@@ -42,12 +42,12 @@ namespace CanteenAIS_DB
         {
             MySqlCommand command = new MySqlCommand(QueryRead);
             FillParameters(entity, command, false);
-            DbConnect.GetInstance().ExecQuery(command, ref exception);
+            DbConnection.GetInstance().ExecQuery(command, ref exception);
         }
 
         public virtual IList<T> Read()
         {
-            DataTable dataTable = DbConnect.GetInstance().ExecQuery(QueryRead, ref exception);
+            DataTable dataTable = DbConnection.GetInstance().ExecQuery(QueryRead, ref exception);
             return AddFromRows(dataTable);
         }
 
@@ -55,7 +55,7 @@ namespace CanteenAIS_DB
         {
             MySqlCommand command = new MySqlCommand(QueryUpdate);
             FillParameters(entity, command);
-            DbConnect.GetInstance().ExecQuery(command, ref exception);
+            DbConnection.GetInstance().ExecQuery(command, ref exception);
         }
     }
 
@@ -81,7 +81,7 @@ namespace CanteenAIS_DB
         {
             MySqlCommand command = new MySqlCommand(QueryDelete);
             command.Parameters.AddWithValue(IdQueryParam, id);
-            DbConnect.GetInstance().ExecQuery(command, ref exception);
+            DbConnection.GetInstance().ExecQuery(command, ref exception);
         }
     }
 

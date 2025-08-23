@@ -107,7 +107,7 @@ namespace CanteenAIS_DB.Database.Queries
             MySqlCommand command = new MySqlCommand(QueryDelete);
             command.Parameters.AddWithValue("@entityDishId", DishId);
             command.Parameters.AddWithValue("@entityProductId", ProductId);
-            DbConnect.GetInstance().ExecQuery(command, ref exception);
+            DbConnection.GetInstance().ExecQuery(command, ref exception);
         }
     }
 }

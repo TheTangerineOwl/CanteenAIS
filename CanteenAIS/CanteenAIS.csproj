@@ -147,5 +147,18 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CanteenAIS_DB\CanteenAIS_DB.csproj">
+      <Project>{cd9e6059-8f56-4aea-ac77-7a7c2ed055b0}</Project>
+      <Name>CanteenAIS_DB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CanteenAIS_Models\CanteenAIS_Models.csproj">
+      <Project>{6e7da54b-a376-4089-bdd4-f455623180e8}</Project>
+      <Name>CanteenAIS_Models</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

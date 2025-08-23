@@ -1,30 +1,26 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CanteenAIS_DB
 {
-    public class DbConnect
+    public class DbConnection
     {
         public readonly static string dbName = "canteen";
         private readonly static string connectionString = $"SERVER=localhost;DATABASE={dbName};UID=admin;PASSWORD=1234567890;";
         private readonly MySqlConnection connection;
 
-        private static DbConnect instance;
+        private static DbConnection instance;
 
-        private DbConnect()
+        private DbConnection()
         {
             connection = new MySqlConnection(connectionString);
         }
 
-        public static DbConnect GetInstance()
+        public static DbConnection GetInstance()
         {
             if (instance == null)
-                instance = new DbConnect();
+                instance = new DbConnection();
             return instance;
         }
 
