@@ -30,11 +30,12 @@ namespace CanteenAIS_DB.Database.Queries
                 return result;
             foreach (DataRow row in table.Rows)
             {
-                result.Add(
-                    new Bank(
-                        id: uint.Parse(row["Id"].ToString()),
-                        name: row["Name"].ToString()
-                ));
+                BankInfo info = new BankInfo
+                {
+                    id = uint.Parse(row["Id"].ToString()),
+                    name = row["Name"].ToString()
+                };
+                result.Add(new Bank(info));
             }
             return result;
         }

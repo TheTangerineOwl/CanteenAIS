@@ -1,12 +1,11 @@
 ﻿//using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Transactions;
 
 namespace CanteenAIS_DB.Database.Entities
 {
-    public interface IDish
+    public interface IDish : ISimpleEntity
     {
-        [DisplayName("Id")]
-        uint Id { get; set; }
         [DisplayName("Имя")]
         string Name { get; set; }
         [DisplayName("Группа")]
@@ -23,59 +22,38 @@ namespace CanteenAIS_DB.Database.Entities
         string Recipe { get; set; }
         [DisplayName("Фото")]
         string Picture { get; set; }
-        //[DisplayName("Ингредиенты")]
-        //ObservableCollection<IIngredient> Ingredients { get; set; }
+    }
+
+    public class DishInfo : SimpleInfo
+    {
+        public string name;
+        public uint groupId;
+        public string groupName;
+        public decimal price;
+        public double serving;
+        public uint unitId;
+        public string unitName;
+        public string recipe;
+        public string picture;
     }
 
     public class Dish : IDish
     {
-        public uint Id { get; set; }
-        public string Name { get; set; }
-        public uint GroupId { get; set; }
-        public string GroupName { get; set; }
-        public decimal Price { get; set; }
-        public double Serving { get; set; }
-        public uint UnitId { get; set; }
-        public string UnitName { get; set; }
-        public string Recipe { get; set; }
-        public string Picture { get; set; }
-        //public ObservableCollection<IIngredient> Ingredients { get; set; }
+        private readonly DishInfo _info;
+        public uint Id { get => _info.id; set => _info.id = value; }
+        public string Name { get => _info.name; set => _info.name = value; }
+        public uint GroupId { get => _info.groupId; set => _info.groupId = value; }
+        public string GroupName { get => _info.groupName; set => _info.groupName = value; }
+        public decimal Price { get => _info.price; set => _info.price = value; }
+        public double Serving { get => _info.serving; set => _info.serving = value; }
+        public uint UnitId { get => _info.unitId; set => _info.unitId = value; }
+        public string UnitName { get => _info.unitName; set => _info.unitName = value; }
+        public string Recipe { get => _info.recipe; set => _info.recipe = value; }
+        public string Picture { get => _info.picture; set => _info.picture = value; }
 
-        public Dish(
-            uint id, string name, uint groupId, string groupName,
-            decimal price, double serving,
-            uint unitId, string unitName,
-            string recipe = null, string picture = null//, ObservableCollection<IIngredient> ingredients = null
-        )
+        public Dish(DishInfo info)
         {
-            Id = id;
-            Name = name;
-            GroupId = groupId;
-            GroupName = groupName;
-            Price = price;
-            Serving = serving;
-            UnitId = unitId; 
-            UnitName = unitName;
-            Recipe = recipe;
-            //Ingredients = ingredients;
-            Picture = picture;
-        }
-
-        public Dish(
-            string name, uint groupId,
-            decimal price, double serving,
-            uint unitId,
-            string recipe = null,
-            string picture = null
-        )
-        {
-            Name = name;
-            GroupId = groupId;
-            Price = price;
-            Serving = serving;
-            UnitId = unitId;
-            Recipe = recipe;
-            Picture = picture;
+            _info = info;
         }
     }
 }

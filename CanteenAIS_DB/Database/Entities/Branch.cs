@@ -1,29 +1,36 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 
 namespace CanteenAIS_DB.Database.Entities
 {
-    public interface IBranch
+    public interface IBranch : ISimpleEntity
     {
-        [DisplayName("Id")]
-        uint Id { get; set; }
         [DisplayName("Имя")]
         string Name { get; set; }
     }
 
+    public class BranchInfo : SimpleInfo
+    {
+        public string name;
+    }
+
     public class Branch : IBranch
     {
-        public uint Id { get; set; }
-        public string Name { get; set; }
-
-        public Branch(uint id, string name)
+        private readonly BranchInfo _info;
+        public uint Id
         {
-            Id = id;
-            Name = name;
+            get => _info.id;
+            set => _info.id = value;
+        }
+        public string Name
+        {
+            get => _info.name;
+            set => _info.name = value;
         }
 
-        public Branch(string name)
+        public Branch(BranchInfo info)
         {
-            Name = name;
+            _info = info;
         }
     }
 }

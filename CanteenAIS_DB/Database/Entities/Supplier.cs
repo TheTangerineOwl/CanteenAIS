@@ -2,10 +2,8 @@
 
 namespace CanteenAIS_DB.Database.Entities
 {
-    public interface ISupplier
+    public interface ISupplier : ISimpleEntity
     {
-        [DisplayName("Id")]
-        uint Id { get; set; }
         [DisplayName("Название")]
         string Name { get; set; }
 
@@ -30,59 +28,42 @@ namespace CanteenAIS_DB.Database.Entities
         string INN { get; set; }
     }
 
+    public class SupplierInfo : SimpleInfo
+    {
+        public string name;
+        public string cityName;
+        public uint streetId;
+        public string streetName;
+        public string building;
+        public uint headId;
+        public string headName;
+        public string headPhone;
+        public uint bankId;
+        public string bankName;
+        public string account;
+        public string inn;
+    }
+
     public class Supplier : ISupplier
     {
-        public uint Id { get; set; }
-        public string Name { get; set; }
+        private readonly SupplierInfo _info;
+        public uint Id { get => _info.id; set => _info.id = value; }
+        public string Name { get => _info.name; set => _info.name = value; }
+        public string CityName { get => _info.cityName; set => _info.cityName = value; }
+        public uint StreetId { get => _info.streetId; set => _info.streetId = value; }
+        public string StreetName { get => _info.streetName; set => _info.streetName = value; }
+        public string Building { get => _info.building; set => _info.building = value; }
+        public uint HeadId { get => _info.headId; set => _info.headId = value; }
+        public string HeadName { get => _info.headName; set => _info.headName = value; }
+        public string HeadPhone { get => _info.headPhone; set => _info.headPhone = value; }
+        public uint BankId { get => _info.bankId; set => _info.bankId = value; }
+        public string BankName { get => _info.bankName; set => _info.bankName = value; }
+        public string Account { get => _info.account; set => _info.account = value; }
+        public string INN { get => _info.inn; set => _info.inn = value; }
 
-        public string CityName { get; set; }
-        public uint StreetId { get; set; }
-        public string StreetName { get; set; }
-        public string Building { get; set; }
-        public uint HeadId { get; set; }
-        public string HeadName { get; set; }
-        public string HeadPhone { get; set; }
-        public uint BankId { get; set; }
-        public string BankName { get; set; }
-        public string Account { get; set; }
-        public string INN { get; set; }
-
-        public Supplier(
-            uint id, string name,
-            string cityName, uint streetId, string streetName,
-            string building,
-            uint headId, string headName, string headPhone,
-            uint bankId, string bankName, string account, string inn
-        )
+        public Supplier(SupplierInfo info)
         {
-            Id = id;
-            Name = name;
-            CityName = cityName;
-            StreetId = streetId;
-            StreetName = streetName;
-            Building = building;
-            HeadId = headId;
-            HeadName = headName;
-            HeadPhone = headPhone;
-            BankId = bankId;
-            BankName = bankName;
-            Account = account;
-            INN = inn;
-        }
-
-        public Supplier(
-            string name, uint streetId,
-            string building, uint headId,
-            uint bankId,string accountNumber, string inn
-        )
-        {
-            Name = name;
-            StreetId = streetId;
-            Building = building;
-            HeadId = headId;
-            BankId = bankId;
-            Account = accountNumber;
-            INN = inn;
+            _info = info;
         }
     }
 }

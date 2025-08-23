@@ -2,28 +2,26 @@
 
 namespace CanteenAIS_DB.Database.Entities
 {
-    public interface ICity
+    public interface ICity : ISimpleEntity
     {
-        [DisplayName("Id")]
-        uint Id { get; set; }
         [DisplayName("Имя")]
         string Name { get; set; }
     }
 
+    public class CityInfo : SimpleInfo
+    {
+        public string name;
+    }
+
     public class City : ICity
     {
-        public uint Id { get; set; }
-        public string Name { get; set; }
+        private readonly CityInfo _info;
+        public uint Id { get => _info.id; set => _info.id = value; }
+        public string Name { get => _info.name; set => _info.name = value; }
 
-        public City(uint id, string name)
+        public City(CityInfo info)
         {
-            Id = id;
-            Name = name;
-        }
-
-        public City(string name)
-        {
-            Name = name;
+            _info = info;
         }
     }
 }

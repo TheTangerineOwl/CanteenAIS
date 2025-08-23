@@ -86,17 +86,18 @@ namespace CanteenAIS_DB.AppAuth.Queries
                 return new List<IUserPerm>();
             foreach (DataRow row in table.Rows)
             {
-                IUserPerm entity = new UserPerm(
-                    userId: uint.Parse(row["UserId"].ToString()),
-                    userLogin: row["UserLogin"].ToString(),
-                    elementId: uint.Parse(row["ElementId"].ToString()),
-                    elementName:row["ElementName"].ToString(),
-                    r: bool.Parse(row["CanRead"].ToString()),
-                    w: bool.Parse(row["CanWrite"].ToString()),
-                    e: bool.Parse(row["CanEdit"].ToString()),
-                    d: bool.Parse(row["CanDelete"].ToString())
-                );
-                result.Add(entity);
+                UserPermInfo info = new UserPermInfo
+                {
+                    UserId = uint.Parse(row["UserId"].ToString()),
+                    userLogin = row["UserLogin"].ToString(),
+                    ElementId = uint.Parse(row["ElementId"].ToString()),
+                    elementName = row["ElementName"].ToString(),
+                    canRead = bool.Parse(row["CanRead"].ToString()),
+                    canWrite = bool.Parse(row["CanWrite"].ToString()),
+                    canEdit = bool.Parse(row["CanEdit"].ToString()),
+                    canDelete = bool.Parse(row["CanDelete"].ToString())
+                };
+                result.Add(new UserPerm(info));
             }
             return result;
         }

@@ -2,10 +2,8 @@
 
 namespace CanteenAIS_DB.Database.Entities
 {
-    public interface ISupplierHead
+    public interface ISupplierHead : ISimpleEntity
     {
-        [DisplayName("Id")]
-        uint Id { get; set; }
         [DisplayName("Фамилия")]
         string LastName { get; set; }
         [DisplayName("Имя")]
@@ -16,28 +14,26 @@ namespace CanteenAIS_DB.Database.Entities
         string Phone { get; set; }
     }
 
+    public class SupplierHeadInfo : SimpleInfo
+    {
+        public string lastName;
+        public string firstName;
+        public string patronim;
+        public string phone;
+    }
+
     public class SupplierHead : ISupplierHead
     {
-        public uint Id { get; set; }
-        public string LastName { get; set; }
-        public string FirstName { get; set; }
-        public string Patronim { get; set; }
-        public string Phone { get; set; }
+        private readonly SupplierHeadInfo _info;
+        public uint Id { get => _info.id; set => _info.id = value; }
+        public string LastName { get => _info.lastName; set => _info.lastName = value; }
+        public string FirstName { get => _info.firstName; set => _info.firstName = value; }
+        public string Patronim { get => _info.patronim; set => _info.patronim = value; }
+        public string Phone { get => _info.phone; set => _info.phone = value; }
 
-        public SupplierHead(uint id, string lastName, string firstName, string patronim, string phone)
+        public SupplierHead(SupplierHeadInfo info)
         {
-            Id = id;
-            LastName = lastName;
-            FirstName = firstName;
-            Patronim = patronim;
-            Phone = phone;
-        }
-        public SupplierHead(string lastName, string firstName, string patronim, string phone)
-        {
-            LastName = lastName;
-            FirstName = firstName;
-            Patronim = patronim;
-            Phone = phone;
+            _info = info;
         }
     }
 }

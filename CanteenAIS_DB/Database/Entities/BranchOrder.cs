@@ -3,10 +3,8 @@ using System.ComponentModel;
 
 namespace CanteenAIS_DB.Database.Entities
 {
-    public interface IBranchOrder
+    public interface IBranchOrder : ISimpleEntity
     {
-        [DisplayName("Id")]
-        uint Id { get; set; }
         uint BranchId { get; set; }
         [DisplayName("Подразделение")]
         string BranchName { get; set; }
@@ -14,25 +12,24 @@ namespace CanteenAIS_DB.Database.Entities
         DateTime DateTime { get; set; }
     }
 
+    public class BranchOrderInfo : SimpleInfo
+    {
+        public uint branchId;
+        public string branchName;
+        public DateTime dateTime;
+    }
+
     public class BranchOrder : IBranchOrder
     {
-        public uint Id { get; set; }
-        public uint BranchId { get; set; }
-        public string BranchName { get; set; }
-        public DateTime DateTime { get; set; }
+        private readonly BranchOrderInfo _info;
+        public uint Id { get => _info.id; set => _info.id = value; }
+        public uint BranchId { get => _info.branchId; set => _info.branchId = value; }
+        public string BranchName { get => _info.branchName; set => _info.branchName = value; }
+        public DateTime DateTime { get => _info.dateTime; set => _info.dateTime = value; }
 
-        public BranchOrder(uint id, uint branchId, string branchName, DateTime dateTime)
+        public BranchOrder(BranchOrderInfo info)
         {
-            Id = id;
-            BranchId = branchId;
-            BranchName = branchName;
-            DateTime = dateTime;
-        }
-
-        public BranchOrder(uint branchId, DateTime dateTime)
-        {
-            BranchId = branchId;
-            DateTime = dateTime;
+            _info = info;
         }
     }
 }

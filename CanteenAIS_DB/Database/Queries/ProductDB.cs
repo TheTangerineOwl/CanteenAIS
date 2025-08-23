@@ -78,17 +78,18 @@ namespace CanteenAIS_DB.Database.Queries
                 return result;
             foreach (DataRow row in table.Rows)
             {
-                IProduct newDish = new Product(
-                    id: uint.Parse(row["Id"].ToString()),
-                    name: row["Name"].ToString(),
-                    unitId: uint.Parse(row["UnitId"].ToString()),
-                    unitName: row["UnitName"].ToString(),
-                    markup: decimal.Parse(row["Markup"].ToString()),
-                    stock: double.Parse(row["Stock"].ToString()),
-                    supplierId: uint.Parse(row["ProductId"].ToString()),
-                    supplierName: row["ProductName"].ToString()
-                );
-                result.Add(newDish);
+                ProductInfo info = new ProductInfo
+                {
+                    id = uint.Parse(row["Id"].ToString()),
+                    name = row["Name"].ToString(),
+                    unitId = uint.Parse(row["UnitId"].ToString()),
+                    unitName = row["UnitName"].ToString(),
+                    markup = decimal.Parse(row["Markup"].ToString()),
+                    stock = double.Parse(row["Stock"].ToString()),
+                    supplierId = uint.Parse(row["SupplierId"].ToString()),
+                    supplierName = row["SupplierName"].ToString()
+                };
+                result.Add(new Product(info));
             }
             return result;
         }

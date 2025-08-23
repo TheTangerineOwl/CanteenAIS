@@ -4,9 +4,8 @@ using System.ComponentModel;
 
 namespace CanteenAIS_DB.AppAuth.Entities
 {
-    public interface IUser
+    public interface IUser : ISimpleEntity
     {
-        uint Id { get; set; }
         [DisplayName("Логин")]
         string Login { get; set; }
         [DisplayName("Пароль")]
@@ -23,43 +22,32 @@ namespace CanteenAIS_DB.AppAuth.Entities
         ObservableCollection<IUserPerm> userPerms { get; set; }
     }
 
+    public class UserInfo : SimpleInfo
+    {
+        public string login;
+        public string password;
+        public string lastName;
+        public string firstName;
+        public string patronim;
+        public DateTime dateOfBirth;
+    }
+
     public class User : IUser
     {
-        public uint Id { get; set; }
-        public string Login { get; set; }
-        public string Password { get; set; }
-        public string LastName { get; set; }
-        public string FirstName { get; set; }
-        public string Patronim { get; set; }
-        public DateTime DateOfBirth { get; set; }
+        private readonly UserInfo _info;
+        public uint Id { get => _info.id; set => _info.id = value; }
+        public string Login { get => _info.login; set => _info.login = value; }
+        public string Password { get => _info.password; set => _info.password = value; }
+        public string LastName { get => _info.lastName; set => _info.lastName = value; }
+        public string FirstName { get => _info.firstName; set => _info.firstName = value; }
+        public string Patronim { get => _info.patronim; set => _info.patronim = value; }
+        public DateTime DateOfBirth { get => _info.dateOfBirth; set => _info.dateOfBirth = value; }
 
         public ObservableCollection<IUserPerm> userPerms { get; set; }
 
-        public User(
-            uint id, string login, string password, DateTime dateOfBirth,
-            string lastName = null, string firstName = null, string patronim = null
-        )
+        public User(UserInfo info)
         {
-            Id = id;
-            Login = login;
-            Password = password;
-            LastName = lastName;
-            FirstName = firstName;
-            Patronim = patronim;
-            DateOfBirth = dateOfBirth;
-        }
-
-        public User(
-            string login, string password, DateTime dateOfBirth,
-            string lastName = null, string firstName = null, string patronim = null
-        )
-        {
-            Login = login;
-            Password = password;
-            LastName = lastName;
-            FirstName = firstName;
-            Patronim = patronim;
-            DateOfBirth = dateOfBirth;
+            _info = info;
         }
     }
 }

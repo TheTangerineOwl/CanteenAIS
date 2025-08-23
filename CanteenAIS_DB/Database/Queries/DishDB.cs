@@ -89,19 +89,20 @@ namespace CanteenAIS_DB.Database.Queries
                 return result;
             foreach (DataRow row in table.Rows)
             {
-                IDish newDish = new Dish(
-                    id: uint.Parse(row["Id"].ToString()),
-                    name: row["Name"].ToString(),
-                    groupId: uint.Parse(row["GroupId"].ToString()),
-                    groupName: row["GroupName"].ToString(),
-                    price: decimal.Parse(row["Price"].ToString()),
-                    serving: double.Parse(row["Serving"].ToString()),
-                    unitId: uint.Parse(row["UnitId"].ToString()),
-                    unitName: row["UnitName"].ToString(),
-                    recipe: row["Recipe"].ToString(),
-                    picture: row["Picture"].ToString()
-                );
-                result.Add(newDish);
+                DishInfo info = new DishInfo
+                {
+                    id = uint.Parse(row["Id"].ToString()),
+                    name = row["Name"].ToString(),
+                    groupId = uint.Parse(row["GroupId"].ToString()),
+                    groupName = row["GroupName"].ToString(),
+                    price = decimal.Parse(row["Price"].ToString()),
+                    serving = double.Parse(row["Serving"].ToString()),
+                    unitId = uint.Parse(row["UnitId"].ToString()),
+                    unitName = row["UnitName"].ToString(),
+                    recipe = row["Recipe"].ToString(),
+                    picture = row["Picture"].ToString()
+                };
+                result.Add(new Dish(info));
             }
             return result;
         }

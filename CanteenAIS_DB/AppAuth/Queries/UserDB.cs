@@ -80,16 +80,17 @@ namespace CanteenAIS_DB.AppAuth.Queries
                 return result;
             foreach (DataRow row in table.Rows)
             {
-                result.Add(
-                    new User(
-                        id: uint.Parse(row["Id"].ToString()),
-                        login: row["Login"].ToString(),
-                        password: row["Password"].ToString(),
-                        lastName: row["LastName"].ToString(),
-                        firstName: row["FirstName"].ToString(),
-                        patronim: row["Patronim"].ToString(),
-                        dateOfBirth: DateTime.Parse(row["DateOfBirth"].ToString())
-                ));
+                UserInfo info = new UserInfo
+                {
+                    id = uint.Parse(row["Id"].ToString()),
+                    login = row["Login"].ToString(),
+                    password = row["Password"].ToString(),
+                    lastName = row["LastName"].ToString(),
+                    firstName = row["FirstName"].ToString(),
+                    patronim = row["Patronim"].ToString(),
+                    dateOfBirth = DateTime.Parse(row["DateOfBirth"].ToString())
+                };
+                result.Add( new User(info));
             }
             return result;
         }

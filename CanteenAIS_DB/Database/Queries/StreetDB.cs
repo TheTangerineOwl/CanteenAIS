@@ -70,13 +70,14 @@ namespace CanteenAIS_DB.Database.Queries
                 return result;
             foreach (DataRow row in table.Rows)
             {
-                result.Add(
-                    new Street(
-                        id: uint.Parse(row["Id"].ToString()),
-                        cityId: uint.Parse(row["CityId"].ToString()),
-                        cityName: row["CityName"].ToString(),
-                        name: row["Name"].ToString()
-                ));
+                StreetInfo info = new StreetInfo
+                {
+                    id = uint.Parse(row["Id"].ToString()),
+                    cityId = uint.Parse(row["CityId"].ToString()),
+                    cityName = row["CityName"].ToString(),
+                    name = row["Name"].ToString()
+                };
+                result.Add(new Street(info));
             }
             return result;
         }

@@ -4,7 +4,7 @@ using System.Data;
 
 namespace CanteenAIS_DB
 {
-    public abstract class BasicEntityCRU<T> where T : class
+    public abstract class BasicEntityCRU<T> where T : IEntity
     {
         //protected string query = null;
         public string exception = string.Empty;
@@ -59,7 +59,7 @@ namespace CanteenAIS_DB
         }
     }
 
-    public abstract class BasicSimpleCRUD<T> : BasicEntityCRU<T> where T : class
+    public abstract class BasicSimpleCRUD<T> : BasicEntityCRU<T> where T : ISimpleEntity
     {
         protected virtual string QueryDelete
         {
@@ -85,7 +85,7 @@ namespace CanteenAIS_DB
         }
     }
 
-    public abstract class BasicDoubleCRUD<T> : BasicEntityCRU<T> where T : class
+    public abstract class BasicDoubleCRUD<T> : BasicEntityCRU<T> where T : IDoubleEntity
     {
         protected abstract string QueryDelete { get; }
 

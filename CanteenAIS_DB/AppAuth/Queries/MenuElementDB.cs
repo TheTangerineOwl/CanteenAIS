@@ -78,15 +78,16 @@ namespace CanteenAIS_DB.AppAuth.Queries
                 return result;
             foreach (DataRow row in table.Rows)
             {
-                result.Add(
-                    new MenuElement(
-                        id: uint.Parse(row["Id"].ToString()),
-                        order: uint.Parse(row["Order"].ToString()),
-                        parentId: uint.Parse(row["ParentId"].ToString()),
-                        name: row["Name"].ToString(),
-                        dllName: row["DllName"].ToString(),
-                        funcName: row["FuncName"].ToString()
-                ));
+                ElementInfo info = new ElementInfo
+                {
+                    id = uint.Parse(row["Id"].ToString()),
+                    order = uint.Parse(row["Order"].ToString()),
+                    parentId = uint.Parse(row["ParentId"].ToString()),
+                    name = row["Name"].ToString(),
+                    dllName = row["DllName"].ToString(),
+                    funcName = row["FuncName"].ToString()
+                };
+                result.Add(new MenuElement(info));
             }
             return result;
         }

@@ -2,7 +2,7 @@
 
 namespace CanteenAIS_DB.Database.Entities
 {
-    public interface ISupplyProduct
+    public interface ISupplyProduct : IDoubleEntity
     {
         uint SupplyId { get; set; }
         uint ProductId { get; set; }
@@ -17,42 +17,33 @@ namespace CanteenAIS_DB.Database.Entities
         double Amount { get; set; }
     }
 
+    public class SupplyProductInfo : DoubleInfo
+    {
+        public uint SupplyId { get => firstId; set => firstId = value; }
+        public uint ProductId { get => secondId; set => secondId = value; }
+        public string productName;
+        public uint unitId;
+        public string unitName;
+        public decimal price;
+        public double amount;
+    }
+
     public class SupplyProduct : ISupplyProduct
     {
-        public uint SupplyId { get; set; }
-        public uint ProductId { get; set; }
-        public string ProductName { get; set; }
-        public uint UnitId { get; set; }
-        public string UnitName { get; set; }
-        public decimal Price { get; set; }
-        public double Amount { get; set; }
+        private readonly SupplyProductInfo _info;
+        public uint SupplyId { get => _info.SupplyId; set => _info.SupplyId = value; }
+        public uint ProductId { get => _info.ProductId; set => _info.ProductId = value; }
+        public string ProductName { get => _info.productName; set => _info.productName = value; }
+        public uint UnitId { get => _info.unitId; set => _info.unitId = value; }
+        public string UnitName { get => _info.unitName; set => _info.unitName = value; }
+        public decimal Price { get => _info.price; set => _info.price = value; }
+        public double Amount { get => _info.amount; set => _info.amount = value; }
+        public uint FirstId { get => SupplyId; set => SupplyId = value; }
+        public uint SecondId { get => ProductId; set => ProductId = value; }
 
-        public SupplyProduct(
-            uint supplyId,
-            uint productId, string productName,
-            uint unitId, string unitName,
-            decimal price, double amount
-        )
+        public SupplyProduct(SupplyProductInfo info)
         {
-            SupplyId = supplyId;
-            ProductId = productId;
-            ProductName = productName;
-            UnitId = unitId;
-            UnitName = unitName;
-            Price = price;
-            Amount = amount;
-        }
-
-        public SupplyProduct(
-            uint supplyId, uint productId,
-            uint unitId,decimal price, double amount
-        )
-        {
-            SupplyId = supplyId;
-            ProductId = productId;
-            UnitId = unitId;
-            Price = price;
-            Amount = amount;
+            _info = info;
         }
     }
 }

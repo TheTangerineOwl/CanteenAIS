@@ -2,10 +2,8 @@
 
 namespace CanteenAIS_DB.Database.Entities
 {
-    public interface IProduct
+    public interface IProduct : ISimpleEntity
     {
-        [DisplayName("Id")]
-        uint Id { get; set; }
         [DisplayName("Имя")]
         string Name { get; set; }
         [DisplayName("Единица измерения")]
@@ -20,45 +18,32 @@ namespace CanteenAIS_DB.Database.Entities
         uint SupplierId { get; set; }
     }
 
+    public class ProductInfo : SimpleInfo
+    {
+        public string name;
+        public uint unitId;
+        public string unitName;
+        public decimal markup;
+        public double stock;
+        public uint supplierId;
+        public string supplierName;
+    }
+
     public class Product : IProduct
     {
-        public uint Id { get; set; }
-        public string Name { get; set; }
-        public uint UnitId { get; set; }
-        public string UnitName { get;set; }
-        public decimal Markup { get; set; }
-        public double Stock { get; set; }
-        public uint SupplierId { get; set; }
+        private readonly ProductInfo _info;
+        public uint Id { get => _info.id; set => _info.id = value; }
+        public string Name { get => _info.name; set => _info.name = value; }
+        public uint UnitId { get => _info.unitId; set => _info.unitId = value; }
+        public string UnitName { get => _info.unitName; set => _info.unitName = value; }
+        public decimal Markup { get => _info.markup; set => _info.markup = value; }
+        public double Stock { get => _info.stock; set => _info.stock = value; }
+        public uint SupplierId { get => _info.supplierId; set => _info.supplierId = value; }
+        public string SupplierName { get => _info.supplierName; set => _info.supplierName = value; }
 
-        public string SupplierName { get; set; }
-
-        public Product(
-            uint id, string name,
-            uint unitId, string unitName,
-            decimal markup, double stock,
-            uint supplierId, string supplierName
-        )
+        public Product(ProductInfo info)
         {
-            Id = id;
-            Name = name;
-            UnitId = unitId;
-            UnitName = unitName;
-            Markup = markup;
-            Stock = stock;
-            SupplierId = supplierId;
-            SupplierName = supplierName;
-        }
-
-        public Product(
-            string name, uint unitId,
-            decimal markup, double stock, uint supplierId
-        )
-        {
-            Name = name;
-            UnitId = unitId;
-            Markup = markup;
-            Stock = stock;
-            SupplierId = supplierId;
+            _info = info;
         }
     }
 }

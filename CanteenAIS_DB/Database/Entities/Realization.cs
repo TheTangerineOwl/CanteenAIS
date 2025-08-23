@@ -1,12 +1,11 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Runtime.InteropServices;
 
 namespace CanteenAIS_DB.Database.Entities
 {
-    public interface IRealization
+    public interface IRealization : ISimpleEntity
     {
-        [DisplayName("Id")]
-        uint Id { get; set; }
         [DisplayName("Время")]
         DateTime DateTime { get; set; }
         uint DishId { get; set; }
@@ -19,39 +18,30 @@ namespace CanteenAIS_DB.Database.Entities
         string UnitName { get; set; }
     }
 
+    public class RealizationInfo : SimpleInfo
+    {
+        public DateTime dateTime;
+        public uint dishId;
+        public string dishName;
+        public double amount;
+        public uint unitId;
+        public string unitName;
+    }
+
     public class Realization : IRealization
     {
-        public uint Id { get; set; }
-        public DateTime DateTime { get; set; }
-        public uint DishId { get; set; }
-        public string DishName { get; set; }
-        public double Amount { get; set; }
-        public uint UnitId { get; set; }
-        public string UnitName { get; set; }
+        private readonly RealizationInfo _info;
+        public uint Id { get => _info.id; set => _info.id = value; }
+        public DateTime DateTime { get => _info.dateTime; set => _info.dateTime = value; }
+        public uint DishId { get => _info.dishId; set => _info.dishId = value; }
+        public string DishName { get => _info.dishName; set => _info.dishName = value; }
+        public double Amount { get => _info.amount; set => _info.amount = value; }
+        public uint UnitId { get => _info.unitId; set => _info.unitId = value; }
+        public string UnitName { get => _info.unitName; set => _info.unitName = value; }
 
-        public Realization(
-            uint id, DateTime dateTime,
-            uint dishId, string dishName,
-            double amount,
-            uint unitId, string unitName)
+        public Realization(RealizationInfo info)
         {
-            Id = id;
-            DateTime = dateTime;
-            DishId = dishId;
-            DishName = dishName;
-            Amount = amount;
-            UnitId = unitId;
-            UnitName = unitName;
-        }
-
-        public Realization(
-            DateTime dateTime, uint dishId, double amount,
-            uint unitId)
-        {
-            DateTime = dateTime;
-            DishId = dishId;
-            Amount = amount;
-            UnitId = unitId;
+            _info = info;
         }
     }
 }

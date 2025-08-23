@@ -70,13 +70,14 @@ namespace CanteenAIS_DB.Database.Queries
                 return result;
             foreach (DataRow row in table.Rows)
             {
-                result.Add(
-                    new BranchOrder(
-                        id: uint.Parse(row["Id"].ToString()),
-                        dateTime: DateTime.Parse(row["DateTime"].ToString()),
-                        branchId: uint.Parse(row["BranchId"].ToString()),
-                        branchName: row["BranchName"].ToString()
-                ));
+                BranchOrderInfo info = new BranchOrderInfo
+                {
+                    id = uint.Parse(row["Id"].ToString()),
+                    dateTime = DateTime.Parse(row["DateTime"].ToString()),
+                    branchId = uint.Parse(row["BranchId"].ToString()),
+                    branchName = row["BranchName"].ToString()
+                };
+                result.Add(new BranchOrder(info));
             }
             return result;
         }

@@ -75,14 +75,15 @@ namespace CanteenAIS_DB.Database.Queries
                 return result;
             foreach (DataRow row in table.Rows)
             {
-                result.Add(
-                    new SupplierHead(
-                        id: uint.Parse(row["Id"].ToString()),
-                        lastName: row["LastName"].ToString(),
-                        firstName: row["FirstName"].ToString(),
-                        patronim: row["Patronim"].ToString(),
-                        phone: row["Phone"].ToString()
-                ));
+                SupplierHeadInfo info = new SupplierHeadInfo
+                {
+                    id = uint.Parse(row["Id"].ToString()),
+                    lastName = row["LastName"].ToString(),
+                    firstName = row["FirstName"].ToString(),
+                    patronim = row["Patronim"].ToString(),
+                    phone = row["Phone"].ToString()
+                };
+                result.Add(new SupplierHead(info));
             }
             return result;
         }

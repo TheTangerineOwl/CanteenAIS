@@ -107,22 +107,23 @@ namespace CanteenAIS_DB.Database.Queries
                 return result;
             foreach (DataRow row in table.Rows)
             {
-                result.Add(
-                    new Supplier(
-                        id: uint.Parse(row["Id"].ToString()),
-                        name: row["Name"].ToString(),
-                        streetId: uint.Parse(row["StreetId"].ToString()),
-                        cityName: row["CityName"].ToString(),
-                        streetName: row["StreetName"].ToString(),
-                        building: row["Building"].ToString(),
-                        headId: uint.Parse(row["HeadId"].ToString()),
-                        headName: row["HeadName"].ToString(),
-                        headPhone: row["HeadPhone"].ToString(),
-                        bankId: uint.Parse(row["BankId"].ToString()),
-                        bankName: row["BankName"].ToString(),
-                        account: row["Account"].ToString(),
-                        inn: row["INN"].ToString()
-                ));
+                SupplierInfo info = new SupplierInfo
+                {
+                    id = uint.Parse(row["Id"].ToString()),
+                    name = row["Name"].ToString(),
+                    streetId = uint.Parse(row["StreetId"].ToString()),
+                    cityName = row["CityName"].ToString(),
+                    streetName = row["StreetName"].ToString(),
+                    building = row["Building"].ToString(),
+                    headId = uint.Parse(row["HeadId"].ToString()),
+                    headName = row["HeadName"].ToString(),
+                    headPhone = row["HeadPhone"].ToString(),
+                    bankId = uint.Parse(row["BankId"].ToString()),
+                    bankName = row["BankName"].ToString(),
+                    account = row["Account"].ToString(),
+                    inn = row["INN"].ToString()
+                };
+                result.Add(new Supplier(info));
             }
             return result;
         }

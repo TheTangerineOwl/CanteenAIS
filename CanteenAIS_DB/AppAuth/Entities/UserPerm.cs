@@ -1,8 +1,9 @@
-﻿using System.ComponentModel;
+﻿using MySqlX.XDevAPI.Common;
+using System.ComponentModel;
 
 namespace CanteenAIS_DB.AppAuth.Entities
 {
-    public interface IUserPerm
+    public interface IUserPerm : IDoubleEntity
     {
         uint UserId { get; set; }
         [DisplayName("Логин")]
@@ -20,44 +21,35 @@ namespace CanteenAIS_DB.AppAuth.Entities
         bool CanDelete { get; set; }
     }
 
+    public class UserPermInfo : DoubleInfo
+    {
+        public uint UserId { get => firstId; set => firstId = value; }
+        public uint ElementId { get => secondId; set => secondId = value; }
+        public string userLogin;
+        public string elementName;
+        public bool canRead;
+        public bool canWrite;
+        public bool canEdit;
+        public bool canDelete;
+    }
+
     public class UserPerm : IUserPerm
     {
-        public uint UserId { get; set; }
-        public string UserLogin { get; set; }
-        public uint ElementId { get; set; }
-        public string ElementName { get; set; }
-        public bool CanRead { get; set; }
-        public bool CanWrite { get; set; }
-        public bool CanEdit { get; set; }
-        public bool CanDelete { get; set; }
+        private readonly UserPermInfo _info;
+        public uint UserId { get => _info.UserId; set => _info.UserId = value; }
+        public string UserLogin { get => _info.userLogin; set => _info.userLogin = value; }
+        public uint ElementId { get => _info.ElementId; set => _info.ElementId = value; }
+        public string ElementName { get => _info.elementName; set => _info.elementName = value; }
+        public bool CanRead { get => _info.canRead; set => _info.canRead = value; }
+        public bool CanWrite { get => _info.canWrite; set => _info.canWrite = value; }
+        public bool CanEdit { get => _info.canEdit; set => _info.canEdit = value; }
+        public bool CanDelete { get => _info.canDelete; set => _info.canDelete = value; }
+        public uint FirstId { get => UserId; set => UserId = value; }
+        public uint SecondId { get => ElementId; set => ElementId = value; }
 
-        public UserPerm(
-            uint userId, string userLogin,
-            uint elementId, string elementName,
-            bool r, bool w, bool e, bool d
-        )
+        public UserPerm(UserPermInfo info)
         {
-            UserId = userId;
-            UserLogin = userLogin;
-            ElementId = elementId;
-            ElementName = elementName;
-            CanRead = r;
-            CanWrite = w;
-            CanEdit = e;
-            CanDelete = d;
-        }
-
-        public UserPerm(
-            uint userId, uint elementId,
-            bool r = false, bool w = false, bool e = false, bool d = false
-        )
-        {
-            UserId = userId;
-            ElementId = elementId;
-            CanRead = r;
-            CanWrite = w;
-            CanEdit = e;
-            CanDelete = d;
+            _info = info;
         }
     }
 }

@@ -78,16 +78,17 @@ namespace CanteenAIS_DB.Database.Queries
                 return result;
             foreach (DataRow row in table.Rows)
             {
-                result.Add(
-                    new Realization(
-                        id: uint.Parse(row["Id"].ToString()),
-                        dishId: uint.Parse(row["DishId"].ToString()),
-                        dishName: row["DishName"].ToString(),
-                        amount: double.Parse(row["Amount"].ToString()),
-                        dateTime: DateTime.Parse(row["DateTime"].ToString()),
-                        unitId: uint.Parse(row["UnitId"].ToString()),
-                        unitName: row["UnitName"].ToString()
-                ));
+                RealizationInfo info = new RealizationInfo
+                {
+                    id = uint.Parse(row["Id"].ToString()),
+                    dishId = uint.Parse(row["DishId"].ToString()),
+                    dishName = row["DishName"].ToString(),
+                    amount = double.Parse(row["Amount"].ToString()),
+                    dateTime = DateTime.Parse(row["DateTime"].ToString()),
+                    unitId = uint.Parse(row["UnitId"].ToString()),
+                    unitName = row["UnitName"].ToString()
+                };
+                result.Add(new Realization(info));
             }
             return result;
         }

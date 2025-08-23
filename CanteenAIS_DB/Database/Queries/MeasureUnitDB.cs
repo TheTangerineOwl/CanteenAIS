@@ -31,11 +31,12 @@ namespace CanteenAIS_DB.Database.Queries
                 return result;
             foreach (DataRow row in table.Rows)
             {
-                result.Add(
-                    new MeasureUnit(
-                        id: uint.Parse(row["Id"].ToString()),
-                        name: row["Name"].ToString()
-                ));
+                MeasureUnitInfo info = new MeasureUnitInfo
+                {
+                    id = uint.Parse(row["Id"].ToString()),
+                    name = row["Name"].ToString()
+                };
+                result.Add(new MeasureUnit(info));
             }
             return result;
         }

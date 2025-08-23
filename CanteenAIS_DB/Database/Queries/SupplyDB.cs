@@ -71,13 +71,14 @@ namespace CanteenAIS_DB.Database.Queries
                 return result;
             foreach (DataRow row in table.Rows)
             {
-                result.Add(
-                    new Supply(
-                        id: uint.Parse(row["Id"].ToString()),
-                        supplierId: uint.Parse(row["ProductId"].ToString()),
-                        supplierName: row["ProductName"].ToString(),
-                        dateTime: DateTime.Parse(row["DateTime"].ToString())
-                ));
+                SupplyInfo info = new SupplyInfo
+                {
+                    id = uint.Parse(row["Id"].ToString()),
+                    supplierId = uint.Parse(row["ProductId"].ToString()),
+                    supplierName = row["ProductName"].ToString(),
+                    dateTime = DateTime.Parse(row["DateTime"].ToString())
+                };
+                result.Add(new Supply(info));
             }
             return result;
         }

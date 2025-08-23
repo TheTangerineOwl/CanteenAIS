@@ -87,17 +87,18 @@ namespace CanteenAIS_DB.Database.Queries
                 return new List<IIngredient>();
             foreach (DataRow row in table.Rows)
             {
-                IIngredient entity = new Ingredient(
-                    dishId: uint.Parse(row["DishId"].ToString()),
-                    dishName: row["DishName"].ToString(),
-                    productId: uint.Parse(row["ProductId"].ToString()),
-                    productName: row["ProductName"].ToString(),
-                    unitId: uint.Parse(row["UnitId"].ToString()),
-                    unitName: row["UnitName"].ToString(),
-                    gross: double.Parse(row["Gross"].ToString()),
-                    net: double.Parse(row["Net"].ToString())
-                    );
-                result.Add(entity);
+                IngredientInfo info = new IngredientInfo
+                {
+                    DishId = uint.Parse(row["DishId"].ToString()),
+                    dishName = row["DishName"].ToString(),
+                    ProductId = uint.Parse(row["ProductId"].ToString()),
+                    productName = row["ProductName"].ToString(),
+                    unitId = uint.Parse(row["UnitId"].ToString()),
+                    unitName = row["UnitName"].ToString(),
+                    gross = double.Parse(row["Gross"].ToString()),
+                    net = double.Parse(row["Net"].ToString())
+                };
+                result.Add(new Ingredient(info));
             }
             return result;
         }

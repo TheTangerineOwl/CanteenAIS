@@ -1,6 +1,6 @@
 ﻿namespace CanteenAIS_DB.Database.Entities
 {
-    public interface IIngredient
+    public interface IIngredient : IDoubleEntity
     {
         uint DishId { get; set; }
         uint ProductId { get; set; }
@@ -10,45 +10,36 @@
         string UnitName { get; set; }
     }
 
+    public class IngredientInfo : DoubleInfo
+    {
+        public uint DishId { get => firstId; set => firstId = value; }
+        public uint ProductId { get => secondId; set => secondId = value; }
+        public string dishName;
+        public string productName;
+        public double gross;
+        public double net;
+        public uint unitId;
+        public string unitName;
+    }
+
     public class Ingredient : IIngredient
     {
-        public uint DishId { get; set; }
-        public string DishName { get; set; }
-        public uint ProductId { get; set; }
-        public string ProductName { get; set; }
-        public double Gross { get; set; }  // брутто
-        public double Net { get; set; }  // нетто
-        public uint UnitId { get; set; }
-        public string UnitName { get; set; }
+        private readonly IngredientInfo _info;
+        public uint DishId { get => _info.DishId; set => _info.DishId = value; }
+        public string DishName { get => _info.dishName; set => _info.dishName = value; }
+        public uint ProductId { get => _info.ProductId; set => _info.ProductId = value; }
+        public string ProductName { get => _info.productName; set => _info.productName = value; }
+        public double Gross { get => _info.gross; set => _info.gross = value; }  // брутто
+        public double Net { get => _info.net; set => _info.net = value; }  // нетто
+        public uint UnitId { get => _info.unitId; set => _info.unitId = value; }
+        public string UnitName { get => _info.unitName; set => _info.unitName = value; }
 
-        public Ingredient(
-            uint dishId, string dishName,
-            uint productId, string productName,
-            double gross, double net,
-            uint unitId, string unitName
-        )
-        {
-            DishId = dishId;
-            DishName = dishName;
-            ProductId = productId;
-            ProductName = productName;
-            Gross = gross;
-            Net = net;
-            UnitId = unitId;
-            UnitName = unitName;
-        }
+        public uint FirstId { get => DishId; set => DishId = value; }
+        public uint SecondId { get => ProductId; set => ProductId = value; }
 
-        public Ingredient(
-            uint dishId, uint productId,
-            double gross, double net,
-            uint unitId
-        )
+        public Ingredient(IngredientInfo info)
         {
-            DishId = dishId;
-            ProductId = productId;
-            Gross = gross;
-            Net = net;
-            UnitId = unitId;
+            _info = info;
         }
     }
 }

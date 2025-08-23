@@ -1,11 +1,10 @@
-﻿using System.ComponentModel;
+﻿using Org.BouncyCastle.Bcpg;
+using System.ComponentModel;
 
 namespace CanteenAIS_DB.AppAuth.Entities
 {
-    public interface IMenuElement
+    public interface IMenuElement : ISimpleEntity
     {
-        [DisplayName("Id")]
-        uint Id { get; set; }
         [DisplayName("Родитель")]
         string ParentName { get; set; }
         uint ParentId { get; set; }
@@ -19,41 +18,30 @@ namespace CanteenAIS_DB.AppAuth.Entities
         uint Order { get; set; }
     }
 
+    public class ElementInfo : SimpleInfo
+    {
+        public uint parentId;
+        public string parentName;
+        public string name;
+        public string dllName;
+        public string funcName;
+        public uint order;
+    }
+
     public class MenuElement : IMenuElement
     {
-        public uint Id { get; set; }
-        public uint ParentId { get; set; }
-        public string ParentName { get; set; }
-        public string Name { get; set; }
-        public string DllName { get; set; }
-        public string FuncName { get; set; }
-        public uint Order { get; set; }
+        private readonly ElementInfo _info;
+        public uint Id { get => _info.id; set => _info.id = value; }
+        public uint ParentId { get => _info.parentId; set => _info.parentId = value; }
+        public string ParentName { get => _info.parentName; set => _info.parentName = value; }
+        public string Name { get => _info.name; set => _info.name = value; }
+        public string DllName { get => _info.dllName; set => _info.dllName = value; }
+        public string FuncName { get => _info.funcName; set => _info.funcName = value; }
+        public uint Order { get => _info.order; set => _info.order = value; }
 
-        public MenuElement(
-            uint id, uint order,
-            string parentName = null,
-            uint parentId = 0, string name = null, string dllName = null, string funcName = null
-        )
+        public MenuElement(ElementInfo info)
         {
-            Id = id;
-            Order = order;
-            ParentId = parentId;
-            ParentName = parentName;
-            Name = name;
-            DllName = dllName;
-            FuncName = funcName;
-        }
-
-        public MenuElement(
-            uint order, string parentName = null, uint parentId = 0, string name = null, string dllName = null, string funcName = null
-        )
-        {
-            Order = order;
-            ParentId = parentId;
-            ParentName= parentName;
-            Name = name;
-            DllName = dllName;
-            FuncName = funcName;
+            _info = info;
         }
     }
 }
