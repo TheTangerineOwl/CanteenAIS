@@ -8,31 +8,15 @@ namespace CanteenAIS_DB.AppAuth.Queries
 {
     public class UserDB : BasicSimpleCRUD<IUser>
     {
-        protected override string TableName
-        {
-            get
-            {
-                return "users";
-            }
-        }
+        protected override string TableName => "users";
 
-        protected override string QueryCreate
-        {
-            get
-            {
-                return "INSERT INTO users (" +
+        protected override string QueryCreate => "INSERT INTO users (" +
                     "`Id`, `Login`, `Password`, `LastName`, `FirstName`, `Patronim`, `DateOfBirth`" +
                     ") VALUES (" +
                     "@entityId, @entityLogin, @entityPassword, @entityLastName, @entityFirstName, @entityPatronim, @entityDateOfBirth" +
                     ");";
-            }
-        }
 
-        protected override string QueryRead
-        {
-            get
-            {
-                return "SELECT " +
+        protected override string QueryRead => "SELECT " +
                     "u.`Id` AS `Id`, " +
                     "u.`Login` AS `Login`, " +
                     "u.`Password` AS `Password`, " +
@@ -41,14 +25,8 @@ namespace CanteenAIS_DB.AppAuth.Queries
                     "u.`Patronim` AS `Patronim`, " +
                     "u.`DateOfBirth` AS `DateOfBirth` " +
                     "FROM users AS u;";
-            }
-        }
 
-        protected override string QueryUpdate
-        {
-            get
-            {
-                return "UPDATE users " +
+        protected override string QueryUpdate => "UPDATE users " +
                     "SET " +
                     "`Login`=@entityLogin, " +
                     "`Password`=@entityPassword, " +
@@ -57,8 +35,6 @@ namespace CanteenAIS_DB.AppAuth.Queries
                     "`Patronim`=@entityPatronim, " +
                     "`DateOfBirth`=@entityDateOfBirth " +
                     "WHERE `Id`=@entityId;";
-            }
-        }
 
         protected override MySqlParameterCollection FillParameters(IUser entity, MySqlCommand command, bool withId = true)
         {

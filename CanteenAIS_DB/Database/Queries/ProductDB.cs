@@ -7,57 +7,37 @@ namespace CanteenAIS_DB.Database.Queries
 {
     public class ProductDB : BasicSimpleCRUD<IProduct>
     {
-        protected override string TableName
-        {
-            get
-            {
-                return "products";
-            }
-        }
+        protected override string TableName => "products";
 
-        protected override string QueryCreate
-        {
-            get
-            {
-                return "INSERT INTO products (" +
-                    "`Id`, `Name`, `UnitId`, `Markup`, `Stock`, `ProductId`" +
-                    ") VALUES (@entityId, @entityName, @entityUnitId, @entityMarkup, @entityStock, @entitySupplierId);";
-            }
-        }
+        protected override string QueryCreate =>
+            "INSERT INTO products (" +
+            "`Id`, `Name`, `UnitId`, `Markup`, `Stock`, `ProductId`" +
+            ") VALUES (" +
+            "@entityId, @entityName, @entityUnitId, @entityMarkup, @entityStock, @entitySupplierId);";
 
-        protected override string QueryRead
-        {
-            get
-            {
-                return $"SELECT " +
-                    $"p.`Id` AS `Id`, " +
-                    $"p.`Name` AS `Name`, " +
-                    $"p.`UnitId` AS `UnitId`, " +
-                    $"mu.`Name` AS `UnitName`, " +
-                    $"p.`Markup` AS `Markup`, " +
-                    $"p.`Stock` AS `Stock`, " +
-                    $"p.`ProductId` AS `ProductId`, " +
-                    $"sr.`Name` AS `ProductName` " +
-                    $"FROM products AS p " +
-                    $"LEFT JOIN measureunits AS mu ON mu.`Id`=p.`UnitId` " +
-                    $"LEFT JOIN suppliers AS sr ON sr.`Id`=p.`ProductId`;";
-            }
-        }
+        protected override string QueryRead =>
+            $"SELECT " +
+            $"p.`Id` AS `Id`, " +
+            $"p.`Name` AS `Name`, " +
+            $"p.`UnitId` AS `UnitId`, " +
+            $"mu.`Name` AS `UnitName`, " +
+            $"p.`Markup` AS `Markup`, " +
+            $"p.`Stock` AS `Stock`, " +
+            $"p.`ProductId` AS `ProductId`, " +
+            $"sr.`Name` AS `ProductName` " +
+            $"FROM products AS p " +
+            $"LEFT JOIN measureunits AS mu ON mu.`Id`=p.`UnitId` " +
+            $"LEFT JOIN suppliers AS sr ON sr.`Id`=p.`ProductId`;";
 
-        protected override string QueryUpdate
-        {
-            get
-            {
-                return "UPDATE products " +
-                    "SET " +
-                    "`Name`=@entityName, " +
-                    "`UnitId`=@entityUnitId, " +
-                    "`Markup`=@entityMarkup, " +
-                    "`Stock`=@entityStock, " +
-                    "`ProductId`=@entitySupplierId " +
-                    "WHERE `Id`=@entityId;";
-            }
-        }
+        protected override string QueryUpdate =>
+            "UPDATE products " +
+            "SET " +
+            "`Name`=@entityName, " +
+            "`UnitId`=@entityUnitId, " +
+            "`Markup`=@entityMarkup, " +
+            "`Stock`=@entityStock, " +
+            "`ProductId`=@entitySupplierId " +
+            "WHERE `Id`=@entityId;";
 
         protected override MySqlParameterCollection FillParameters(IProduct entity, MySqlCommand command, bool withId = true)
         {

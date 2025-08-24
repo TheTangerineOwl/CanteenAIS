@@ -1,18 +1,16 @@
 ﻿using CanteenAIS_DB;
 using CanteenAIS_DB.AppAuth.Entities;
-using CanteenAIS_DB.Database.Entities;
+using CanteenAIS_Models.Statics;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Threading;
 
 namespace CanteenAIS_Models
 {   
-    public abstract class TableModel<TEntity, TEntityInfo>//, TQueryClass>
+    public abstract class TableModel<TEntity, TEntityInfo>
         where TEntity : class, IEntity
         where TEntityInfo : Info
-        //where TQueryClass : BasicEntityCRU<TEntity>
     {
         public abstract string TableName { get; }
         protected IDictionary<DataRow, TEntity> DataValues;
@@ -41,10 +39,6 @@ namespace CanteenAIS_Models
         {
             List<TEntity> values = FetchValues().ToList();
             DataTable table = DataTableConverter.ToDataTable(values);
-            /*            table.Columns.Remove(table.Columns[0]);
-                        table.Columns.Remove(table.Columns[1]);
-                        table.Columns.Remove(table.Columns[2]);*/
-
             FillDataValues(table, values);
             return table;
         }
@@ -93,10 +87,9 @@ namespace CanteenAIS_Models
         public abstract void DeleteRow(DataRow row);
     }
 
-    public abstract class SimpleModel<TEntity, TEntityInfo> : TableModel<TEntity, TEntityInfo>//, TQueryClass>
+    public abstract class SimpleModel<TEntity, TEntityInfo> : TableModel<TEntity, TEntityInfo>
         where TEntity : class, ISimpleEntity
         where TEntityInfo : SimpleInfo
-        //where TQueryClass : BasicSimpleCRUD<TEntity>
     {
         public SimpleModel(BasicSimpleCRUD<TEntity> contextInstance) : base(contextInstance) { }
 
@@ -125,10 +118,9 @@ namespace CanteenAIS_Models
         }
     }
 
-    public abstract class DoubleModel<TEntity, TEntityInfo> : TableModel<TEntity, TEntityInfo>//, TQueryClass>
+    public abstract class DoubleModel<TEntity, TEntityInfo> : TableModel<TEntity, TEntityInfo>
         where TEntity : class, IDoubleEntity
         where TEntityInfo : DoubleInfo
-        //where TQueryClass : BasicDoubleCRUD<TEntity>
     {
         public DoubleModel(BasicDoubleCRUD<TEntity> contextInstance) : base(contextInstance) { }
 

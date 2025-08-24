@@ -1,10 +1,10 @@
-﻿namespace CanteenAIS_Models
+﻿namespace CanteenAIS_Models.Statics
 {
-    public class Contents
+    public static class Contents
     {
-        public string Title => "Структура меню";
+        public static string Title => "Структура меню";
 
-        public string Content => "Иерархическая структура меню:\n" +
+        public static string Content => "Иерархическая структура меню:\n" +
             "-Разное\n" +
                 "\t-Настройки\n" +
                 "\t-Сменить пароль\n" +

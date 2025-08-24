@@ -8,57 +8,36 @@ namespace CanteenAIS_DB.Database.Queries
 {
     public class RealizationDB : BasicSimpleCRUD<IRealization>
     {
-        protected override string TableName
-        {
-            get
-            {
-                return "realizations";
-            }
-        }
+        protected override string TableName => "realizations";
 
-        protected override string QueryCreate
-        {
-            get
-            {
-                return "INSERT INTO realizations (" +
-                    "`Id`, `DishId`, `Amount`, `DateTime`, `UnitId`" +
-                    ") VALUES (" +
-                    "@entityId, @entityDishId, @entityAmount, @entityDateTime, @entityUnitId" +
-                    ");";
-            }
-        }
+        protected override string QueryCreate =>
+            "INSERT INTO realizations (" +
+            "`Id`, `DishId`, `Amount`, `DateTime`, `UnitId`" +
+            ") VALUES (" +
+            "@entityId, @entityDishId, @entityAmount, @entityDateTime, @entityUnitId" +
+            ");";
 
-        protected override string QueryRead
-        {
-            get
-            {
-                return "SELECT " +
-                    "r.`Id` AS `Id`, " +
-                    "r.`DishId` AS `DishId`, " +
-                    "d.`Name` AS `DishName`, " +
-                    "r.`Amount` AS `Amount`, " +
-                    "r.`DateTime` AS `DateTime`, " +
-                    "r.`UnitId` AS `UnitId`, " +
-                    "mu.`Name` AS `UnitName` " +
-                    "FROM realizations AS r " +
-                    "LEFT JOIN dishes AS d ON d.`Id`=r.`DishId` " +
-                    "LEFT JOIN measureunits AS mu ON mu.`Id`=r.`UnitId`;";
-            }
-        }
+        protected override string QueryRead =>
+            "SELECT " +
+            "r.`Id` AS `Id`, " +
+            "r.`DishId` AS `DishId`, " +
+            "d.`Name` AS `DishName`, " +
+            "r.`Amount` AS `Amount`, " +
+            "r.`DateTime` AS `DateTime`, " +
+            "r.`UnitId` AS `UnitId`, " +
+            "mu.`Name` AS `UnitName` " +
+            "FROM realizations AS r " +
+            "LEFT JOIN dishes AS d ON d.`Id`=r.`DishId` " +
+            "LEFT JOIN measureunits AS mu ON mu.`Id`=r.`UnitId`;";
 
-        protected override string QueryUpdate
-        {
-            get
-            {
-                return "UPDATE realizations " +
-                    "SET " +
-                    "`DishId`=@entityDishId, " +
-                    "`Amount`=@entityAmount, " +
-                    "`DateTime`=@entityDateTime, " +
-                    "`UnitId`=@entityUnitId " +
-                    "WHERE `Id`=@entityId;";
-            }
-        }
+        protected override string QueryUpdate =>
+            "UPDATE realizations " +
+            "SET " +
+            "`DishId`=@entityDishId, " +
+            "`Amount`=@entityAmount, " +
+            "`DateTime`=@entityDateTime, " +
+            "`UnitId`=@entityUnitId " +
+            "WHERE `Id`=@entityId;";
 
         protected override MySqlParameterCollection FillParameters(IRealization entity, MySqlCommand command, bool withId = true)
         {

@@ -2,9 +2,6 @@
 using CanteenAIS_DB.AppAuth.Entities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CanteenAIS_Models.Management.Services
 {

@@ -1,10 +1,10 @@
-﻿namespace CanteenAIS_Models
+﻿namespace CanteenAIS_Models.Statics
 {
-    public class AboutProgram
+    public static class AboutProgram
     {
-        public string FormTitle => "О программе";
+        public static string FormTitle => "О программе";
 
-        public string AboutText => "О программе\n" +
+        public static string AboutText => "О программе\n" +
             "Курсовая работа по дисциплине Базы данных\n" +
             "Выполнила:\n" +
             "Студентка: Гомзякова Софья Александровна\n" +

@@ -7,68 +7,38 @@ namespace CanteenAIS_DB.Database.Queries
 {
     public class IngredientDB : BasicDoubleCRUD<IIngredient>
     {
-        protected override string TableName
-        {
-            get
-            {
-                return "ingredients";
-            }
-        }
+        protected override string TableName => "ingredients";
 
-        protected override string QueryCreate
-        {
-            get
-            {
-                return "INSERT INTO ingredients (" +
-                    "`DishId`, `ProductId`, `Gross`, `Net`, `UnitId`" +
-                    ") VALUES (" +
-                    "@entityDishId, @entityProductId, @entityGross, @entityNet, @entityUnitId" +
-                    ");";
-            }
-        }
+        protected override string QueryCreate => "INSERT INTO ingredients (" +
+            "`DishId`, `ProductId`, `Gross`, `Net`, `UnitId`" +
+            ") VALUES (" +
+            "@entityDishId, @entityProductId, @entityGross, @entityNet, @entityUnitId" +
+            ");";
 
-        protected override string QueryRead
-        {
-            get
-            {
-                return "SELECT " +
-                    "i.`DishId` AS `DishId`, " +
-                    "d.`Name` AS `DishName`, " +
-                    "i.`ProductId` AS `ProductId`, " +
-                    "p.`Name` AS `ProductName`, " +
-                    "i.`Gross` AS `Gross`, " +
-                    "i.`Net` AS `Net`, " +
-                    "i.`UnitId` AS `UnitId`, " +
-                    "mu.`Name` AS `UnitName` " +
-                    "FROM ingredients AS i " +
-                    "LEFT JOIN dishes AS d ON `DishId`=d.`Id` " +
-                    "LEFT JOIN products AS p ON `ProductId`=p.`Id` " +
-                    "LEFT JOIN measureunits AS mu ON i.`UnitId`=mu.`Id`;";
-            }
-        }
+        protected override string QueryRead => "SELECT " +
+            "i.`DishId` AS `DishId`, " +
+            "d.`Name` AS `DishName`, " +
+            "i.`ProductId` AS `ProductId`, " +
+            "p.`Name` AS `ProductName`, " +
+            "i.`Gross` AS `Gross`, " +
+            "i.`Net` AS `Net`, " +
+            "i.`UnitId` AS `UnitId`, " +
+            "mu.`Name` AS `UnitName` " +
+            "FROM ingredients AS i " +
+            "LEFT JOIN dishes AS d ON `DishId`=d.`Id` " +
+            "LEFT JOIN products AS p ON `ProductId`=p.`Id` " +
+            "LEFT JOIN measureunits AS mu ON i.`UnitId`=mu.`Id`;";
 
-        protected override string QueryUpdate
-        {
-            get
-            {
-                return "UPDATE ingredients " +
-                    "SET " +
-                    "`Gross`=@entityGross, " +
-                    "`Net`=@entityNet, " +
-                    "`UnitId`=@entityUnitId " +
-                    "WHERE " +
-                    "`DishId`=@entityDishId AND `ProductId`=@entityProductId;";
-            }
-        }
+        protected override string QueryUpdate => "UPDATE ingredients " +
+            "SET " +
+            "`Gross`=@entityGross, " +
+            "`Net`=@entityNet, " +
+            "`UnitId`=@entityUnitId " +
+            "WHERE " +
+            "`DishId`=@entityDishId AND `ProductId`=@entityProductId;";
 
-        protected override string QueryDelete
-        {
-            get
-            {
-                return $"DELETE FROM ingredients" +
-                    $"WHERE DishId=@entityDishId AND ProductId=@entityProductId";
-            }
-        }
+        protected override string QueryDelete => $"DELETE FROM ingredients" +
+            $"WHERE DishId=@entityDishId AND ProductId=@entityProductId";
 
         protected override MySqlParameterCollection FillParameters(IIngredient en, MySqlCommand command, bool withId = true)
         {
@@ -108,7 +78,7 @@ namespace CanteenAIS_DB.Database.Queries
             MySqlCommand command = new MySqlCommand(QueryDelete);
             command.Parameters.AddWithValue("@entityDishId", DishId);
             command.Parameters.AddWithValue("@entityProductId", ProductId);
-            DbConnection.GetInstance().ExecQuery(command, ref exception);
+            DbConnection.GetInstance().ExecMySqlQuery(command, ref exception);
         }
     }
 }

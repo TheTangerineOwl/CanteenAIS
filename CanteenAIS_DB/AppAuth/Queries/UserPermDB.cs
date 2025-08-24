@@ -7,66 +7,38 @@ namespace CanteenAIS_DB.AppAuth.Queries
 {
     public class UserPermDB : BasicDoubleCRUD<IUserPerm>
     {
-        protected override string TableName
-        {
-            get
-            {
-                return "userperms";
-            }
-        }
+        protected override string TableName => "userperms";
 
-        protected override string QueryCreate
-        {
-            get
-            {
-                return "INSERT INTO userperms (" +
-                    "`UserId`, `ElementId`, `CanRead`, `CanWrite`, `CanEdit`, `CanDelete`" +
-                    ") VALUES (" +
-                    "@entityUserId, @entityElementId, @entityCanRead, @entityCanWrite, @entityCanEdit, @entityCanDelete" +
-                    ");";
-            }
-        }
+        protected override string QueryCreate => "INSERT INTO userperms (" +
+            "`UserId`, `ElementId`, `CanRead`, `CanWrite`, `CanEdit`, `CanDelete`" +
+            ") VALUES (" +
+            "@entityUserId, @entityElementId, @entityCanRead, " +
+            "@entityCanWrite, @entityCanEdit, @entityCanDelete" +
+            ");";
 
-        protected override string QueryRead
-        {
-            get
-            {
-                return "SELECT " +
-                    "up.`UserId` AS `UserId`, " +
-                    "u.`Login` AS `UserLogin`, " +
-                    "up.`ElementId` AS `ElementId`, " +
-                    "me.`Name` AS `ElementName`, " +
-                    "up.`CanRead` AS `CanRead`, " +
-                    "up.`CanWrite` AS `CanWrite`, " +
-                    "up.`CanEdit` AS `CanEdit`, " +
-                    "up.`CanDelete` AS `CanDelete` " +
-                    "FROM userperms AS up " +
-                    "LEFT JOIN users AS u ON u.`Id`=up.`UserId` " +
-                    "LEFT JOIN menuelements AS me ON me.`Id`=up.`ElementId`;";
-            }
-        }
+        protected override string QueryRead => "SELECT " +
+            "up.`UserId` AS `UserId`, " +
+            "u.`Login` AS `UserLogin`, " +
+            "up.`ElementId` AS `ElementId`, " +
+            "me.`Name` AS `ElementName`, " +
+            "up.`CanRead` AS `CanRead`, " +
+            "up.`CanWrite` AS `CanWrite`, " +
+            "up.`CanEdit` AS `CanEdit`, " +
+            "up.`CanDelete` AS `CanDelete` " +
+            "FROM userperms AS up " +
+            "LEFT JOIN users AS u ON u.`Id`=up.`UserId` " +
+            "LEFT JOIN menuelements AS me ON me.`Id`=up.`ElementId`;";
 
-        protected override string QueryUpdate
-        {
-            get
-            {
-                return "UPDATE userperms " +
-                    "SET " +
-                    "`CanRead`=@entityCanRead, " +
-                    "`CanWrite`=@entityCanWrite, " +
-                    "`CanEdit`=@entityCanEdit, " +
-                    "`CanDelete`=@entityCanDelete " +
-                    "WHERE `UserId`=@entityUserId AND `ElementId`=@entityElementId;";
-            }
-        }
+        protected override string QueryUpdate => "UPDATE userperms " +
+            "SET " +
+            "`CanRead`=@entityCanRead, " +
+            "`CanWrite`=@entityCanWrite, " +
+            "`CanEdit`=@entityCanEdit, " +
+            "`CanDelete`=@entityCanDelete " +
+            "WHERE `UserId`=@entityUserId AND `ElementId`=@entityElementId;";
 
-        protected override string QueryDelete
-        {
-            get
-            {
-                return "DELETE FROM userperms WHERE `UserId`=@entityUserId AND `ElementId`=@entityElementId;";
-            }
-        }
+        protected override string QueryDelete => "DELETE FROM userperms " +
+            "WHERE `UserId`=@entityUserId AND `ElementId`=@entityElementId;";
 
         protected override MySqlParameterCollection FillParameters(IUserPerm entity, MySqlCommand command, bool withId = true)
         {
@@ -107,7 +79,7 @@ namespace CanteenAIS_DB.AppAuth.Queries
             MySqlCommand command = new MySqlCommand(QueryDelete);
             command.Parameters.AddWithValue("@entityUserId", userId);
             command.Parameters.AddWithValue("@entityElementId", elementId);
-            DbConnection.GetInstance().ExecQuery(command, ref exception);
+            DbConnection.GetInstance().ExecMySqlQuery(command, ref exception);
         }
     }
 }

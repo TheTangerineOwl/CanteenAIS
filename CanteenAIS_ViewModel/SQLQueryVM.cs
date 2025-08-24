@@ -1,0 +1,97 @@
+﻿using CanteenAIS_DB;
+using CanteenAIS_DB.AppAuth.Entities;
+using CanteenAIS_Models;
+using CanteenAIS_ViewModel;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Windows.Input;
+
+namespace CanteenDBViewModels
+{
+    public class SQLqueryVM : PropChanged
+    {
+        private readonly IUserPerm Perm;
+
+        public SQLqueryVM(uint elementId)
+        {
+            List<IUserPerm> allPerms = DBContext.GetInstance().UserPerms.Read().ToList();
+            foreach (var perm in allPerms)
+                if (perm.UserId == DBContext.GetInstance().CurrentUser?.Id && perm.ElementId == elementId)
+                    Perm = perm;
+        }
+
+        public string Title => "SQL-запрос";
+
+        private DataTable dataTable = new DataTable();
+        public DataTable DataBaseTable
+        {
+            get => dataTable;
+            set => Set(ref dataTable, value);
+        }
+
+        private string query = "";
+        public string Query
+        {
+            get => query;
+            set => Set(ref query, value);
+        }
+
+        public bool ValidPermsForQuery()
+        {
+            if (!Perm.CanRead && Query.Contains("SELECT"))
+                return false;
+            if (!Perm.CanWrite && Query.Contains("INSERT"))
+                return false;
+            if (!Perm.CanEdit && Query.Contains("UPDATE"))
+                return false;
+            if (!Perm.CanDelete && (Query.Contains("DROP") || Query.Contains("ALTER")))
+                return false;
+            return true;
+        }
+
+        public enum QueryResult { GOOD, INVALPERM, EXCEPTION }
+        public QueryResult Result { get; private set; }
+        private string exception;
+        public string Exception { get => exception; }
+
+        public ICommand ClickExecuteQuery
+        {
+            get
+            {
+                return new Command((obj) =>
+                {
+                    if (Query == null || Query == string.Empty)
+                    {
+                        Result = QueryResult.GOOD;
+                        exception = "Запрос пуст";
+                    }
+                    else if (!ValidPermsForQuery())
+                    {
+                        Result = QueryResult.INVALPERM;
+                        exception = "Запрос недопустим при данных правах пользователя!";
+                    }
+                    else
+                    {
+                        exception = string.Empty;
+                        DataTable table = DbConnection.GetInstance().ExecQuery(
+                            Query, ref exception
+                        );
+
+                        if (exception != string.Empty)
+                        {
+                            DataBaseTable.Clear();
+                            Result = QueryResult.EXCEPTION;
+                        }
+                        else
+                        {
+                            DataBaseTable = table;
+                            Result = QueryResult.GOOD;
+                        }
+                    }
+                });
+            }
+        }
+    }
+
+}

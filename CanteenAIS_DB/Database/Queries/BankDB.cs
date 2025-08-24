@@ -7,13 +7,7 @@ namespace CanteenAIS_DB.Database.Queries
 {
     public class BankDB : BasicSimpleCRUD<IBank>
     {
-        protected override string TableName
-        {
-            get
-            {
-                return "banks";
-            }
-        }
+        protected override string TableName => "banks";
 
         protected override MySqlParameterCollection FillParameters(IBank entity, MySqlCommand command, bool withId = true)
         {

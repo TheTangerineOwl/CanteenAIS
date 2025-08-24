@@ -7,13 +7,7 @@ namespace CanteenAIS_DB.Database.Queries
 {
     public class AssortmentGroupDB : BasicSimpleCRUD<IAssortmentGroup>
     {
-        protected override string TableName
-        {
-            get
-            {
-                return "assortmentgroups";
-            }
-        }
+        protected override string TableName => "assortmentgroups";
 
         protected override MySqlParameterCollection FillParameters(IAssortmentGroup entity, MySqlCommand command, bool withId = true)
         {

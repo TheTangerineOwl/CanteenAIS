@@ -8,13 +8,7 @@ namespace CanteenAIS_DB.Database.Queries
 {
     public class MeasureUnitDB : BasicSimpleCRUD<IMeasureUnit>
     {
-        protected override string TableName
-        {
-            get
-            {
-                return "measureunits";
-            }
-        }
+        protected override string TableName => "measureunits";
 
         protected override MySqlParameterCollection FillParameters(IMeasureUnit entity, MySqlCommand command, bool withId = true)
         {

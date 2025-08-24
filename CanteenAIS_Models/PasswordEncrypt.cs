@@ -14,7 +14,6 @@ namespace CanteenAIS_Models
         public string Encrypt(string value)
         {
             byte[] messageBytes = Encoding.UTF8.GetBytes(value);
-            //byte[] hashValue = SHA256.HashData(messageBytes);
             SHA256 sha256 = SHA256.Create();
             byte[] hash = sha256.ComputeHash(messageBytes);
             return Convert.ToString(hash);

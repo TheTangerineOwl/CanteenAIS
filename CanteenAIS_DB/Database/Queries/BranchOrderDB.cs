@@ -8,51 +8,27 @@ namespace CanteenAIS_DB.Database.Queries
 {
     public class BranchOrderDB : BasicSimpleCRUD<IBranchOrder>
     {
-        protected override string TableName
-        {
-            get
-            {
-                return "branchorders";
-            }
-        }
+        protected override string TableName => "branchorders";
 
-        protected override string QueryCreate
-        {
-            get
-            {
-                return $"INSERT INTO branchorders (" +
-                    $"`BranchId`, `DateTime`" +
-                    $") VALUES (" +
-                    $"@entityId, @entityDateTime" +
-                    $");";
-            }
-        }
+        protected override string QueryCreate => $"INSERT INTO branchorders (" +
+            $"`BranchId`, `DateTime`" +
+            $") VALUES (" +
+            $"@entityId, @entityDateTime" +
+            $");";
 
-        protected override string QueryRead
-        {
-            get
-            {
-                return $"SELECT " +
-                    $"bo.`Id` AS `Id`, " +
-                    $"bo.`BranchId` AS `BranchId`, " +
-                    $"br.`Name` AS `BranchName`, " +
-                    $"bo.`DateTime` AS `DateTime` " +
-                    $"FROM branchorders AS bo " +
-                    $"LEFT JOIN branches AS br ON br.`Id`=bo.`BranchId`;";
-            }
-        }
+        protected override string QueryRead => $"SELECT " +
+            $"bo.`Id` AS `Id`, " +
+            $"bo.`BranchId` AS `BranchId`, " +
+            $"br.`Name` AS `BranchName`, " +
+            $"bo.`DateTime` AS `DateTime` " +
+            $"FROM branchorders AS bo " +
+            $"LEFT JOIN branches AS br ON br.`Id`=bo.`BranchId`;";
 
-        protected override string QueryUpdate
-        {
-            get
-            {
-                return $"UPDATE branchorders " +
-                    $"SET " +
-                    $"`BranchId`=@entityBranchId, " +
-                    $"`DateTime`=@entityDateTime " +
-                    $"WHERE `Id`=@entityId;";
-            }
-        }
+        protected override string QueryUpdate => $"UPDATE branchorders " +
+            $"SET " +
+            $"`BranchId`=@entityBranchId, " +
+            $"`DateTime`=@entityDateTime " +
+            $"WHERE `Id`=@entityId;";
 
         protected override MySqlParameterCollection FillParameters(IBranchOrder entity, MySqlCommand command, bool withId = true)
         {

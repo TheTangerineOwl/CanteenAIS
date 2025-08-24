@@ -7,13 +7,7 @@ namespace CanteenAIS_DB.Database.Queries
 {
     public class BranchDB : BasicSimpleCRUD<IBranch>
     {
-        protected override string TableName
-        {
-            get
-            {
-                return "branches";
-            }
-        }
+        protected override string TableName => "branches";
 
         protected override MySqlParameterCollection FillParameters(IBranch entity, MySqlCommand command, bool withId = true)
         {

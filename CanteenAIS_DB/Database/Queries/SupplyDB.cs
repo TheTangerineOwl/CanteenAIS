@@ -8,51 +8,30 @@ namespace CanteenAIS_DB.Database.Queries
 {
     public class SupplyDB : BasicSimpleCRUD<ISupply>
     {
-        protected override string TableName
-        {
-            get
-            {
-                return "supplies";
-            }
-        }
+        protected override string TableName => "supplies";
 
-        protected override string QueryCreate
-        {
-            get
-            {
-                return "INSERT INTO supplies (" +
-                    "`Id`, `ProductId`, `DateTime`" +
-                    ") VALUES (" +
-                    "@entityId, @entitySupplierId, @entityDateTime" +
-                    ");";
-            }
-        }
+        protected override string QueryCreate =>
+            "INSERT INTO supplies (" +
+            "`Id`, `ProductId`, `DateTime`" +
+            ") VALUES (" +
+            "@entityId, @entitySupplierId, @entityDateTime" +
+            ");";
 
-        protected override string QueryRead
-        {
-            get
-            {
-                return "SELECT " +
-                    "s.`Id` AS `Id`, " +
-                    "s.`ProductId` AS `ProductId`, " +
-                    "sr.`Name` AS `ProductName`, " +
-                    "s.`DateTime` AS `DateTime` " +
-                    "FROM supplies AS s " +
-                    "LEFT JOIN suppliers AS sr ON sr.`Id`=s.`ProductId`;";
-            }
-        }
+        protected override string QueryRead =>
+            "SELECT " +
+            "s.`Id` AS `Id`, " +
+            "s.`ProductId` AS `ProductId`, " +
+            "sr.`Name` AS `ProductName`, " +
+            "s.`DateTime` AS `DateTime` " +
+            "FROM supplies AS s " +
+            "LEFT JOIN suppliers AS sr ON sr.`Id`=s.`ProductId`;";
 
-        protected override string QueryUpdate
-        {
-            get
-            {
-                return "UPDATE supplies " +
-                    "SET " +
-                    "`ProductId`=@entitySupplierId, " +
-                    "`DateTime`=@entityDateTime " +
-                    "WHERE `Id`=@entityId;";
-            }
-        }
+        protected override string QueryUpdate =>
+            "UPDATE supplies " +
+            "SET " +
+            "`ProductId`=@entitySupplierId, " +
+            "`DateTime`=@entityDateTime " +
+            "WHERE `Id`=@entityId;";
 
         protected override MySqlParameterCollection FillParameters(ISupply entity, MySqlCommand command, bool withId = true)
         {

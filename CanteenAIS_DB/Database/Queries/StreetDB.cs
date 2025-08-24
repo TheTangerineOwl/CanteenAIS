@@ -8,51 +8,27 @@ namespace CanteenAIS_DB.Database.Queries
 {
     public class StreetDB : BasicSimpleCRUD<IStreet>
     {
-        protected override string TableName
-        {
-            get
-            {
-                return "streets";
-            }
-        }
+        protected override string TableName => "streets";
 
-        protected override string QueryCreate
-        {
-            get
-            {
-                return "UPDATE streets " +
-                    "SET " +
-                    "`CityId`=@entityCityId, " +
-                    "`Name`=@entityName " +
-                    "WHERE `Id`=@entityId;";
-            }
-        }
+        protected override string QueryCreate => "UPDATE streets " +
+            "SET " +
+            "`CityId`=@entityCityId, " +
+            "`Name`=@entityName " +
+            "WHERE `Id`=@entityId;";
 
-        protected override string QueryRead
-        {
-            get
-            {
-                return "SELECT " +
-                    "s.`Id` AS `Id`, " +
-                    "s.`CityId` AS `CityId`, " +
-                    "c.`Name` AS `CityName`, " +
-                    "s.`Name` AS `Name` " +
-                    "FROM streets AS s " +
-                    "LEFT JOIN cities AS c ON c.`Id`=`CityId`;";
-            }
-        }
+        protected override string QueryRead => "SELECT " +
+            "s.`Id` AS `Id`, " +
+            "s.`CityId` AS `CityId`, " +
+            "c.`Name` AS `CityName`, " +
+            "s.`Name` AS `Name` " +
+            "FROM streets AS s " +
+            "LEFT JOIN cities AS c ON c.`Id`=`CityId`;";
 
-        protected override string QueryUpdate
-        {
-            get
-            {
-                return "INSERT INTO streets (" +
-                    "`Id`, `CityId`, `Name`" +
-                    ") VALUES (" +
-                    "@entityId, @entityCityId, @entityName" +
-                    ");";
-            }
-        }
+        protected override string QueryUpdate => "INSERT INTO streets (" +
+            "`Id`, `CityId`, `Name`" +
+            ") VALUES (" +
+            "@entityId, @entityCityId, @entityName" +
+            ");";
 
         protected override MySqlParameterCollection FillParameters(IStreet entity, MySqlCommand command, bool withId = true)
         {

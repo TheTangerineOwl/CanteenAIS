@@ -7,65 +7,39 @@ namespace CanteenAIS_DB.Database.Queries
 {
     public class OrderProductDB : BasicDoubleCRUD<IOrderProduct>
     {
-        protected override string TableName
-        {
-            get
-            {
-                return "orderproducts";
-            }
-        }
+        protected override string TableName => "orderproducts";
 
-        protected override string QueryCreate
-        {
-            get
-            {
-                return "INSERT INTO orderproducts (" +
-                    "`OrderId`, `ProductId`, `UnitId`, `Amount`" +
-                    ") VALUES (" +
-                    "@entityOrderId, @entityProductId, @entityUnitId, @entityAmount" +
-                    ");";
-            }
-        }
+        protected override string QueryCreate =>
+            "INSERT INTO orderproducts (" +
+            "`OrderId`, `ProductId`, `UnitId`, `Amount`" +
+            ") VALUES (" +
+            "@entityOrderId, @entityProductId, @entityUnitId, @entityAmount" +
+            ");";
 
-        protected override string QueryRead
-        {
-            get
-            {
-                return "SELECT " +
-                    "op.`OrderId` AS `OrderId`, " +
-                    "op.`ProductId` AS `ProductId`, " +
-                    "p.`Name` AS `ProductName`, " +
-                    "op.`Amount` AS `Amount`, " +
-                    "op.`UnitId` AS `UnitId`, " +
-                    "mu.`Name` AS `UnitName` " +
-                    "FROM orderproducts AS op " +
-                    "LEFT JOIN branchorders AS bo ON bo.`Id`=`OrderId` " +
-                    "LEFT JOIN products AS p ON p.`Id`=`ProductId` " +
-                    "LEFT JOIN measureunits AS mu ON mu.`Id`=op.`UnitId`;";
-            }
-        }
+        protected override string QueryRead =>
+            "SELECT " +
+            "op.`OrderId` AS `OrderId`, " +
+            "op.`ProductId` AS `ProductId`, " +
+            "p.`Name` AS `ProductName`, " +
+            "op.`Amount` AS `Amount`, " +
+            "op.`UnitId` AS `UnitId`, " +
+            "mu.`Name` AS `UnitName` " +
+            "FROM orderproducts AS op " +
+            "LEFT JOIN branchorders AS bo ON bo.`Id`=`OrderId` " +
+            "LEFT JOIN products AS p ON p.`Id`=`ProductId` " +
+            "LEFT JOIN measureunits AS mu ON mu.`Id`=op.`UnitId`;";
 
-        protected override string QueryUpdate
-        {
-            get
-            {
-                return "UPDATE orderproducts " +
-                    "SET " +
-                    "`UnitId`=@entityUnitId, " +
-                    "`Amount`=@entityAmount " +
-                    "WHERE " +
-                    "`OrderId`=@entityOrderId AND `ProductId`=@entityProductId;";
-            }
-        }
+        protected override string QueryUpdate =>
+            "UPDATE orderproducts " +
+            "SET " +
+            "`UnitId`=@entityUnitId, " +
+            "`Amount`=@entityAmount " +
+            "WHERE " +
+            "`OrderId`=@entityOrderId AND `ProductId`=@entityProductId;";
 
-        protected override string QueryDelete
-        {
-            get
-            {
-                return $"DELETE FROM orderproducts " +
-                    $"WHERE `OrderId`=@entityOrderId AND `ProductId`=@entityProductId";
-            }
-        }
+        protected override string QueryDelete =>
+            $"DELETE FROM orderproducts " +
+            $"WHERE `OrderId`=@entityOrderId AND `ProductId`=@entityProductId";
 
         protected override MySqlParameterCollection FillParameters(IOrderProduct entity, MySqlCommand command, bool withId = true)
         {
@@ -101,7 +75,7 @@ namespace CanteenAIS_DB.Database.Queries
             MySqlCommand command = new MySqlCommand(QueryDelete);
             command.Parameters.AddWithValue("@entityOrderId", orderId);
             command.Parameters.AddWithValue("@entityProductId", productId);
-            DbConnection.GetInstance().ExecQuery(command, ref exception);
+            DbConnection.GetInstance().ExecMySqlQuery(command, ref exception);
         }
     }
 }

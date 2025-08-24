@@ -7,66 +7,42 @@ namespace CanteenAIS_DB.Database.Queries
 {
     public class DishDB : BasicSimpleCRUD<IDish>
     {
-        protected override string TableName
-        {
-            get
-            {
-                return "dishes";
-            }
-        }
+        protected override string TableName => "dishes";
 
-        protected override string QueryCreate
-        {
-            get
-            {
-                return "INSERT INTO dishes (" +
-                    "`Id`, `Name`, `GroupId`, `Price`, `Serving`, `UnitId`, `Recipe`, `Picture`" +
-                    ") VALUES (" +
-                    "@entityId, " +
-                    "@entityName, " +
-                    "@entityGroupId, " +
-                    "@entityPrice, " +
-                    "@entityServing, @entityUnitId, @entityRecipe, @entityPicture);";
-            }
-        }
+        protected override string QueryCreate => "INSERT INTO dishes (" +
+            "`Id`, `Name`, `GroupId`, `Price`, `Serving`, `UnitId`, `Recipe`, `Picture`" +
+            ") VALUES (" +
+            "@entityId, " +
+            "@entityName, " +
+            "@entityGroupId, " +
+            "@entityPrice, " +
+            "@entityServing, @entityUnitId, @entityRecipe, @entityPicture);";
 
-        protected override string QueryRead
-        {
-            get
-            {
-                return $"SELECT " +
-                    $"d.`Id` AS `Id`, " +
-                    $"d.`Name` AS `Name`, " +
-                    $"d.`GroupId` AS `GroupId`, " +
-                    $"ag.`Name` AS `GroupName`, " +
-                    $"d.`Price` AS `Price`, " +
-                    $"d.`Serving` AS `Serving`, " +
-                    $"d.`UnitId` AS `UnitId`, " +
-                    $"mu.`Name` AS `UnitName`, " +
-                    $"d.`Recipe` AS `Recipe`, " +
-                    $"d.`Picture` AS `Picture` " +
-                    $"FROM dishes AS d " +
-                    $"LEFT JOIN assortmentgroups AS ag ON `GroupId`=ag.`Id` " +
-                    $"LEFT JOIN measureunits AS mu ON `UnitId`=mu.`Id`;";
-            }
-        }
+        protected override string QueryRead => $"SELECT " +
+            $"d.`Id` AS `Id`, " +
+            $"d.`Name` AS `Name`, " +
+            $"d.`GroupId` AS `GroupId`, " +
+            $"ag.`Name` AS `GroupName`, " +
+            $"d.`Price` AS `Price`, " +
+            $"d.`Serving` AS `Serving`, " +
+            $"d.`UnitId` AS `UnitId`, " +
+            $"mu.`Name` AS `UnitName`, " +
+            $"d.`Recipe` AS `Recipe`, " +
+            $"d.`Picture` AS `Picture` " +
+            $"FROM dishes AS d " +
+            $"LEFT JOIN assortmentgroups AS ag ON `GroupId`=ag.`Id` " +
+            $"LEFT JOIN measureunits AS mu ON `UnitId`=mu.`Id`;";
 
-        protected override string QueryUpdate
-        {
-            get
-            {
-                return "UPDATE dishes " +
-                    "SET " +
-                    "`Name`=@entityName, " +
-                    "`GroupId`=@entityGroupId, " +
-                    "`Price`=@entityPrice, " +
-                    "`Serving`=@entityServing, " +
-                    "`UnitId`=@entityUnitId, " +
-                    "`Recipe`=@entityRecipe, " +
-                    "`Picture`=@entityPicture " +
-                    "WHERE `Id`=@entityId;";
-            }
-        }
+        protected override string QueryUpdate => "UPDATE dishes " +
+            "SET " +
+            "`Name`=@entityName, " +
+            "`GroupId`=@entityGroupId, " +
+            "`Price`=@entityPrice, " +
+            "`Serving`=@entityServing, " +
+            "`UnitId`=@entityUnitId, " +
+            "`Recipe`=@entityRecipe, " +
+            "`Picture`=@entityPicture " +
+            "WHERE `Id`=@entityId;";
 
         protected override MySqlParameterCollection FillParameters(IDish dish, MySqlCommand command, bool withId = true)
         {

@@ -8,54 +8,26 @@ namespace CanteenAIS_DB.Database.Queries
 {
     public class SupplierHeadDB : BasicSimpleCRUD<ISupplierHead>
     {
-        protected override string TableName
-        {
-            get
-            {
-                return "supplierheads";
-            }
-        }
+        protected override string TableName => "supplierheads";
 
-        protected override string QueryCreate
-        {
-            get
-            {
-                return $"INSERT INTO supplierheads (" +
-                    $"`LastName`, `FirstName`, `Patronim`, `Phone`" +
-                    $") VALUES (" +
-                    $"@entityLastName, @entityFirstName, @entityPatronim, @entityPhone" +
-                    $");";
-            }
-        }
+        protected override string QueryCreate =>
+            $"INSERT INTO supplierheads (" +
+            $"`LastName`, `FirstName`, `Patronim`, `Phone`" +
+            $") VALUES (" +
+            $"@entityLastName, @entityFirstName, @entityPatronim, @entityPhone" +
+            $");";
 
-        protected override string QueryRead
-        {
-            get
-            {
-                return $"SELECT * FROM supplierheads ORDER BY `Id`";
-            }
-        }
+        protected override string QueryRead => $"SELECT * FROM supplierheads ORDER BY `Id`";
 
-        protected override string QueryUpdate
-        {
-            get
-            {
-                return $"UPDATE supplierheads SET " +
-                    $"`LastName`=@entityLastName," +
-                    $"`FirstName`=@entityFirstName," +
-                    $"`Patronim`=@entityPatronim," +
-                    $"`Phone`=@entityPhone " +
-                    $"WHERE `Id`=@entityId";
-            }
-        }
+        protected override string QueryUpdate =>
+            $"UPDATE supplierheads SET " +
+            $"`LastName`=@entityLastName," +
+            $"`FirstName`=@entityFirstName," +
+            $"`Patronim`=@entityPatronim," +
+            $"`Phone`=@entityPhone " +
+            $"WHERE `Id`=@entityId";
 
-        protected override string QueryDelete
-        {
-            get
-            {
-                return $"DELETE FROM supplierheads WHERE `Id`=@entityId";
-            }
-        }
+        protected override string QueryDelete => $"DELETE FROM supplierheads WHERE `Id`=@entityId";
 
         protected override MySqlParameterCollection FillParameters(ISupplierHead entity, MySqlCommand command, bool withId = true)
         {
@@ -87,7 +59,5 @@ namespace CanteenAIS_DB.Database.Queries
             }
             return result;
         }
-
-
     }
 }

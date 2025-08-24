@@ -7,30 +7,14 @@ namespace CanteenAIS_DB.AppAuth.Queries
 {
     public class MenuElementDB : BasicSimpleCRUD<IMenuElement>
     {
-        protected override string TableName
-        {
-            get
-            {
-                return "menuelements";
-            }
-        }
+        protected override string TableName => "menuelements";
 
-        protected override string QueryCreate
-        {
-            get
-            {
-                return "INSERT INTO menuelements (" +
+        protected override string QueryCreate => "INSERT INTO menuelements (" +
                     "`Id`, `ParentId`, `Name`, `DllName`, `FuncName`, `Order`" +
                     ") VALUES (" +
                     "@entityId, @entityParentId, @entityName, @entityDllName, @entityFuncName, @entityOrder);";
-            }
-        }
 
-        protected override string QueryRead
-        {
-            get
-            {
-                return "SELECT " +
+        protected override string QueryRead => "SELECT " +
                     "me.`Id` AS `Id`, " +
                     "me.`ParentId` AS `ParentId`, " +
                     "mep.`Name` AS `ParentName`, " +
@@ -40,14 +24,8 @@ namespace CanteenAIS_DB.AppAuth.Queries
                     "me.`Order` AS `Order` " +
                     "FROM canteenapp.menuelements AS me " +
                     "LEFT JOIN canteenapp.menuelements AS mep ON me.`ParentId`=mep.`Id`;";
-            }
-        }
 
-        protected override string QueryUpdate
-        {
-            get
-            {
-                return "UPDATE menuelements " +
+        protected override string QueryUpdate => "UPDATE menuelements " +
                     "SET " +
                     "`ParentId`=@entityParentId, " +
                     "`Name`=@entityName, " +
@@ -55,8 +33,6 @@ namespace CanteenAIS_DB.AppAuth.Queries
                     "`FuncName`=@entityFuncName, " +
                     "`Order`=@entityOrder " +
                     "WHERE `Id`=@entityId;";
-            }
-        }
 
         protected override MySqlParameterCollection FillParameters(IMenuElement entity, MySqlCommand command, bool withId = true)
         {

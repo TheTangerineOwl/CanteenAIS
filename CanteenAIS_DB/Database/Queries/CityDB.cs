@@ -8,13 +8,7 @@ namespace CanteenAIS_DB.Database.Queries
 {
     public class CityDB : BasicSimpleCRUD<ICity>
     {
-        protected override string TableName
-        {
-            get
-            {
-                return "cities";
-            }
-        }
+        protected override string TableName => "cities";
 
         protected override MySqlParameterCollection FillParameters(ICity entity, MySqlCommand command, bool withId = true)
         {

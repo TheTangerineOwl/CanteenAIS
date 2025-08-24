@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 
-namespace CanteenAIS_Models
+namespace CanteenAIS_Models.Statics
 {
     public static class DataTableConverter
     {

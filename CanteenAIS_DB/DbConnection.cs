@@ -24,7 +24,7 @@ namespace CanteenAIS_DB
             return instance;
         }
 
-        public DataTable ExecQuery(MySqlCommand command, ref string exception)
+        public DataTable ExecMySqlQuery(MySqlCommand command, ref string exception)
         {
             if (connection == null)
             {
@@ -59,7 +59,7 @@ namespace CanteenAIS_DB
             try
             {
                 MySqlCommand command = new MySqlCommand(query, connection);
-                return ExecQuery(command, ref exception);
+                return ExecMySqlQuery(command, ref exception);
             }
             catch (Exception ex)
             {
