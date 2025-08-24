@@ -45,6 +45,25 @@
     <Compile Include="Contents.cs" />
     <Compile Include="DataConverter.cs" />
     <Compile Include="DBContext.cs" />
+    <Compile Include="ManagementModels\UserModel.cs" />
+    <Compile Include="ManagementModels\UserPermModel.cs" />
+    <Compile Include="Models\AssortmentGroupModel.cs" />
+    <Compile Include="Models\BankModel.cs" />
+    <Compile Include="Models\BranchModel.cs" />
+    <Compile Include="Models\BranchOrderModel.cs" />
+    <Compile Include="Models\CityModel.cs" />
+    <Compile Include="Models\DishModel.cs" />
+    <Compile Include="Models\IngredientModel.cs" />
+    <Compile Include="Models\MeasureUnitModel.cs" />
+    <Compile Include="ManagementModels\MenuElementModel.cs" />
+    <Compile Include="Models\OrderProductModel.cs" />
+    <Compile Include="Models\ProductModel.cs" />
+    <Compile Include="Models\RealizationModel.cs" />
+    <Compile Include="Models\StreetModel.cs" />
+    <Compile Include="Models\SupplierHeadModel.cs" />
+    <Compile Include="Models\SupplierModel.cs" />
+    <Compile Include="Models\SupplyModel.cs" />
+    <Compile Include="Models\SupplyProductModel.cs" />
     <Compile Include="TableModel.cs" />
     <Compile Include="PasswordEncrypt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -55,8 +74,6 @@
       <Name>CanteenAIS_DB</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

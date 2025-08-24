@@ -1,17 +1,29 @@
 ﻿using CanteenAIS_DB;
 using CanteenAIS_DB.AppAuth.Entities;
 using CanteenAIS_DB.Database.Entities;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Threading;
 
 namespace CanteenAIS_Models
 {   
-    public abstract class TableModel<TEntity> where TEntity : class
+    public abstract class TableModel<TEntity, TEntityInfo>//, TQueryClass>
+        where TEntity : class, IEntity
+        where TEntityInfo : Info
+        //where TQueryClass : BasicEntityCRU<TEntity>
     {
         public abstract string TableName { get; }
         protected IDictionary<DataRow, TEntity> DataValues;
-        //protected DataRow Selected { get; set; }
+        protected DataRow Selected { get; set; }
+
+        protected readonly BasicEntityCRU<TEntity> TableContext;
+
+        protected TableModel(BasicEntityCRU<TEntity> contextInstance)
+        {
+            TableContext = contextInstance;
+        }
 
         protected virtual void FillDataValues(DataTable table, IList<TEntity> values)
         {
@@ -20,7 +32,10 @@ namespace CanteenAIS_Models
                 DataValues.Add(table.Rows[i], values[i]);
         }
 
-        protected abstract IList<TEntity> FetchValues();
+        protected virtual IList<TEntity> FetchValues()
+        {
+            return TableContext.Read().ToList();
+        }
 
         public virtual DataTable GetTable()
         {
@@ -34,19 +49,27 @@ namespace CanteenAIS_Models
             return table;
         }
 
-        public abstract DataTable GetSearchResult(string search);
+        public virtual DataTable FetchAndFilter(Predicate<TEntity> predicate)
+        {
+            List<TEntity> allValues = FetchValues().ToList();
+            List<TEntity> result = allValues.Where(e => predicate(e)).ToList();
+            DataTable table = DataTableConverter.ToDataTable(result);
+            FillDataValues(table, result);
+            return table;
+        }
 
-        //public abstract DataTable GetFiltered(IAssortmentGroup search)
-        //{
-        //    List<IAssortmentGroup> allValues = FetchValues().ToList();
-        //    List<IAssortmentGroup> result = allValues.Where(v =>
-        //       !string.IsNullOrEmpty(search.Name) &&
-        //       search.Name.Contains(v.Name.ToString())
-        //    ).ToList();
-        //    DataTable table = DataTableConverter.ToDataTable(result);
-        //    FillDataValues(table, result);
-        //    return table;
-        //}
+        public abstract int CompareEntities(TEntity first, TEntity second);
+        public abstract bool ContainsString(TEntity entity, string sample);
+
+        public virtual DataTable GetSearchResult(string search)
+        {
+            return FetchAndFilter(v => ContainsString(v, search));
+        }
+
+        public virtual DataTable GetFiltered(TEntity filter)
+        {
+            return FetchAndFilter(v => CompareEntities(v, filter) == 0);
+        }
 
         public virtual IUserPerm GetPerms(uint elementId)
         {
@@ -55,27 +78,90 @@ namespace CanteenAIS_Models
             IUser currentUser = DBContext.GetInstance().CurrentUser;
             perms = userPerms.Find(up => up.UserId == currentUser.Id && up.ElementId == elementId);
             if (perms.UserId != currentUser.Id)
-                perms = new UserPerm(currentUser.Id, elementId);
+                perms = new UserPerm(
+                    new UserPermInfo
+                    {
+                        UserId = currentUser.Id,
+                        ElementId = elementId
+                    }
+                );
             return perms;
+        }
+
+        public abstract void Add(TEntityInfo info);
+        public abstract void Update(DataRow row, TEntityInfo info);
+        public abstract void DeleteRow(DataRow row);
+    }
+
+    public abstract class SimpleModel<TEntity, TEntityInfo> : TableModel<TEntity, TEntityInfo>//, TQueryClass>
+        where TEntity : class, ISimpleEntity
+        where TEntityInfo : SimpleInfo
+        //where TQueryClass : BasicSimpleCRUD<TEntity>
+    {
+        public SimpleModel(BasicSimpleCRUD<TEntity> contextInstance) : base(contextInstance) { }
+
+        public uint GetId(DataRow row)
+        {
+            return DataValues[row].Id;
+        }
+
+        public DataRow GetRowById(uint id)
+        {
+            return DataValues.First(pair => pair.Value.Id == id).Key;
+        }
+
+        public override void DeleteRow(DataRow row)
+        {
+            ((BasicSimpleCRUD<TEntity>)TableContext).Delete(GetId(row));
+        }
+
+        public override int CompareEntities(TEntity first, TEntity second)
+        {
+            if (first == null)
+                return -1;
+            if (second == null)
+                return 1;
+            return first.Id.CompareTo(second.Id);
         }
     }
 
-    public abstract class SimpleModel<TEntity, TQueryClass> : TableModel<TEntity>
-        where TEntity : class
-        where TQueryClass : BasicSimpleCRUD<TEntity>
+    public abstract class DoubleModel<TEntity, TEntityInfo> : TableModel<TEntity, TEntityInfo>//, TQueryClass>
+        where TEntity : class, IDoubleEntity
+        where TEntityInfo : DoubleInfo
+        //where TQueryClass : BasicDoubleCRUD<TEntity>
     {
-        protected readonly TQueryClass TableContext;
+        public DoubleModel(BasicDoubleCRUD<TEntity> contextInstance) : base(contextInstance) { }
 
-        protected SimpleModel(TQueryClass contextInstance)
+        public (uint, uint) GetPK(DataRow row)
         {
-            TableContext = contextInstance;
+            TEntity entity = DataValues[row];
+            return (entity.FirstId, entity.SecondId);
         }
 
-        protected override IList<TEntity> FetchValues()
+        public DataRow GetRowByPK(uint firstId, uint secondId)
         {
-            return TableContext.Read().ToList();
+            return DataValues.First(pair =>
+                pair.Value.FirstId == firstId &&
+                pair.Value.SecondId == secondId
+            ).Key;
         }
 
-        
+        public override void DeleteRow(DataRow row)
+        {
+            (uint firstId, uint secondId) = GetPK(row);
+            ((BasicDoubleCRUD<TEntity>)TableContext).Delete(firstId, secondId);
+        }
+
+        public override int CompareEntities(TEntity first, TEntity second)
+        {
+            if (first == null)
+                return -1;
+            if (second == null)
+                return 1;
+            int compared = first.FirstId.CompareTo(second.FirstId);
+            if (compared != 0)
+                first.SecondId.CompareTo(second.SecondId);
+            return 0;
+        }
     }
 }
