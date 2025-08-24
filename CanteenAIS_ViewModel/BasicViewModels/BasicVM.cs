@@ -5,7 +5,7 @@ using System;
 using System.Data;
 using System.Windows.Input;
 
-namespace CanteenAIS_ViewModel
+namespace CanteenAIS_ViewModel.BasicViewModels
 {
     public abstract class BasicVM<TEntity, TEntityInfo> : PropChanged
         where TEntity : class, IEntity

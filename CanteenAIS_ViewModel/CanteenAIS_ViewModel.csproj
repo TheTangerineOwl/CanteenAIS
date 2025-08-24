@@ -41,9 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BasicViewModels\BasicActionVM.cs" />
     <Compile Include="SQLQueryVM.cs" />
     <Compile Include="StaticViewModels\AboutProgramVM.cs" />
-    <Compile Include="BasicVM.cs" />
+    <Compile Include="BasicViewModels\BasicVM.cs" />
     <Compile Include="Command.cs" />
     <Compile Include="EntityViewModels\AssortmentGroup\AssortmentGroupVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
