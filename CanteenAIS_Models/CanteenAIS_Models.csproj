@@ -45,8 +45,9 @@
     <Compile Include="Contents.cs" />
     <Compile Include="DataConverter.cs" />
     <Compile Include="DBContext.cs" />
-    <Compile Include="ManagementModels\UserModel.cs" />
-    <Compile Include="ManagementModels\UserPermModel.cs" />
+    <Compile Include="Management\Models\UserModel.cs" />
+    <Compile Include="Management\Models\UserPermModel.cs" />
+    <Compile Include="Management\Services\UserService.cs" />
     <Compile Include="Models\AssortmentGroupModel.cs" />
     <Compile Include="Models\BankModel.cs" />
     <Compile Include="Models\BranchModel.cs" />
@@ -55,7 +56,7 @@
     <Compile Include="Models\DishModel.cs" />
     <Compile Include="Models\IngredientModel.cs" />
     <Compile Include="Models\MeasureUnitModel.cs" />
-    <Compile Include="ManagementModels\MenuElementModel.cs" />
+    <Compile Include="Management\Models\MenuElementModel.cs" />
     <Compile Include="Models\OrderProductModel.cs" />
     <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Models\RealizationModel.cs" />

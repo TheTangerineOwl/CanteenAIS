@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CanteenAIS_Models.ManagementModels
+namespace CanteenAIS_Models.Management.Models
 {
     public class UserPermModel : DoubleModel<IUserPerm, UserPermInfo>
     {
