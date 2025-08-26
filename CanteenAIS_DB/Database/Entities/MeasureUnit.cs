@@ -2,26 +2,24 @@
 
 namespace CanteenAIS_DB.Database.Entities
 {
-    public interface IMeasureUnit : ISimpleEntity
+    public abstract class MeasureUnitEntity : SimpleEntity
     {
         [DisplayName("Имя")]
-        string Name { get; set; }
-    }
+        public virtual string Name { get; set; }
 
-    public class MeasureUnitInfo : SimpleInfo
-    {
-        public string name;
-    }
+        public MeasureUnitEntity() { }
 
-    public class MeasureUnit : IMeasureUnit
-    {
-        private readonly MeasureUnitInfo _info;
-        public uint Id { get => _info.id; set => _info.id = value; }
-        public string Name { get => _info.name; set => _info.name = value; }
-
-        public MeasureUnit(MeasureUnitInfo info)
+        public MeasureUnitEntity(MeasureUnitEntity info)
         {
-            _info = info;
+            Id = info.Id;
+            Name = info.Name;
         }
+    }
+
+    public class MeasureUnit : MeasureUnitEntity
+    {
+        public MeasureUnit() { }
+
+        public MeasureUnit(MeasureUnitEntity info) : base(info) { }
     }
 }

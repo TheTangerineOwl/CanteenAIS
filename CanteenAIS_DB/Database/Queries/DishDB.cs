@@ -5,7 +5,7 @@ using CanteenAIS_DB.Database.Entities;
 
 namespace CanteenAIS_DB.Database.Queries
 {
-    public class DishDB : BasicSimpleCRUD<IDish>
+    public class DishDB : BasicSimpleCRUD<DishEntity>
     {
         protected override string TableName => "dishes";
 
@@ -44,7 +44,7 @@ namespace CanteenAIS_DB.Database.Queries
             "`Picture`=@entityPicture " +
             "WHERE `Id`=@entityId;";
 
-        protected override MySqlParameterCollection FillParameters(IDish dish, MySqlCommand command, bool withId = true)
+        protected override MySqlParameterCollection FillParameters(DishEntity dish, MySqlCommand command, bool withId = true)
         {
             command.Parameters.AddWithValue("@entityName", dish.Name);
             if (withId)
@@ -58,27 +58,27 @@ namespace CanteenAIS_DB.Database.Queries
             return command.Parameters;
         }
 
-        protected override IList<IDish> AddFromRows(DataTable table)
+        protected override IList<TDish> AddFromRows<TDish>(DataTable table)
         {
-            IList<IDish> result = new List<IDish>();
+            IList<TDish> result = new List<TDish>();
             if (table == null)
                 return result;
             foreach (DataRow row in table.Rows)
             {
-                DishInfo info = new DishInfo
+                TDish info = new TDish
                 {
-                    id = uint.Parse(row["Id"].ToString()),
-                    name = row["Name"].ToString(),
-                    groupId = uint.Parse(row["GroupId"].ToString()),
-                    groupName = row["GroupName"].ToString(),
-                    price = decimal.Parse(row["Price"].ToString()),
-                    serving = double.Parse(row["Serving"].ToString()),
-                    unitId = uint.Parse(row["UnitId"].ToString()),
-                    unitName = row["UnitName"].ToString(),
-                    recipe = row["Recipe"].ToString(),
-                    picture = row["Picture"].ToString()
+                    Id = uint.Parse(row["Id"].ToString()),
+                    Name = row["Name"].ToString(),
+                    GroupId = uint.Parse(row["GroupId"].ToString()),
+                    GroupName = row["GroupName"].ToString(),
+                    Price = decimal.Parse(row["Price"].ToString()),
+                    Serving = double.Parse(row["Serving"].ToString()),
+                    UnitId = uint.Parse(row["UnitId"].ToString()),
+                    UnitName = row["UnitName"].ToString(),
+                    Recipe = row["Recipe"].ToString(),
+                    Picture = row["Picture"].ToString()
                 };
-                result.Add(new Dish(info));
+                result.Add(info);
             }
             return result;
         }

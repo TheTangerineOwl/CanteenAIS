@@ -2,26 +2,24 @@
 
 namespace CanteenAIS_DB.Database.Entities
 {
-    public interface ICity : ISimpleEntity
+    public abstract class CityEntity : SimpleEntity
     {
         [DisplayName("Имя")]
-        string Name { get; set; }
-    }
+        public virtual string Name { get; set; }
 
-    public class CityInfo : SimpleInfo
-    {
-        public string name;
-    }
+        public CityEntity() { }
 
-    public class City : ICity
-    {
-        private readonly CityInfo _info;
-        public uint Id { get => _info.id; set => _info.id = value; }
-        public string Name { get => _info.name; set => _info.name = value; }
-
-        public City(CityInfo info)
+        public CityEntity(CityEntity info)
         {
-            _info = info;
+            Id = info.Id;
+            Name = info.Name;
         }
+    }
+
+    public class City : CityEntity
+    {
+        public City() : base() { }
+
+        public City(CityEntity info) : base(info) { }
     }
 }

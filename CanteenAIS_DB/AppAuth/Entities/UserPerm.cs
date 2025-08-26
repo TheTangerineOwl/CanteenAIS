@@ -1,55 +1,58 @@
-﻿using MySqlX.XDevAPI.Common;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
 namespace CanteenAIS_DB.AppAuth.Entities
 {
-    public interface IUserPerm : IDoubleEntity
+    public abstract class UserPermEntity : DoubleEntity
     {
-        uint UserId { get; set; }
+        public override uint FirstId { get => UserId; set => UserId = value; }
+        public override uint SecondId { get => ElementId; set => ElementId = value; }
+
+        public virtual uint UserId { get; set; }
         [DisplayName("Логин")]
-        string UserLogin { get; set; }
-        uint ElementId { get; set; }
+        public virtual string UserLogin { get; set; }
+        public virtual uint ElementId { get; set; }
         [DisplayName("Элемент меню")]
-        string ElementName { get; set; }
+        public virtual string ElementName { get; set; }
         [DisplayName("Чтение")]
-        bool CanRead { get; set; }
+        public virtual bool CanRead { get; set; }
         [DisplayName("Добавление")]
-        bool CanWrite { get; set; }
+        public virtual bool CanWrite { get; set; }
         [DisplayName("Редактирование")]
-        bool CanEdit { get; set; }
+        public virtual bool CanEdit { get; set; }
         [DisplayName("Удаление")]
-        bool CanDelete { get; set; }
-    }
+        public virtual bool CanDelete { get; set; }
 
-    public class UserPermInfo : DoubleInfo
-    {
-        public uint UserId { get => firstId; set => firstId = value; }
-        public uint ElementId { get => secondId; set => secondId = value; }
-        public string userLogin;
-        public string elementName;
-        public bool canRead;
-        public bool canWrite;
-        public bool canEdit;
-        public bool canDelete;
-    }
-
-    public class UserPerm : IUserPerm
-    {
-        private readonly UserPermInfo _info;
-        public uint UserId { get => _info.UserId; set => _info.UserId = value; }
-        public string UserLogin { get => _info.userLogin; set => _info.userLogin = value; }
-        public uint ElementId { get => _info.ElementId; set => _info.ElementId = value; }
-        public string ElementName { get => _info.elementName; set => _info.elementName = value; }
-        public bool CanRead { get => _info.canRead; set => _info.canRead = value; }
-        public bool CanWrite { get => _info.canWrite; set => _info.canWrite = value; }
-        public bool CanEdit { get => _info.canEdit; set => _info.canEdit = value; }
-        public bool CanDelete { get => _info.canDelete; set => _info.canDelete = value; }
-        public uint FirstId { get => UserId; set => UserId = value; }
-        public uint SecondId { get => ElementId; set => ElementId = value; }
-
-        public UserPerm(UserPermInfo info)
+        public override void Copy<TResult, TInfo>(ref TResult res, TInfo info)
         {
-            _info = info;
+            base.Copy(ref res, info);
+            if (info is UserPermEntity _info &&
+                res is UserPermEntity _res)
+            {
+                if (_info.UserLogin != null) _res.UserLogin = _info.UserLogin;
+                if (_info.ElementName != null) _res.ElementName = _info.ElementName;
+
+            }
         }
+
+        public UserPermEntity() { }
+
+        public UserPermEntity(UserPermEntity info)
+        {
+            UserId = info.UserId;
+            UserLogin = info.UserLogin;
+            ElementId = info.ElementId;
+            ElementName = info.ElementName;
+            CanRead = info.CanRead;
+            CanWrite = info.CanWrite;
+            CanEdit = info.CanEdit;
+            CanDelete = info.CanDelete;
+        }
+    }
+
+    public class UserPerm : UserPermEntity
+    {
+        public UserPerm() { }
+
+        public UserPerm(UserPermEntity info) : base(info) { }
     }
 }

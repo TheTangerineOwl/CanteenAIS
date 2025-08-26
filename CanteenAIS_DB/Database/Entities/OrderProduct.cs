@@ -1,40 +1,40 @@
-﻿namespace CanteenAIS_DB.Database.Entities
+﻿using System.ComponentModel;
+
+namespace CanteenAIS_DB.Database.Entities
 {
-    public interface IOrderProduct : IDoubleEntity
+    public abstract class OrderProductEntity : DoubleEntity
     {
-        uint OrderId { get; set; }
-        uint ProductId { get; set; }
-        string ProductName { get; set; }
-        uint UnitId { get; set; }
-        string UnitName { get; set; }
-        double Amount { get; set; }
-    }
+        public override uint FirstId { get => OrderId; set => OrderId = value; }
+        public override uint SecondId { get => ProductId; set => ProductId = value; }
 
-    public class OrderProductInfo : DoubleInfo
-    {
-        public uint OrderId { get => firstId; set => firstId = value; }
-        public uint ProductId { get => secondId; set => secondId = value; }
-        public string productName;
-        public uint unitId;
-        public string unitName;
-        public double amount;
-    }
+        [DisplayName("Заказ")]
+        public virtual uint OrderId { get; set; }
+        public uint ProductId { get; set; }
+        [DisplayName("Продукт")]
+        public string ProductName { get; set; }
+        public uint UnitId { get; set; }
+        [DisplayName("Единица измерения")]
+        public string UnitName { get; set; }
+        [DisplayName("Объем")]
+        public double Amount { get; set; }
 
-    public class OrderProduct : IOrderProduct
-    {
-        private readonly OrderProductInfo _info;
-        public uint OrderId { get => _info.OrderId; set => _info.OrderId = value; }
-        public uint ProductId { get => _info.secondId; set => _info.secondId = value; }
-        public string ProductName { get => _info.productName; set => _info.productName = value; }
-        public uint UnitId { get => _info.unitId; set => _info.unitId = value; }
-        public string UnitName { get => _info.unitName; set => _info.unitName = value; }
-        public double Amount { get => _info.amount; set => _info.amount = value; }
-        public uint FirstId { get => OrderId; set => OrderId = value; }
-        public uint SecondId { get => ProductId; set => ProductId = value; }
+        public OrderProductEntity() { }
 
-        public OrderProduct(OrderProductInfo info)
+        public OrderProductEntity(OrderProductEntity info)
         {
-            _info = info;
+            OrderId = info.OrderId;
+            ProductId = info.ProductId;
+            ProductName = info.ProductName;
+            UnitId = info.UnitId;
+            UnitName = info.UnitName;
+            Amount = info.Amount;
         }
+    }
+
+    public class OrderProduct : OrderProductEntity
+    {
+        public OrderProduct() { }
+
+        public OrderProduct(OrderProductEntity info) : base(info) { }
     }
 }

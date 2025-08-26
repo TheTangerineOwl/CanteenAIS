@@ -6,7 +6,7 @@ using System.Data;
 
 namespace CanteenAIS_DB.AppAuth.Queries
 {
-    public class UserDB : BasicSimpleCRUD<IUser>
+    public class UserDB : BasicSimpleCRUD<UserEntity>
     {
         protected override string TableName => "users";
 
@@ -36,7 +36,7 @@ namespace CanteenAIS_DB.AppAuth.Queries
                     "`DateOfBirth`=@entityDateOfBirth " +
                     "WHERE `Id`=@entityId;";
 
-        protected override MySqlParameterCollection FillParameters(IUser entity, MySqlCommand command, bool withId = true)
+        protected override MySqlParameterCollection FillParameters(UserEntity entity, MySqlCommand command, bool withId = true)
         {
             if (withId)
                 command.Parameters.AddWithValue("@entityId", entity.Id);
@@ -49,24 +49,24 @@ namespace CanteenAIS_DB.AppAuth.Queries
             return command.Parameters;
         }
 
-        protected override IList<IUser> AddFromRows(DataTable table)
+        protected override IList<TUser> AddFromRows<TUser>(DataTable table)
         {
-            IList<IUser> result = new List<IUser>();
+            IList<TUser> result = new List<TUser>();
             if (table == null)
                 return result;
             foreach (DataRow row in table.Rows)
             {
-                UserInfo info = new UserInfo
+                TUser info = new TUser
                 {
-                    id = uint.Parse(row["Id"].ToString()),
-                    login = row["Login"].ToString(),
-                    password = row["Password"].ToString(),
-                    lastName = row["LastName"].ToString(),
-                    firstName = row["FirstName"].ToString(),
-                    patronim = row["Patronim"].ToString(),
-                    dateOfBirth = DateTime.Parse(row["DateOfBirth"].ToString())
+                    Id = uint.Parse(row["Id"].ToString()),
+                    Login = row["Login"].ToString(),
+                    Password = row["Password"].ToString(),
+                    LastName = row["LastName"].ToString(),
+                    FirstName = row["FirstName"].ToString(),
+                    Patronim = row["Patronim"].ToString(),
+                    DateOfBirth = DateTime.Parse(row["DateOfBirth"].ToString())
                 };
-                result.Add( new User(info));
+                result.Add(info);
             }
             return result;
         }

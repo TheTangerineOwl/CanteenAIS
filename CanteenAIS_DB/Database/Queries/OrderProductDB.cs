@@ -5,7 +5,7 @@ using CanteenAIS_DB.Database.Entities;
 
 namespace CanteenAIS_DB.Database.Queries
 {
-    public class OrderProductDB : BasicDoubleCRUD<IOrderProduct>
+    public class OrderProductDB : BasicDoubleCRUD<OrderProductEntity>
     {
         protected override string TableName => "orderproducts";
 
@@ -41,7 +41,7 @@ namespace CanteenAIS_DB.Database.Queries
             $"DELETE FROM orderproducts " +
             $"WHERE `OrderId`=@entityOrderId AND `ProductId`=@entityProductId";
 
-        protected override MySqlParameterCollection FillParameters(IOrderProduct entity, MySqlCommand command, bool withId = true)
+        protected override MySqlParameterCollection FillParameters(OrderProductEntity entity, MySqlCommand command, bool withId = true)
         {
             command.Parameters.AddWithValue("@entityOrderId", entity.OrderId);
             command.Parameters.AddWithValue("@entityProductId", entity.ProductId);
@@ -50,22 +50,22 @@ namespace CanteenAIS_DB.Database.Queries
             return command.Parameters;
         }
 
-        protected override IList<IOrderProduct> AddFromRows(DataTable table)
+        protected override IList<TOrderProduct> AddFromRows<TOrderProduct>(DataTable table)
         {
-            IList<IOrderProduct> result = new List<IOrderProduct>();
+            IList<TOrderProduct> result = new List<TOrderProduct>();
             if (table == null)
-                return new List<IOrderProduct>();
+                return new List<TOrderProduct>();
             foreach (DataRow row in table.Rows)
             {
-                OrderProductInfo info = new OrderProductInfo{
+                TOrderProduct info = new TOrderProduct{
                     OrderId = uint.Parse(row["OrderId"].ToString()),
                     ProductId = uint.Parse(row["ProductId"].ToString()),
-                    productName = row["ProductName"].ToString(),
-                    unitId = uint.Parse(row["UnitId"].ToString()),
-                    unitName = row["UnitName"].ToString(),
-                    amount = double.Parse(row["Amount"].ToString())
+                    ProductName = row["ProductName"].ToString(),
+                    UnitId = uint.Parse(row["UnitId"].ToString()),
+                    UnitName = row["UnitName"].ToString(),
+                    Amount = double.Parse(row["Amount"].ToString())
                 };
-                result.Add(new OrderProduct(info));
+                result.Add(info);
             }
             return result;
         }

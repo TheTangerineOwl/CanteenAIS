@@ -1,16 +1,15 @@
 ﻿using MySql.Data.MySqlClient;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using CanteenAIS_DB.Database.Entities;
 
 namespace CanteenAIS_DB.Database.Queries
 {
-    public class MeasureUnitDB : BasicSimpleCRUD<IMeasureUnit>
+    public class MeasureUnitDB : BasicSimpleCRUD<MeasureUnitEntity>
     {
         protected override string TableName => "measureunits";
 
-        protected override MySqlParameterCollection FillParameters(IMeasureUnit entity, MySqlCommand command, bool withId = true)
+        protected override MySqlParameterCollection FillParameters(MeasureUnitEntity entity, MySqlCommand command, bool withId = true)
         {
             command.Parameters.AddWithValue("@entityName", entity.Name);
             if (withId)
@@ -18,19 +17,19 @@ namespace CanteenAIS_DB.Database.Queries
             return command.Parameters;
         }
 
-        protected override IList<IMeasureUnit> AddFromRows(DataTable table)
+        protected override IList<TMeasureUnit> AddFromRows<TMeasureUnit>(DataTable table)
         {
-            IList<IMeasureUnit> result = new List<IMeasureUnit>();
+            IList<TMeasureUnit> result = new List<TMeasureUnit>();
             if (table == null)
                 return result;
             foreach (DataRow row in table.Rows)
             {
-                MeasureUnitInfo info = new MeasureUnitInfo
+                TMeasureUnit info = new TMeasureUnit
                 {
-                    id = uint.Parse(row["Id"].ToString()),
-                    name = row["Name"].ToString()
+                    Id = uint.Parse(row["Id"].ToString()),
+                    Name = row["Name"].ToString()
                 };
-                result.Add(new MeasureUnit(info));
+                result.Add(info);
             }
             return result;
         }

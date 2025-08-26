@@ -5,7 +5,7 @@ using System.Data;
 
 namespace CanteenAIS_DB.AppAuth.Queries
 {
-    public class UserPermDB : BasicDoubleCRUD<IUserPerm>
+    public class UserPermDB : BasicDoubleCRUD<UserPermEntity>
     {
         protected override string TableName => "userperms";
 
@@ -40,7 +40,7 @@ namespace CanteenAIS_DB.AppAuth.Queries
         protected override string QueryDelete => "DELETE FROM userperms " +
             "WHERE `UserId`=@entityUserId AND `ElementId`=@entityElementId;";
 
-        protected override MySqlParameterCollection FillParameters(IUserPerm entity, MySqlCommand command, bool withId = true)
+        protected override MySqlParameterCollection FillParameters(UserPermEntity entity, MySqlCommand command, bool withId = true)
         {
             command.Parameters.AddWithValue("@entityUserId", entity.UserId);
             command.Parameters.AddWithValue("@entityElementId", entity.ElementId);
@@ -51,25 +51,25 @@ namespace CanteenAIS_DB.AppAuth.Queries
             return command.Parameters;
         }
 
-        protected override IList<IUserPerm> AddFromRows(DataTable table)
+        protected override IList<TUserPerm> AddFromRows<TUserPerm>(DataTable table)
         {
-            IList<IUserPerm> result = new List<IUserPerm>();
+            IList<TUserPerm> result = new List<TUserPerm>();
             if (table == null)
-                return new List<IUserPerm>();
+                return new List<TUserPerm>();
             foreach (DataRow row in table.Rows)
             {
-                UserPermInfo info = new UserPermInfo
+                TUserPerm info = new TUserPerm
                 {
                     UserId = uint.Parse(row["UserId"].ToString()),
-                    userLogin = row["UserLogin"].ToString(),
+                    UserLogin = row["UserLogin"].ToString(),
                     ElementId = uint.Parse(row["ElementId"].ToString()),
-                    elementName = row["ElementName"].ToString(),
-                    canRead = bool.Parse(row["CanRead"].ToString()),
-                    canWrite = bool.Parse(row["CanWrite"].ToString()),
-                    canEdit = bool.Parse(row["CanEdit"].ToString()),
-                    canDelete = bool.Parse(row["CanDelete"].ToString())
+                    ElementName = row["ElementName"].ToString(),
+                    CanRead = bool.Parse(row["CanRead"].ToString()),
+                    CanWrite = bool.Parse(row["CanWrite"].ToString()),
+                    CanEdit = bool.Parse(row["CanEdit"].ToString()),
+                    CanDelete = bool.Parse(row["CanDelete"].ToString())
                 };
-                result.Add(new UserPerm(info));
+                result.Add(info);
             }
             return result;
         }

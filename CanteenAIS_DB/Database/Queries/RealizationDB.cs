@@ -6,7 +6,7 @@ using CanteenAIS_DB.Database.Entities;
 
 namespace CanteenAIS_DB.Database.Queries
 {
-    public class RealizationDB : BasicSimpleCRUD<IRealization>
+    public class RealizationDB : BasicSimpleCRUD<RealizationEntity>
     {
         protected override string TableName => "realizations";
 
@@ -39,7 +39,7 @@ namespace CanteenAIS_DB.Database.Queries
             "`UnitId`=@entityUnitId " +
             "WHERE `Id`=@entityId;";
 
-        protected override MySqlParameterCollection FillParameters(IRealization entity, MySqlCommand command, bool withId = true)
+        protected override MySqlParameterCollection FillParameters(RealizationEntity entity, MySqlCommand command, bool withId = true)
         {
             if (withId)
                 command.Parameters.AddWithValue("@entityId", entity.Id);
@@ -50,24 +50,24 @@ namespace CanteenAIS_DB.Database.Queries
             return command.Parameters;
         }
 
-        protected override IList<IRealization> AddFromRows(DataTable table)
+        protected override IList<TRealization> AddFromRows<TRealization>(DataTable table)
         {
-            IList<IRealization> result = new List<IRealization>();
+            IList<TRealization> result = new List<TRealization>();
             if (table == null)
                 return result;
             foreach (DataRow row in table.Rows)
             {
-                RealizationInfo info = new RealizationInfo
+                TRealization info = new TRealization
                 {
-                    id = uint.Parse(row["Id"].ToString()),
-                    dishId = uint.Parse(row["DishId"].ToString()),
-                    dishName = row["DishName"].ToString(),
-                    amount = double.Parse(row["Amount"].ToString()),
-                    dateTime = DateTime.Parse(row["DateTime"].ToString()),
-                    unitId = uint.Parse(row["UnitId"].ToString()),
-                    unitName = row["UnitName"].ToString()
+                    Id = uint.Parse(row["Id"].ToString()),
+                    DishId = uint.Parse(row["DishId"].ToString()),
+                    DishName = row["DishName"].ToString(),
+                    Amount = double.Parse(row["Amount"].ToString()),
+                    DateTime = DateTime.Parse(row["DateTime"].ToString()),
+                    UnitId = uint.Parse(row["UnitId"].ToString()),
+                    UnitName = row["UnitName"].ToString()
                 };
-                result.Add(new Realization(info));
+                result.Add(info);
             }
             return result;
         }

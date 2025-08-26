@@ -1,16 +1,15 @@
 ﻿using MySql.Data.MySqlClient;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using CanteenAIS_DB.Database.Entities;
 
 namespace CanteenAIS_DB.Database.Queries
 {
-    public class CityDB : BasicSimpleCRUD<ICity>
+    public class CityDB : BasicSimpleCRUD<CityEntity>
     {
         protected override string TableName => "cities";
 
-        protected override MySqlParameterCollection FillParameters(ICity entity, MySqlCommand command, bool withId = true)
+        protected override MySqlParameterCollection FillParameters(CityEntity entity, MySqlCommand command, bool withId = true)
         {
             command.Parameters.AddWithValue("@entityName", entity.Name);
             if (withId)
@@ -18,19 +17,19 @@ namespace CanteenAIS_DB.Database.Queries
             return command.Parameters;
         }
 
-        protected override IList<ICity> AddFromRows(DataTable table)
+        protected override IList<TCity> AddFromRows<TCity>(DataTable table)
         {
-            IList<ICity> result = new List<ICity>();
+            IList<TCity> result = new List<TCity>();
             if (table == null)
                 return result;
             foreach (DataRow row in table.Rows)
             {
-                CityInfo info = new CityInfo
+                TCity info = new TCity
                 {
-                    id = uint.Parse(row["Id"].ToString()),
-                    name = row["Name"].ToString()
+                    Id = uint.Parse(row["Id"].ToString()),
+                    Name = row["Name"].ToString()
                 };
-                result.Add(new City(info));
+                result.Add(info);
             }
             return result;
         }

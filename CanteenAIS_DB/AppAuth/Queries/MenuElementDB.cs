@@ -5,7 +5,7 @@ using System.Data;
 
 namespace CanteenAIS_DB.AppAuth.Queries
 {
-    public class MenuElementDB : BasicSimpleCRUD<IMenuElement>
+    public class MenuElementDB : BasicSimpleCRUD<MenuElementEntity>
     {
         protected override string TableName => "menuelements";
 
@@ -34,7 +34,7 @@ namespace CanteenAIS_DB.AppAuth.Queries
                     "`Order`=@entityOrder " +
                     "WHERE `Id`=@entityId;";
 
-        protected override MySqlParameterCollection FillParameters(IMenuElement entity, MySqlCommand command, bool withId = true)
+        protected override MySqlParameterCollection FillParameters(MenuElementEntity entity, MySqlCommand command, bool withId = true)
         {
             if (withId)
                 command.Parameters.AddWithValue("@entityId", entity.Id);
@@ -47,23 +47,23 @@ namespace CanteenAIS_DB.AppAuth.Queries
             return command.Parameters;
         }
 
-        protected override IList<IMenuElement> AddFromRows(DataTable table)
+        protected override IList<TEntity> AddFromRows<TEntity>(DataTable table)
         {
-            IList<IMenuElement> result = new List<IMenuElement>();
+            IList<TEntity> result = new List<TEntity>();
             if (table == null)
                 return result;
             foreach (DataRow row in table.Rows)
             {
-                ElementInfo info = new ElementInfo
+                TEntity info = new TEntity
                 {
-                    id = uint.Parse(row["Id"].ToString()),
-                    order = uint.Parse(row["Order"].ToString()),
-                    parentId = uint.Parse(row["ParentId"].ToString()),
-                    name = row["Name"].ToString(),
-                    dllName = row["DllName"].ToString(),
-                    funcName = row["FuncName"].ToString()
+                    Id = uint.Parse(row["Id"].ToString()),
+                    Order = uint.Parse(row["Order"].ToString()),
+                    ParentId = uint.Parse(row["ParentId"].ToString()),
+                    Name = row["Name"].ToString(),
+                    DllName = row["DllName"].ToString(),
+                    FuncName = row["FuncName"].ToString()
                 };
-                result.Add(new MenuElement(info));
+                result.Add(info);
             }
             return result;
         }

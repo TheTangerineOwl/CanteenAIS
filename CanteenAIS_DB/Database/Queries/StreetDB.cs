@@ -1,12 +1,11 @@
 ﻿using MySql.Data.MySqlClient;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using CanteenAIS_DB.Database.Entities;
 
 namespace CanteenAIS_DB.Database.Queries
 {
-    public class StreetDB : BasicSimpleCRUD<IStreet>
+    public class StreetDB : BasicSimpleCRUD<StreetEntity>
     {
         protected override string TableName => "streets";
 
@@ -30,7 +29,7 @@ namespace CanteenAIS_DB.Database.Queries
             "@entityId, @entityCityId, @entityName" +
             ");";
 
-        protected override MySqlParameterCollection FillParameters(IStreet entity, MySqlCommand command, bool withId = true)
+        protected override MySqlParameterCollection FillParameters(StreetEntity entity, MySqlCommand command, bool withId = true)
         {
             if (withId)
                 command.Parameters.AddWithValue("@entityId", entity.Id);
@@ -39,21 +38,21 @@ namespace CanteenAIS_DB.Database.Queries
             return command.Parameters;
         }
 
-        protected override IList<IStreet> AddFromRows(DataTable table)
+        protected override IList<TStreet> AddFromRows<TStreet>(DataTable table)
         {
-            IList<IStreet> result = new List<IStreet>();
+            IList<TStreet> result = new List<TStreet>();
             if (table == null)
                 return result;
             foreach (DataRow row in table.Rows)
             {
-                StreetInfo info = new StreetInfo
+                TStreet info = new TStreet
                 {
-                    id = uint.Parse(row["Id"].ToString()),
-                    cityId = uint.Parse(row["CityId"].ToString()),
-                    cityName = row["CityName"].ToString(),
-                    name = row["Name"].ToString()
+                    Id = uint.Parse(row["Id"].ToString()),
+                    CityId = uint.Parse(row["CityId"].ToString()),
+                    CityName = row["CityName"].ToString(),
+                    Name = row["Name"].ToString()
                 };
-                result.Add(new Street(info));
+                result.Add(info);
             }
             return result;
         }

@@ -5,11 +5,11 @@ using CanteenAIS_DB.Database.Entities;
 
 namespace CanteenAIS_DB.Database.Queries
 {
-    public class AssortmentGroupDB : BasicSimpleCRUD<IAssortmentGroup>
+    public class AssortmentGroupDB : BasicSimpleCRUD<AssortmentGroupEntity>
     {
         protected override string TableName => "assortmentgroups";
 
-        protected override MySqlParameterCollection FillParameters(IAssortmentGroup entity, MySqlCommand command, bool withId = true)
+        protected override MySqlParameterCollection FillParameters(AssortmentGroupEntity entity, MySqlCommand command, bool withId = true)
         {
             command.Parameters.AddWithValue("@entityName", entity.Name);
             if (withId)
@@ -17,19 +17,19 @@ namespace CanteenAIS_DB.Database.Queries
             return command.Parameters;
         }
 
-        protected override IList<IAssortmentGroup> AddFromRows(DataTable table)
+        protected override IList<TAssortmentGroup> AddFromRows<TAssortmentGroup>(DataTable table)
         {
-            IList<IAssortmentGroup> result = new List<IAssortmentGroup>();
+            IList<TAssortmentGroup> result = new List<TAssortmentGroup>();
             if (table == null)
                 return result;
             foreach (DataRow row in table.Rows)
             {
-                AssortmentGroupInfo info = new AssortmentGroupInfo
+                TAssortmentGroup info = new TAssortmentGroup
                 {
-                    id = uint.Parse(row["Id"].ToString()),
-                    name = row["Name"].ToString()
+                    Id = uint.Parse(row["Id"].ToString()),
+                    Name = row["Name"].ToString()
                 };
-                result.Add(new AssortmentGroup(info));
+                result.Add(info);
             }
             return result;
         }

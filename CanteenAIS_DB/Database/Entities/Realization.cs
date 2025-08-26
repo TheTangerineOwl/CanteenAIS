@@ -1,47 +1,39 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Runtime.InteropServices;
 
 namespace CanteenAIS_DB.Database.Entities
 {
-    public interface IRealization : ISimpleEntity
+    public abstract class RealizationEntity : SimpleEntity
     {
         [DisplayName("Время")]
-        DateTime DateTime { get; set; }
-        uint DishId { get; set; }
+        public virtual DateTime DateTime { get; set; }
+        public virtual uint DishId { get; set; }
         [DisplayName("Блюдо")]
-        string DishName { get; set; }
+        public virtual string DishName { get; set; }
         [DisplayName("Объем")]
-        double Amount { get; set; }
-        uint UnitId { get; set; }
+        public virtual double Amount { get; set; }
+        public virtual uint UnitId { get; set; }
         [DisplayName("Единица измерения")]
-        string UnitName { get; set; }
-    }
+        public virtual string UnitName { get; set; }
 
-    public class RealizationInfo : SimpleInfo
-    {
-        public DateTime dateTime;
-        public uint dishId;
-        public string dishName;
-        public double amount;
-        public uint unitId;
-        public string unitName;
-    }
+        public RealizationEntity() { }
 
-    public class Realization : IRealization
-    {
-        private readonly RealizationInfo _info;
-        public uint Id { get => _info.id; set => _info.id = value; }
-        public DateTime DateTime { get => _info.dateTime; set => _info.dateTime = value; }
-        public uint DishId { get => _info.dishId; set => _info.dishId = value; }
-        public string DishName { get => _info.dishName; set => _info.dishName = value; }
-        public double Amount { get => _info.amount; set => _info.amount = value; }
-        public uint UnitId { get => _info.unitId; set => _info.unitId = value; }
-        public string UnitName { get => _info.unitName; set => _info.unitName = value; }
-
-        public Realization(RealizationInfo info)
+        public RealizationEntity(RealizationEntity info)
         {
-            _info = info;
+            Id = info.Id;
+            DateTime = info.DateTime;
+            DishId = info.DishId;
+            DishName = info.DishName;
+            Amount = info.Amount;
+            UnitId = info.UnitId;
+            UnitName = info.UnitName;
         }
+    }
+
+    public class Realization : RealizationEntity
+    {
+        public Realization() { }
+
+        public Realization(RealizationEntity info) : base(info) { }
     }
 }

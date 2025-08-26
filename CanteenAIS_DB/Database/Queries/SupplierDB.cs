@@ -1,12 +1,11 @@
 ﻿using MySql.Data.MySqlClient;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using CanteenAIS_DB.Database.Entities;
 
 namespace CanteenAIS_DB.Database.Queries
 {
-    public class SupplierDB : BasicSimpleCRUD<ISupplier>
+    public class SupplierDB : BasicSimpleCRUD<SupplierEntity>
     {
         protected override string TableName => "suppliers";
 
@@ -58,7 +57,7 @@ namespace CanteenAIS_DB.Database.Queries
 
         protected override string QueryDelete => $"DELETE FROM suppliers WHERE Id=@entityId";
 
-        protected override MySqlParameterCollection FillParameters(ISupplier entity, MySqlCommand command, bool withId = true)
+        protected override MySqlParameterCollection FillParameters(SupplierEntity entity, MySqlCommand command, bool withId = true)
         {
             command.Parameters.AddWithValue("@entityName", entity.Name);
             if (withId)
@@ -72,30 +71,30 @@ namespace CanteenAIS_DB.Database.Queries
             return command.Parameters;
         }
 
-        protected override IList<ISupplier> AddFromRows(DataTable table)
+        protected override IList<TSupplier> AddFromRows<TSupplier>(DataTable table)
         {
-            IList<ISupplier> result = new List<ISupplier>();
+            IList<TSupplier> result = new List<TSupplier>();
             if (table == null)
                 return result;
             foreach (DataRow row in table.Rows)
             {
-                SupplierInfo info = new SupplierInfo
+                TSupplier info = new TSupplier
                 {
-                    id = uint.Parse(row["Id"].ToString()),
-                    name = row["Name"].ToString(),
-                    streetId = uint.Parse(row["StreetId"].ToString()),
-                    cityName = row["CityName"].ToString(),
-                    streetName = row["StreetName"].ToString(),
-                    building = row["Building"].ToString(),
-                    headId = uint.Parse(row["HeadId"].ToString()),
-                    headName = row["HeadName"].ToString(),
-                    headPhone = row["HeadPhone"].ToString(),
-                    bankId = uint.Parse(row["BankId"].ToString()),
-                    bankName = row["BankName"].ToString(),
-                    account = row["Account"].ToString(),
-                    inn = row["INN"].ToString()
+                    Id = uint.Parse(row["Id"].ToString()),
+                    Name = row["Name"].ToString(),
+                    StreetId = uint.Parse(row["StreetId"].ToString()),
+                    CityName = row["CityName"].ToString(),
+                    StreetName = row["StreetName"].ToString(),
+                    Building = row["Building"].ToString(),
+                    HeadId = uint.Parse(row["HeadId"].ToString()),
+                    HeadName = row["HeadName"].ToString(),
+                    HeadPhone = row["HeadPhone"].ToString(),
+                    BankId = uint.Parse(row["BankId"].ToString()),
+                    BankName = row["BankName"].ToString(),
+                    Account = row["Account"].ToString(),
+                    INN = row["INN"].ToString()
                 };
-                result.Add(new Supplier(info));
+                result.Add(info);
             }
             return result;
         }

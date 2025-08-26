@@ -4,9 +4,8 @@ using System.Data;
 
 namespace CanteenAIS_DB
 {
-    public abstract class BasicEntityCRU<T> where T : IEntity
+    public abstract class BasicEntityCRU<T> where T : Entity
     {
-        //protected string query = null;
         public string exception = string.Empty;
 
         protected abstract string TableName { get; }
@@ -36,7 +35,7 @@ namespace CanteenAIS_DB
         }
 
         protected abstract MySqlParameterCollection FillParameters(T entity, MySqlCommand command, bool withId = true);
-        protected abstract IList<T> AddFromRows(DataTable table);
+        protected abstract IList<TEntity> AddFromRows<TEntity>(DataTable table) where TEntity : T, new();
 
         public virtual void Create(T entity)
         {
@@ -45,10 +44,10 @@ namespace CanteenAIS_DB
             DbConnection.GetInstance().ExecMySqlQuery(command, ref exception);
         }
 
-        public virtual IList<T> Read()
+        public virtual IList<U> Read<U>() where U : T, new()
         {
             DataTable dataTable = DbConnection.GetInstance().ExecQuery(QueryRead, ref exception);
-            return AddFromRows(dataTable);
+            return AddFromRows<U>(dataTable);
         }
 
         public virtual void Update(T entity)
@@ -59,7 +58,7 @@ namespace CanteenAIS_DB
         }
     }
 
-    public abstract class BasicSimpleCRUD<T> : BasicEntityCRU<T> where T : ISimpleEntity
+    public abstract class BasicSimpleCRUD<T> : BasicEntityCRU<T> where T : SimpleEntity
     {
         protected virtual string QueryDelete
         {
@@ -85,7 +84,7 @@ namespace CanteenAIS_DB
         }
     }
 
-    public abstract class BasicDoubleCRUD<T> : BasicEntityCRU<T> where T : IDoubleEntity
+    public abstract class BasicDoubleCRUD<T> : BasicEntityCRU<T> where T : DoubleEntity
     {
         protected abstract string QueryDelete { get; }
 

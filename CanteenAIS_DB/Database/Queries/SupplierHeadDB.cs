@@ -1,12 +1,11 @@
 ﻿using MySql.Data.MySqlClient;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using CanteenAIS_DB.Database.Entities;
 
 namespace CanteenAIS_DB.Database.Queries
 {
-    public class SupplierHeadDB : BasicSimpleCRUD<ISupplierHead>
+    public class SupplierHeadDB : BasicSimpleCRUD<SupplierHeadEntity>
     {
         protected override string TableName => "supplierheads";
 
@@ -29,7 +28,7 @@ namespace CanteenAIS_DB.Database.Queries
 
         protected override string QueryDelete => $"DELETE FROM supplierheads WHERE `Id`=@entityId";
 
-        protected override MySqlParameterCollection FillParameters(ISupplierHead entity, MySqlCommand command, bool withId = true)
+        protected override MySqlParameterCollection FillParameters(SupplierHeadEntity entity, MySqlCommand command, bool withId = true)
         {
             command.Parameters.AddWithValue("@entityLastName", entity.LastName);
             if (withId)
@@ -40,22 +39,22 @@ namespace CanteenAIS_DB.Database.Queries
             return command.Parameters;
         }
 
-        protected override IList<ISupplierHead> AddFromRows(DataTable table)
+        protected override IList<THead> AddFromRows<THead>(DataTable table)
         {
-            IList<ISupplierHead> result = new List<ISupplierHead>();
+            IList<THead> result = new List<THead>();
             if (table == null)
                 return result;
             foreach (DataRow row in table.Rows)
             {
-                SupplierHeadInfo info = new SupplierHeadInfo
+                THead info = new THead
                 {
-                    id = uint.Parse(row["Id"].ToString()),
-                    lastName = row["LastName"].ToString(),
-                    firstName = row["FirstName"].ToString(),
-                    patronim = row["Patronim"].ToString(),
-                    phone = row["Phone"].ToString()
+                    Id = uint.Parse(row["Id"].ToString()),
+                    LastName = row["LastName"].ToString(),
+                    FirstName = row["FirstName"].ToString(),
+                    Patronim = row["Patronim"].ToString(),
+                    Phone = row["Phone"].ToString()
                 };
-                result.Add(new SupplierHead(info));
+                result.Add(info);
             }
             return result;
         }

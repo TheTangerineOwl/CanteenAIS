@@ -5,7 +5,7 @@ using CanteenAIS_DB.Database.Entities;
 
 namespace CanteenAIS_DB.Database.Queries
 {
-    public class IngredientDB : BasicDoubleCRUD<IIngredient>
+    public class IngredientDB : BasicDoubleCRUD<IngredientEntity>
     {
         protected override string TableName => "ingredients";
 
@@ -40,7 +40,7 @@ namespace CanteenAIS_DB.Database.Queries
         protected override string QueryDelete => $"DELETE FROM ingredients" +
             $"WHERE DishId=@entityDishId AND ProductId=@entityProductId";
 
-        protected override MySqlParameterCollection FillParameters(IIngredient en, MySqlCommand command, bool withId = true)
+        protected override MySqlParameterCollection FillParameters(IngredientEntity en, MySqlCommand command, bool withId = true)
         {
             command.Parameters.AddWithValue("@entityGross", en.Gross);
             command.Parameters.AddWithValue("@entityNet", en.Net);
@@ -50,25 +50,25 @@ namespace CanteenAIS_DB.Database.Queries
             return command.Parameters;
         }
 
-        protected override IList<IIngredient> AddFromRows(DataTable table)
+        protected override IList<TIngredient> AddFromRows<TIngredient>(DataTable table)
         {
-            IList<IIngredient> result = new List<IIngredient>();
+            IList<TIngredient> result = new List<TIngredient>();
             if (table == null)
-                return new List<IIngredient>();
+                return new List<TIngredient>();
             foreach (DataRow row in table.Rows)
             {
-                IngredientInfo info = new IngredientInfo
+                TIngredient info = new TIngredient
                 {
                     DishId = uint.Parse(row["DishId"].ToString()),
-                    dishName = row["DishName"].ToString(),
+                    DishName = row["DishName"].ToString(),
                     ProductId = uint.Parse(row["ProductId"].ToString()),
-                    productName = row["ProductName"].ToString(),
-                    unitId = uint.Parse(row["UnitId"].ToString()),
-                    unitName = row["UnitName"].ToString(),
-                    gross = double.Parse(row["Gross"].ToString()),
-                    net = double.Parse(row["Net"].ToString())
+                    ProductName = row["ProductName"].ToString(),
+                    UnitId = uint.Parse(row["UnitId"].ToString()),
+                    UnitName = row["UnitName"].ToString(),
+                    Gross = double.Parse(row["Gross"].ToString()),
+                    Net = double.Parse(row["Net"].ToString())
                 };
-                result.Add(new Ingredient(info));
+                result.Add(info);
             }
             return result;
         }

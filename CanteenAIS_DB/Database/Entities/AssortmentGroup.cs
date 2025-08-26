@@ -1,37 +1,25 @@
 ﻿using System.ComponentModel;
-using System;
-using System.Diagnostics.Eventing.Reader;
 
 namespace CanteenAIS_DB.Database.Entities
 {
-    public interface IAssortmentGroup : ISimpleEntity
+    public abstract class AssortmentGroupEntity : SimpleEntity
     {
         [DisplayName("Имя")]
-        string Name { get; set; }
+        public virtual string Name { get; set; }
+
+        public AssortmentGroupEntity() { }
+
+        public AssortmentGroupEntity(AssortmentGroupEntity info)
+        {
+            Id = info.Id;
+            Name = info.Name;
+        }
     }
 
-    public class AssortmentGroupInfo : SimpleInfo
+    public class AssortmentGroup : AssortmentGroupEntity
     {
-        public string name;
-    }
+        public AssortmentGroup() { }
 
-    public class AssortmentGroup : IAssortmentGroup
-    {
-        private readonly AssortmentGroupInfo _info;
-        public uint Id
-        {
-            get => _info.id;
-            set => _info.id = value;
-        }
-        public string Name
-        {
-            get => _info.name;
-            set => _info.name = value;
-        }
-
-        public AssortmentGroup(AssortmentGroupInfo info)
-        {
-            _info = info;
-        }
+        public AssortmentGroup(AssortmentGroupEntity info) : base(info) { }
     }
 }

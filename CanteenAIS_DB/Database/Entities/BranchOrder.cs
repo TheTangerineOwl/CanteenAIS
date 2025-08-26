@@ -3,33 +3,29 @@ using System.ComponentModel;
 
 namespace CanteenAIS_DB.Database.Entities
 {
-    public interface IBranchOrder : ISimpleEntity
+    public abstract class BranchOrderEntity : SimpleEntity
     {
-        uint BranchId { get; set; }
+        public virtual uint BranchId { get; set; }
         [DisplayName("Подразделение")]
-        string BranchName { get; set; }
+        public virtual string BranchName { get; set; }
         [DisplayName("Дата")]
-        DateTime DateTime { get; set; }
-    }
+        public virtual DateTime DateTime { get; set; }
 
-    public class BranchOrderInfo : SimpleInfo
-    {
-        public uint branchId;
-        public string branchName;
-        public DateTime dateTime;
-    }
+        public BranchOrderEntity() { }
 
-    public class BranchOrder : IBranchOrder
-    {
-        private readonly BranchOrderInfo _info;
-        public uint Id { get => _info.id; set => _info.id = value; }
-        public uint BranchId { get => _info.branchId; set => _info.branchId = value; }
-        public string BranchName { get => _info.branchName; set => _info.branchName = value; }
-        public DateTime DateTime { get => _info.dateTime; set => _info.dateTime = value; }
-
-        public BranchOrder(BranchOrderInfo info)
+        public BranchOrderEntity(BranchOrderEntity info)
         {
-            _info = info;
+            Id = info.Id;
+            BranchId = info.BranchId;
+            BranchName = info.BranchName;
+            DateTime = info.DateTime;
         }
+    }
+
+    public class BranchOrder : BranchOrderEntity
+    {
+        public BranchOrder() { }
+
+        public BranchOrder(BranchOrderEntity info) : base(info) { }
     }
 }

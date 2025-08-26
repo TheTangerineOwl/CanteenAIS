@@ -1,47 +1,39 @@
-﻿using Org.BouncyCastle.Bcpg;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
 namespace CanteenAIS_DB.AppAuth.Entities
 {
-    public interface IMenuElement : ISimpleEntity
+    public abstract class MenuElementEntity : SimpleEntity
     {
         [DisplayName("Родитель")]
-        string ParentName { get; set; }
-        uint ParentId { get; set; }
+        public virtual string ParentName { get; set; }
+        public virtual uint ParentId { get; set; }
         [DisplayName("Имя")]
-        string Name { get; set; }
+        public virtual string Name { get; set; }
         [DisplayName("Dll")]
-        string DllName { get; set; }
+        public virtual string DllName { get; set; }
         [DisplayName("Функция")]
-        string FuncName { get; set; }
+        public virtual string FuncName { get; set; }
         [DisplayName("Order")]
-        uint Order { get; set; }
-    }
+        public virtual uint Order { get; set; }
 
-    public class ElementInfo : SimpleInfo
-    {
-        public uint parentId;
-        public string parentName;
-        public string name;
-        public string dllName;
-        public string funcName;
-        public uint order;
-    }
+        public MenuElementEntity() { }
 
-    public class MenuElement : IMenuElement
-    {
-        private readonly ElementInfo _info;
-        public uint Id { get => _info.id; set => _info.id = value; }
-        public uint ParentId { get => _info.parentId; set => _info.parentId = value; }
-        public string ParentName { get => _info.parentName; set => _info.parentName = value; }
-        public string Name { get => _info.name; set => _info.name = value; }
-        public string DllName { get => _info.dllName; set => _info.dllName = value; }
-        public string FuncName { get => _info.funcName; set => _info.funcName = value; }
-        public uint Order { get => _info.order; set => _info.order = value; }
-
-        public MenuElement(ElementInfo info)
+        public MenuElementEntity(MenuElementEntity info)
         {
-            _info = info;
+            Id = info.Id;
+            ParentId = info.ParentId;
+            ParentName = info.ParentName;
+            Name = info.Name;
+            DllName = info.DllName;
+            FuncName = info.FuncName;
+            Order = info.Order;
         }
+    }
+
+    public class MenuElement : MenuElementEntity
+    {
+        public MenuElement() { }
+
+        public MenuElement(MenuElementEntity info) : base(info) { }
     }
 }

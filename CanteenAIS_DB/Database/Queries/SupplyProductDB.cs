@@ -5,7 +5,7 @@ using CanteenAIS_DB.Database.Entities;
 
 namespace CanteenAIS_DB.Database.Queries
 {
-    public class SupplyProductDB : BasicDoubleCRUD<ISupplyProduct>
+    public class SupplyProductDB : BasicDoubleCRUD<SupplyProductEntity>
     {
         protected override string TableName => "supplyproducts";
 
@@ -42,7 +42,7 @@ namespace CanteenAIS_DB.Database.Queries
             $"DELETE FROM supplyproducts " +
             $"WHERE `SupplyId`=@entitySupplyId AND `ProductId`=@entityProductId";
 
-        protected override MySqlParameterCollection FillParameters(ISupplyProduct entity, MySqlCommand command, bool withId = true)
+        protected override MySqlParameterCollection FillParameters(SupplyProductEntity entity, MySqlCommand command, bool withId = true)
         {
             command.Parameters.AddWithValue("@entitySupplyId", entity.SupplyId);
             command.Parameters.AddWithValue("@entityProductId", entity.ProductId);
@@ -52,24 +52,24 @@ namespace CanteenAIS_DB.Database.Queries
             return command.Parameters;
         }
 
-        protected override IList<ISupplyProduct> AddFromRows(DataTable table)
+        protected override IList<TSupplyProduct> AddFromRows<TSupplyProduct>(DataTable table)
         {
-            IList<ISupplyProduct> result = new List<ISupplyProduct>();
+            IList<TSupplyProduct> result = new List<TSupplyProduct>();
             if (table == null)
-                return new List<ISupplyProduct>();
+                return new List<TSupplyProduct>();
             foreach (DataRow row in table.Rows)
             {
-                SupplyProductInfo info = new SupplyProductInfo
+                TSupplyProduct info = new TSupplyProduct
                 {
                     SupplyId = uint.Parse(row["SupplyId"].ToString()),
                     ProductId = uint.Parse(row["ProductId"].ToString()),
-                    productName = row["ProductName"].ToString(),
-                    unitId = uint.Parse(row["UnitId"].ToString()),
-                    unitName = row["UnitName"].ToString(),
-                    amount = double.Parse(row["Amount"].ToString()),
-                    price = decimal.Parse(row["Price"].ToString())
+                    ProductName = row["ProductName"].ToString(),
+                    UnitId = uint.Parse(row["UnitId"].ToString()),
+                    UnitName = row["UnitName"].ToString(),
+                    Amount = double.Parse(row["Amount"].ToString()),
+                    Price = decimal.Parse(row["Price"].ToString())
                 };
-                result.Add(new SupplyProduct(info));
+                result.Add(info);
             }
             return result;
         }

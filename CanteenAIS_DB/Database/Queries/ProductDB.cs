@@ -5,7 +5,7 @@ using CanteenAIS_DB.Database.Entities;
 
 namespace CanteenAIS_DB.Database.Queries
 {
-    public class ProductDB : BasicSimpleCRUD<IProduct>
+    public class ProductDB : BasicSimpleCRUD<ProductEntity>
     {
         protected override string TableName => "products";
 
@@ -39,7 +39,7 @@ namespace CanteenAIS_DB.Database.Queries
             "`ProductId`=@entitySupplierId " +
             "WHERE `Id`=@entityId;";
 
-        protected override MySqlParameterCollection FillParameters(IProduct entity, MySqlCommand command, bool withId = true)
+        protected override MySqlParameterCollection FillParameters(ProductEntity entity, MySqlCommand command, bool withId = true)
         {
             if (withId)
                 command.Parameters.AddWithValue("@entityId", entity.Id);
@@ -51,25 +51,25 @@ namespace CanteenAIS_DB.Database.Queries
             return command.Parameters;
         }
 
-        protected override IList<IProduct> AddFromRows(DataTable table)
+        protected override IList<TProduct> AddFromRows<TProduct>(DataTable table)
         {
-            IList<IProduct> result = new List<IProduct>();
+            IList<TProduct> result = new List<TProduct>();
             if (table == null)
                 return result;
             foreach (DataRow row in table.Rows)
             {
-                ProductInfo info = new ProductInfo
+                TProduct info = new TProduct
                 {
-                    id = uint.Parse(row["Id"].ToString()),
-                    name = row["Name"].ToString(),
-                    unitId = uint.Parse(row["UnitId"].ToString()),
-                    unitName = row["UnitName"].ToString(),
-                    markup = decimal.Parse(row["Markup"].ToString()),
-                    stock = double.Parse(row["Stock"].ToString()),
-                    supplierId = uint.Parse(row["SupplierId"].ToString()),
-                    supplierName = row["SupplierName"].ToString()
+                    Id = uint.Parse(row["Id"].ToString()),
+                    Name = row["Name"].ToString(),
+                    UnitId = uint.Parse(row["UnitId"].ToString()),
+                    UnitName = row["UnitName"].ToString(),
+                    Markup = decimal.Parse(row["Markup"].ToString()),
+                    Stock = double.Parse(row["Stock"].ToString()),
+                    SupplierId = uint.Parse(row["SupplierId"].ToString()),
+                    SupplierName = row["SupplierName"].ToString()
                 };
-                result.Add(new Product(info));
+                result.Add(info);
             }
             return result;
         }

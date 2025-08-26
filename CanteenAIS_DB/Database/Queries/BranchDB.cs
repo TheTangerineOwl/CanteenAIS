@@ -5,11 +5,11 @@ using CanteenAIS_DB.Database.Entities;
 
 namespace CanteenAIS_DB.Database.Queries
 {
-    public class BranchDB : BasicSimpleCRUD<IBranch>
+    public class BranchDB : BasicSimpleCRUD<BranchEntity>
     {
         protected override string TableName => "branches";
 
-        protected override MySqlParameterCollection FillParameters(IBranch entity, MySqlCommand command, bool withId = true)
+        protected override MySqlParameterCollection FillParameters(BranchEntity entity, MySqlCommand command, bool withId = true)
         {
             command.Parameters.AddWithValue("@entityName", entity.Name);
             if (withId)
@@ -17,19 +17,19 @@ namespace CanteenAIS_DB.Database.Queries
             return command.Parameters;
         }
 
-        protected override IList<IBranch> AddFromRows(DataTable table)
+        protected override IList<TBranch> AddFromRows<TBranch>(DataTable table)
         {
-            IList<IBranch> result = new List<IBranch>();
+            IList<TBranch> result = new List<TBranch>();
             if (table == null)
                 return result;
             foreach (DataRow row in table.Rows)
             {
-                BranchInfo info = new BranchInfo
+                TBranch info = new TBranch
                 {
-                    id = uint.Parse(row["Id"].ToString()),
-                    name = row["Name"].ToString()
+                    Id = uint.Parse(row["Id"].ToString()),
+                    Name = row["Name"].ToString()
                 };
-                result.Add(new Branch(info));
+                result.Add(info);
             }
             return result;
         }

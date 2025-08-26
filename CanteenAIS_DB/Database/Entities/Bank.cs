@@ -1,36 +1,25 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
 namespace CanteenAIS_DB.Database.Entities
 {
-    public interface IBank : ISimpleEntity
+    public abstract class BankEntity : SimpleEntity
     {
         [DisplayName("Имя")]
-        string Name { get; set; }
+        public virtual string Name { get; set; }
+
+        public BankEntity() { }
+
+        public BankEntity(BankEntity info)
+        {
+            Id = info.Id;
+            Name = info.Name;
+        }
     }
 
-    public class BankInfo : SimpleInfo
+    public class Bank : BankEntity
     {
-        public string name;
-    }
+        public Bank() { }
 
-    public class Bank : IBank
-    {
-        private readonly BankInfo _info;
-        public uint Id
-        {
-            get => _info.id;
-            set => _info.id = value;
-        }
-        public string Name
-        {
-            get => _info.name;
-            set => _info.name = value;
-        }
-
-        public Bank(BankInfo info)
-        {
-            _info = info;
-        }
+        public Bank(BankEntity info) : base(info) { }
     }
 }
