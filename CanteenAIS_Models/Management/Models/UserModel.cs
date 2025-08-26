@@ -4,24 +4,45 @@ using System.Data;
 
 namespace CanteenAIS_Models.Management.Models
 {
-    public class UserModel : SimpleModel<IUser, UserInfo>
+    public class UserModel : SimpleModel<UserEntity>
     {
         public override string TableName => "Пользователи";
 
-        public UserModel(BasicSimpleCRUD<IUser> context) : base(context) { }
+        public UserModel(BasicSimpleCRUD<UserEntity> context) : base(context) { }
 
-        public override void Add(UserInfo info)
+        public override void Add<TResultType>(UserEntity info)
         {
-            TableContext.Create(new User(info));
+            TResultType res = new TResultType
+            {
+                Id = info.Id,
+                Login = info.Login,
+                Password = info.Password,
+                LastName = info.LastName,
+                FirstName = info.FirstName,
+                Patronim = info.Patronim,
+                DateOfBirth = info.DateOfBirth,
+                UserPerms = info.UserPerms
+            };
+            TableContext.Create(res);
         }
 
-        public override void Update(DataRow row, UserInfo info)
+        public override void Update<TResultType>(DataRow row, UserEntity info)
         {
-            info.id = GetId(row);
-            TableContext.Update(new User(info));
+            TResultType result = new TResultType
+            {
+                Id = GetId(row),
+                Login = info.Login,
+                Password = info.Password,
+                LastName = info.LastName,
+                FirstName = info.FirstName,
+                Patronim = info.Patronim,
+                DateOfBirth = info.DateOfBirth,
+                UserPerms = info.UserPerms
+            };
+            TableContext.Update(result);
         }
 
-        public override int CompareEntities(IUser first, IUser second)
+        public override int CompareEntities(UserEntity first, UserEntity second)
         {
             if (first == null)
                 return -1;
@@ -42,7 +63,7 @@ namespace CanteenAIS_Models.Management.Models
             return 0;
         }
 
-        public override bool ContainsString(IUser entity, string sample)
+        public override bool ContainsString(UserEntity entity, string sample)
         {
             return (
                 entity.Id.ToString().Contains(sample) ||

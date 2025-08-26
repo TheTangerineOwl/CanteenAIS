@@ -4,24 +4,55 @@ using System.Data;
 
 namespace CanteenAIS_Models.Models
 {
-    public class SupplierModel : SimpleModel<ISupplier, SupplierInfo>
+    public class SupplierModel : SimpleModel<SupplierEntity>
     {
         public override string TableName => "Поставщики";
 
-        public SupplierModel(BasicSimpleCRUD<ISupplier> context) : base(context) { }
+        public SupplierModel(BasicSimpleCRUD<SupplierEntity> context) : base(context) { }
 
-        public override void Add(SupplierInfo info)
+        public override void Add<TResult>(SupplierEntity info)
         {
-            TableContext.Create(new Supplier(info));
+            TResult result = new TResult
+            {
+                Id = info.Id,
+                Name = info.Name,
+                CityName = info.CityName,
+                StreetId = info.StreetId,
+                StreetName = info.StreetName,
+                Building = info.Building,
+                HeadId = info.HeadId,
+                HeadName = info.HeadName,
+                HeadPhone = info.HeadPhone,
+                BankId = info.BankId,
+                BankName = info.BankName,
+                Account = info.Account,
+                INN = info.INN
+            };
+            TableContext.Create(result);
         }
 
-        public override void Update(DataRow row, SupplierInfo info)
+        public override void Update<TResult>(DataRow row, SupplierEntity info)
         {
-            info.id = GetId(row);
-            TableContext.Update(new Supplier(info));
+            TResult result = new TResult
+            {
+                Id = GetId(row),
+                Name = info.Name,
+                CityName = info.CityName,
+                StreetId = info.StreetId,
+                StreetName = info.StreetName,
+                Building = info.Building,
+                HeadId = info.HeadId,
+                HeadName = info.HeadName,
+                HeadPhone = info.HeadPhone,
+                BankId = info.BankId,
+                BankName = info.BankName,
+                Account = info.Account,
+                INN = info.INN
+            };
+            TableContext.Update(result);
         }
 
-        public override int CompareEntities(ISupplier first, ISupplier second)
+        public override int CompareEntities(SupplierEntity first, SupplierEntity second)
         {
             if (first == null)
                 return -1;
@@ -44,7 +75,7 @@ namespace CanteenAIS_Models.Models
             return first.INN.CompareTo(second.INN);
         }
 
-        public override bool ContainsString(ISupplier entity, string sample)
+        public override bool ContainsString(SupplierEntity entity, string sample)
         {
             return (
                 entity.Id.ToString().Contains(sample) ||

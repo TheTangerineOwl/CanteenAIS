@@ -4,24 +4,46 @@ using System.Data;
 
 namespace CanteenAIS_Models.Management.Models
 {
-    public class UserPermModel : DoubleModel<IUserPerm, UserPermInfo>
+    public class UserPermModel : DoubleModel<UserPermEntity>
     {
         public override string TableName => "Права пользователей";
 
-        public UserPermModel(BasicDoubleCRUD<IUserPerm> context) : base(context) { }
+        public UserPermModel(BasicDoubleCRUD<UserPermEntity> context) : base(context) { }
 
-        public override void Add(UserPermInfo info)
+        public override void Add<TResultType>(UserPermEntity info)
         {
-            TableContext.Create(new UserPerm(info));
+            TResultType result = new TResultType
+            {
+                UserId = info.UserId,
+                UserLogin = info.UserLogin,
+                ElementId = info.ElementId,
+                ElementName = info.ElementName,
+                CanRead = info.CanRead,
+                CanWrite = info.CanWrite,
+                CanDelete = info.CanDelete,
+                CanEdit = info.CanEdit
+            };
+            TableContext.Create(result);
         }
 
-        public override void Update(DataRow row, UserPermInfo info)
+        public override void Update<TResultType>(DataRow row, UserPermEntity info)
         {
             (info.UserId, info.ElementId) = GetPK(row);
-            TableContext.Update(new UserPerm(info));
+            TResultType result = new TResultType
+            {
+                UserId = info.UserId,
+                UserLogin = info.UserLogin,
+                ElementId = info.ElementId,
+                ElementName = info.ElementName,
+                CanRead = info.CanRead,
+                CanWrite = info.CanWrite,
+                CanDelete = info.CanDelete,
+                CanEdit = info.CanEdit
+            };
+            TableContext.Update(result);
         }
 
-        public override int CompareEntities(IUserPerm first, IUserPerm second)
+        public override int CompareEntities(UserPermEntity first, UserPermEntity second)
         {
             if (first == null)
                 return -1;
@@ -33,7 +55,7 @@ namespace CanteenAIS_Models.Management.Models
             return compared;
         }
 
-        public override bool ContainsString(IUserPerm entity, string sample)
+        public override bool ContainsString(UserPermEntity entity, string sample)
         {
             return (
                 entity.UserLogin.Contains(sample) ||

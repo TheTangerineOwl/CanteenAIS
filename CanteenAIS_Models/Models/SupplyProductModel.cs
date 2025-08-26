@@ -4,24 +4,44 @@ using System.Data;
 
 namespace CanteenAIS_Models.Models
 {
-    public class SupplyProductModel : DoubleModel<ISupplyProduct, SupplyProductInfo>
+    public class SupplyProductModel : DoubleModel<SupplyProductEntity>
     {
         public override string TableName => "Банки";
 
-        public SupplyProductModel(BasicDoubleCRUD<ISupplyProduct> context) : base(context) { }
+        public SupplyProductModel(BasicDoubleCRUD<SupplyProductEntity> context) : base(context) { }
 
-        public override void Add(SupplyProductInfo info)
+        public override void Add<TResult>(SupplyProductEntity info)
         {
-            TableContext.Create(new SupplyProduct(info));
+            TResult result = new TResult
+            {
+                SupplyId = info.SupplyId,
+                ProductId = info.ProductId,
+                ProductName = info.ProductName,
+                Amount = info.Amount,
+                UnitId = info.UnitId,
+                UnitName = info.UnitName,
+                Price = info.Price
+            };
+            TableContext.Create(result);
         }
 
-        public override void Update(DataRow row, SupplyProductInfo info)
+        public override void Update<TResult>(DataRow row, SupplyProductEntity info)
         {
-            (info.SupplyId, info.ProductId) = GetPK(row);
-            TableContext.Update(new SupplyProduct(info));
+            TResult result = new TResult
+            {
+                SupplyId = info.SupplyId,
+                ProductId = info.ProductId,
+                ProductName = info.ProductName,
+                Amount = info.Amount,
+                UnitId = info.UnitId,
+                UnitName = info.UnitName,
+                Price = info.Price
+            };
+            (result.SupplyId, result.ProductId) = GetPK(row);
+            TableContext.Update(result);
         }
 
-        public override int CompareEntities(ISupplyProduct first, ISupplyProduct second)
+        public override int CompareEntities(SupplyProductEntity first, SupplyProductEntity second)
         {
             if (first == null)
                 return -1;
@@ -39,7 +59,7 @@ namespace CanteenAIS_Models.Models
             return compared;
         }
 
-        public override bool ContainsString(ISupplyProduct entity, string sample)
+        public override bool ContainsString(SupplyProductEntity entity, string sample)
         {
             return (
                 entity.SupplyId.ToString().Contains(sample) ||

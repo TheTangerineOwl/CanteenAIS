@@ -4,24 +4,43 @@ using System.Data;
 
 namespace CanteenAIS_Models.Management.Models
 {
-    public class MenuElementModel : SimpleModel<IMenuElement, ElementInfo>
+    public class MenuElementModel : SimpleModel<MenuElementEntity>
     {
         public override string TableName => "Главное меню";
 
-        public MenuElementModel(BasicSimpleCRUD<IMenuElement> context) : base(context) { }
+        public MenuElementModel(BasicSimpleCRUD<MenuElementEntity> context) : base(context) { }
 
-        public override void Add(ElementInfo info)
+        public override void Add<TResult>(MenuElementEntity info)
         {
-            TableContext.Create(new MenuElement(info));
+            TResult result = new TResult
+            {
+                Id = info.Id,
+                ParentId = info.ParentId,
+                ParentName = info.ParentName,
+                Name = info.Name,
+                DllName = info.DllName,
+                FuncName = info.FuncName,
+                Order = info.Order
+            };
+            TableContext.Create(result);
         }
 
-        public override void Update(DataRow row, ElementInfo info)
+        public override void Update<TResult>(DataRow row, MenuElementEntity info)
         {
-            info.id = GetId(row);
-            TableContext.Update(new MenuElement(info));
+            TResult result = new TResult
+            {
+                Id = GetId(row),
+                ParentId = info.ParentId,
+                ParentName = info.ParentName,
+                Name = info.Name,
+                DllName = info.DllName,
+                FuncName = info.FuncName,
+                Order = info.Order
+            };
+            TableContext.Update(result);
         }
 
-        public override int CompareEntities(IMenuElement first, IMenuElement second)
+        public override int CompareEntities(MenuElementEntity first, MenuElementEntity second)
         {
             if (first == null)
                 return -1;
@@ -42,7 +61,7 @@ namespace CanteenAIS_Models.Management.Models
             return 0;
         }
 
-        public override bool ContainsString(IMenuElement entity, string sample)
+        public override bool ContainsString(MenuElementEntity entity, string sample)
         {
             return (
                 entity.Id.ToString().Contains(sample) ||

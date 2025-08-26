@@ -4,24 +4,33 @@ using System.Data;
 
 namespace CanteenAIS_Models.Models
 {
-    public class AssortmentGroupModel : SimpleModel<IAssortmentGroup, AssortmentGroupInfo>
+    public class AssortmentGroupModel : SimpleModel<AssortmentGroupEntity>
     {
         public override string TableName => "Группа ассортимента";
 
-        public AssortmentGroupModel(BasicSimpleCRUD<IAssortmentGroup> context) : base(context) { }
+        public AssortmentGroupModel(BasicSimpleCRUD<AssortmentGroupEntity> context) : base(context) { }
 
-        public override void Add(AssortmentGroupInfo info)
+        public override void Add<TResult>(AssortmentGroupEntity info)
         {
-            TableContext.Create(new AssortmentGroup(info));
+            TResult result = new TResult
+            {
+                Id = info.Id,
+                Name = info.Name
+            };
+            TableContext.Create(result);
         }
 
-        public override void Update(DataRow row, AssortmentGroupInfo info)
+        public override void Update<TResult>(DataRow row, AssortmentGroupEntity info)
         {
-            info.id = GetId(row);
-            TableContext.Update(new AssortmentGroup(info));
+            TResult result = new TResult
+            {
+                Id = GetId(row),
+                Name = info.Name
+            };
+            TableContext.Update(result);
         }
 
-        public override int CompareEntities(IAssortmentGroup first, IAssortmentGroup second)
+        public override int CompareEntities(AssortmentGroupEntity first, AssortmentGroupEntity second)
         {
             if (first == null)
                 return -1;
@@ -34,7 +43,7 @@ namespace CanteenAIS_Models.Models
             return 0;
         }
 
-        public override bool ContainsString(IAssortmentGroup entity, string sample)
+        public override bool ContainsString(AssortmentGroupEntity entity, string sample)
         {
             return (
                 entity.Id.ToString().Contains(sample) ||

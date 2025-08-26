@@ -4,24 +4,49 @@ using System.Data;
 
 namespace CanteenAIS_Models.Models
 {
-    public class DishModel : SimpleModel<IDish, DishInfo>
+    public class DishModel : SimpleModel<DishEntity>
     {
         public override string TableName => "Изделия";
 
-        public DishModel(BasicSimpleCRUD<IDish> context) : base(context) { }
+        public DishModel(BasicSimpleCRUD<DishEntity> context) : base(context) { }
 
-        public override void Add(DishInfo info)
+        public override void Add<TResult>(DishEntity info)
         {
-            TableContext.Create(new Dish(info));
+            TResult result = new TResult
+            {
+                Id = info.Id,
+                Name = info.Name,
+                GroupId = info.GroupId,
+                GroupName = info.GroupName,
+                Price = info.Price,
+                Serving = info.Serving,
+                UnitId = info.UnitId,
+                UnitName = info.UnitName,
+                Recipe = info.Recipe,
+                Picture = info.Picture
+            };
+            TableContext.Create(result);
         }
 
-        public override void Update(DataRow row, DishInfo info)
+        public override void Update<TResult>(DataRow row, DishEntity info)
         {
-            info.id = GetId(row);
-            TableContext.Update(new Dish(info));
+            TResult result = new TResult
+            {
+                Id = GetId(row),
+                Name = info.Name,
+                GroupId = info.GroupId,
+                GroupName = info.GroupName,
+                Price = info.Price,
+                Serving = info.Serving,
+                UnitId = info.UnitId,
+                UnitName = info.UnitName,
+                Recipe = info.Recipe,
+                Picture = info.Picture
+            };
+            TableContext.Update(result);
         }
 
-        public override int CompareEntities(IDish first, IDish second)
+        public override int CompareEntities(DishEntity first, DishEntity second)
         {
             if (first == null)
                 return -1;
@@ -44,7 +69,7 @@ namespace CanteenAIS_Models.Models
             return first.Picture.CompareTo(second.Picture);
         }
 
-        public override bool ContainsString(IDish entity, string sample)
+        public override bool ContainsString(DishEntity entity, string sample)
         {
             return (
                 entity.Id.ToString().Contains(sample) ||

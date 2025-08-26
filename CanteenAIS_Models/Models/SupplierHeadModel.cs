@@ -4,24 +4,39 @@ using System.Data;
 
 namespace CanteenAIS_Models.Models
 {
-    public class SupplierHeadModel : SimpleModel<ISupplierHead, SupplierHeadInfo>
+    public class SupplierHeadModel : SimpleModel<SupplierHeadEntity>
     {
         public override string TableName => "Руководители";
 
-        public SupplierHeadModel(BasicSimpleCRUD<ISupplierHead> context) : base(context) { }
+        public SupplierHeadModel(BasicSimpleCRUD<SupplierHeadEntity> context) : base(context) { }
 
-        public override void Add(SupplierHeadInfo info)
+        public override void Add<TResult>(SupplierHeadEntity info)
         {
-            TableContext.Create(new SupplierHead(info));
+            TResult result = new TResult
+            {
+                Id = info.Id,
+                LastName = info.LastName,
+                FirstName = info.FirstName,
+                Patronim = info.Patronim,
+                Phone = info.Phone
+            };
+            TableContext.Create(result);
         }
 
-        public override void Update(DataRow row, SupplierHeadInfo info)
+        public override void Update<TResult>(DataRow row, SupplierHeadEntity info)
         {
-            info.id = GetId(row);
-            TableContext.Update(new SupplierHead(info));
+            TResult result = new TResult
+            {
+                Id = GetId(row),
+                LastName = info.LastName,
+                FirstName = info.FirstName,
+                Patronim = info.Patronim,
+                Phone = info.Phone
+            };
+            TableContext.Update(result);
         }
 
-        public override int CompareEntities(ISupplierHead first, ISupplierHead second)
+        public override int CompareEntities(SupplierHeadEntity first, SupplierHeadEntity second)
         {
             if (first == null)
                 return -1;
@@ -40,7 +55,7 @@ namespace CanteenAIS_Models.Models
             return 0;
         }
 
-        public override bool ContainsString(ISupplierHead entity, string sample)
+        public override bool ContainsString(SupplierHeadEntity entity, string sample)
         {
             return (
                 entity.Id.ToString().Contains(sample) ||

@@ -4,24 +4,45 @@ using System.Data;
 
 namespace CanteenAIS_Models.Models
 {
-    public class ProductModel : SimpleModel<IProduct, ProductInfo>
+    public class ProductModel : SimpleModel<ProductEntity>
     {
         public override string TableName => "Продукты";
 
-        public ProductModel(BasicSimpleCRUD<IProduct> context) : base(context) { }
+        public ProductModel(BasicSimpleCRUD<ProductEntity> context) : base(context) { }
 
-        public override void Add(ProductInfo info)
+        public override void Add<TResult>(ProductEntity info)
         {
-            TableContext.Create(new Product(info));
+            TResult result = new TResult
+            {
+                Id = info.Id,
+                Name = info.Name,
+                UnitId = info.UnitId,
+                UnitName = info.UnitName,
+                Markup = info.Markup,
+                Stock = info.Stock,
+                SupplierId = info.SupplierId,
+                SupplierName = info.SupplierName
+            };
+            TableContext.Create(result);
         }
 
-        public override void Update(DataRow row, ProductInfo info)
+        public override void Update<TResult>(DataRow row, ProductEntity info)
         {
-            info.id = GetId(row);
-            TableContext.Update(new Product(info));
+            TResult result = new TResult
+            {
+                Id = GetId(row),
+                Name = info.Name,
+                UnitId = info.UnitId,
+                UnitName = info.UnitName,
+                Markup = info.Markup,
+                Stock = info.Stock,
+                SupplierId = info.SupplierId,
+                SupplierName = info.SupplierName
+            };
+            TableContext.Update(result);
         }
 
-        public override int CompareEntities(IProduct first, IProduct second)
+        public override int CompareEntities(ProductEntity first, ProductEntity second)
         {
             if (first == null)
                 return -1;
@@ -42,7 +63,7 @@ namespace CanteenAIS_Models.Models
             return 0;
         }
 
-        public override bool ContainsString(IProduct entity, string sample)
+        public override bool ContainsString(ProductEntity entity, string sample)
         {
             return (
                 entity.Id.ToString().Contains(sample) ||

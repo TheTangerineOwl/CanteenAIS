@@ -4,24 +4,33 @@ using System.Data;
 
 namespace CanteenAIS_Models.Models
 {
-    public class BranchModel : SimpleModel<IBranch, BranchInfo>
+    public class BranchModel : SimpleModel<BranchEntity>
     {
         public override string TableName => "Отделения";
 
-        public BranchModel(BasicSimpleCRUD<IBranch> context) : base(context) { }
+        public BranchModel(BasicSimpleCRUD<BranchEntity> context) : base(context) { }
 
-        public override void Add(BranchInfo info)
+        public override void Add<TResult>(BranchEntity info)
         {
-            TableContext.Create(new Branch(info));
+            TResult result = new TResult
+            {
+                Id = info.Id,
+                Name = info.Name
+            };
+            TableContext.Create(result);
         }
 
-        public override void Update(DataRow row, BranchInfo info)
+        public override void Update<TResult>(DataRow row, BranchEntity info)
         {
-            info.id = GetId(row);
+            TResult result = new TResult
+            {
+                Id = GetId(row),
+                Name = info.Name
+            };
             TableContext.Update(new Branch(info));
         }
 
-        public override int CompareEntities(IBranch first, IBranch second)
+        public override int CompareEntities(BranchEntity first, BranchEntity second)
         {
             if (first == null)
                 return -1;
@@ -34,7 +43,7 @@ namespace CanteenAIS_Models.Models
             return 0;
         }
 
-        public override bool ContainsString(IBranch entity, string sample)
+        public override bool ContainsString(BranchEntity entity, string sample)
         {
             return (
                 entity.Id.ToString().Contains(sample) ||

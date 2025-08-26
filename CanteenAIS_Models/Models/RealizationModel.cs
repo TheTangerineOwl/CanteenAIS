@@ -4,24 +4,43 @@ using System.Data;
 
 namespace CanteenAIS_Models.Models
 {
-    public class RealizationModel : SimpleModel<IRealization, RealizationInfo>
+    public class RealizationModel : SimpleModel<RealizationEntity>
     {
         public override string TableName => "Реализации";
 
-        public RealizationModel(BasicSimpleCRUD<IRealization> context) : base(context) { }
+        public RealizationModel(BasicSimpleCRUD<RealizationEntity> context) : base(context) { }
 
-        public override void Add(RealizationInfo info)
+        public override void Add<TResult>(RealizationEntity info)
         {
-            TableContext.Create(new Realization(info));
+            TResult result = new TResult
+            {
+                Id = info.Id,
+                DishId = info.DishId,
+                DishName = info.DishName,
+                Amount = info.Amount,
+                DateTime = info.DateTime,
+                UnitId = info.UnitId,
+                UnitName = info.UnitName
+            };
+            TableContext.Create(result);
         }
 
-        public override void Update(DataRow row, RealizationInfo info)
+        public override void Update<TResult>(DataRow row, RealizationEntity info)
         {
-            info.id = GetId(row);
-            TableContext.Update(new Realization(info));
+            TResult result = new TResult
+            {
+                Id = GetId(row),
+                DishId = info.DishId,
+                DishName = info.DishName,
+                Amount = info.Amount,
+                DateTime = info.DateTime,
+                UnitId = info.UnitId,
+                UnitName = info.UnitName
+            };
+            TableContext.Update(result);
         }
 
-        public override int CompareEntities(IRealization first, IRealization second)
+        public override int CompareEntities(RealizationEntity first, RealizationEntity second)
         {
             if (first == null)
                 return -1;
@@ -40,7 +59,7 @@ namespace CanteenAIS_Models.Models
             return 0;
         }
 
-        public override bool ContainsString(IRealization entity, string sample)
+        public override bool ContainsString(RealizationEntity entity, string sample)
         {
             return (
                 entity.Id.ToString().Contains(sample) ||

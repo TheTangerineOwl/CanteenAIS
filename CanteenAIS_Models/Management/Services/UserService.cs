@@ -9,21 +9,22 @@ namespace CanteenAIS_Models.Management.Services
     {
         private readonly IEncryptor<string, string> Encryptor;
 
-        public IUser CurrentUser {
+        public UserEntity CurrentUser {
             get => DBContext.GetInstance().CurrentUser;
             set { DBContext.GetInstance().CurrentUser = value; }
         }
-        public BasicSimpleCRUD<IUser> Context { get => DBContext.GetInstance().Users; }
+        public BasicSimpleCRUD<UserEntity> Context { get => DBContext.GetInstance().Users; }
 
         public UserService(IEncryptor<string, string> encryptor)
         {
             Encryptor = encryptor;
         }
 
-        public bool Login(string login, string password)
+        public bool Login<TUser>(string login, string password)
+            where TUser : UserEntity, new()
         {
-            IList<IUser> users = Context.Read();
-            foreach (IUser user in users)
+            IList<TUser> users = Context.Read<TUser>();
+            foreach (TUser user in users)
             {
                 //string encryptedpass = Encryptor.Encrypt(password);
                 if (user.Login == login && user.Password == Encryptor.Encrypt(password))
@@ -36,18 +37,19 @@ namespace CanteenAIS_Models.Management.Services
             return false;
         }
 
-        public bool Registration(string login, string password)
+        public bool Registration<TUser>(string login, string password)
+            where TUser : UserEntity, new()
         {
-            IList<IUser> users = Context.Read();
-            foreach (IUser user in users)
+            IList<TUser> users = Context.Read<TUser>();
+            foreach (TUser user in users)
             {
                 if (user.Login == login)
                     return false;
             }
-            UserInfo info = new UserInfo
+            TUser info = new TUser
             {
-                login = login,
-                password = Encryptor.Encrypt(password)
+                Login = login,
+                Password = Encryptor.Encrypt(password)
             };
             Context.Create(new User(info));
             return true;

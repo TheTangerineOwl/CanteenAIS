@@ -4,24 +4,46 @@ using System.Data;
 
 namespace CanteenAIS_Models.Models
 {
-    public class IngredientModel : DoubleModel<IIngredient, IngredientInfo>
+    public class IngredientModel : DoubleModel<IngredientEntity>
     {
         public override string TableName => "Ингредиенты";
 
-        public IngredientModel(BasicDoubleCRUD<IIngredient> context) : base(context) { }
+        public IngredientModel(BasicDoubleCRUD<IngredientEntity> context) : base(context) { }
 
-        public override void Add(IngredientInfo info)
+        public override void Add<TResult>(IngredientEntity info)
         {
-            TableContext.Create(new Ingredient(info));
+            TResult result = new TResult
+            {
+                DishId = info.DishId,
+                DishName = info.DishName,
+                ProductId = info.ProductId,
+                ProductName = info.ProductName,
+                Gross = info.Gross,
+                Net = info.Net,
+                UnitId = info.UnitId,
+                UnitName = info.UnitName
+            };
+            TableContext.Create(result);
         }
 
-        public override void Update(DataRow row, IngredientInfo info)
+        public override void Update<TResult>(DataRow row, IngredientEntity info)
         {
-            (info.firstId, info.secondId) = GetPK(row);
-            TableContext.Update(new Ingredient(info));
+            TResult result = new TResult
+            {
+                DishId = info.DishId,
+                DishName = info.DishName,
+                ProductId = info.ProductId,
+                ProductName = info.ProductName,
+                Gross = info.Gross,
+                Net = info.Net,
+                UnitId = info.UnitId,
+                UnitName = info.UnitName
+            };
+            (result.DishId, result.ProductId) = GetPK(row);
+            TableContext.Update(result);
         }
 
-        public override int CompareEntities(IIngredient first, IIngredient second)
+        public override int CompareEntities(IngredientEntity first, IngredientEntity second)
         {
             if (first == null)
                 return -1;
@@ -38,7 +60,7 @@ namespace CanteenAIS_Models.Models
             return first.UnitId.CompareTo(second.UnitId);
         }
 
-        public override bool ContainsString(IIngredient entity, string sample)
+        public override bool ContainsString(IngredientEntity entity, string sample)
         {
             return (
                 entity.DishId.ToString().Contains(sample) ||

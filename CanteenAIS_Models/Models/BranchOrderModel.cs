@@ -4,24 +4,37 @@ using System.Data;
 
 namespace CanteenAIS_Models.Models
 {
-    public class BranchOrderModel : SimpleModel<IBranchOrder, BranchOrderInfo>
+    public class BranchOrderModel : SimpleModel<BranchOrderEntity>
     {
         public override string TableName => "Заказы продуктов";
 
-        public BranchOrderModel(BasicSimpleCRUD<IBranchOrder> context) : base(context) { }
+        public BranchOrderModel(BasicSimpleCRUD<BranchOrderEntity> context) : base(context) { }
 
-        public override void Add(BranchOrderInfo info)
+        public override void Add<TResult>(BranchOrderEntity info)
         {
-            TableContext.Create(new BranchOrder(info));
+            TResult result = new TResult
+            {
+                Id = info.Id,
+                BranchId = info.BranchId,
+                BranchName = info.BranchName,
+                DateTime = info.DateTime
+            };
+            TableContext.Create(result);
         }
 
-        public override void Update(DataRow row, BranchOrderInfo info)
+        public override void Update<TResult>(DataRow row, BranchOrderEntity info)
         {
-            info.id = GetId(row);
-            TableContext.Update(new BranchOrder(info));
+            TResult result = new TResult
+            {
+                Id = GetId(row),
+                BranchId = info.BranchId,
+                BranchName = info.BranchName,
+                DateTime = info.DateTime
+            };
+            TableContext.Update(result);
         }
 
-        public override int CompareEntities(IBranchOrder first, IBranchOrder second)
+        public override int CompareEntities(BranchOrderEntity first, BranchOrderEntity second)
         {
             if (first == null)
                 return -1;
@@ -34,7 +47,7 @@ namespace CanteenAIS_Models.Models
             return first.DateTime.CompareTo(second.DateTime);
         }
 
-        public override bool ContainsString(IBranchOrder entity, string sample)
+        public override bool ContainsString(BranchOrderEntity entity, string sample)
         {
             return (
                 entity.Id.ToString().Contains(sample) ||

@@ -8,9 +8,8 @@ using System.Linq;
 
 namespace CanteenAIS_Models
 {   
-    public abstract class TableModel<TEntity, TEntityInfo>
-        where TEntity : class, IEntity
-        where TEntityInfo : Info
+    public abstract class TableModel<TEntity>
+        where TEntity : Entity
     {
         public abstract string TableName { get; }
         protected IDictionary<DataRow, TEntity> DataValues;
@@ -23,30 +22,30 @@ namespace CanteenAIS_Models
             TableContext = contextInstance;
         }
 
-        protected virtual void FillDataValues(DataTable table, IList<TEntity> values)
+        protected virtual void FillDataValues<TEntityType>(DataTable table, IList<TEntityType> values) where TEntityType : TEntity
         {
             DataValues = new Dictionary<DataRow, TEntity>();
             for (int i = 0; i < values.Count; i++)
                 DataValues.Add(table.Rows[i], values[i]);
         }
 
-        protected virtual IList<TEntity> FetchValues()
+        protected virtual IList<TEntityType> FetchValues<TEntityType>() where TEntityType : TEntity, new()
         {
-            return TableContext.Read().ToList();
+            return TableContext.Read<TEntityType>().ToList();
         }
 
-        public virtual DataTable GetTable()
+        public virtual DataTable GetTable<TEntityType>() where TEntityType : TEntity, new()
         {
-            List<TEntity> values = FetchValues().ToList();
+            List<TEntityType> values = FetchValues<TEntityType>().ToList();
             DataTable table = DataTableConverter.ToDataTable(values);
             FillDataValues(table, values);
             return table;
         }
 
-        public virtual DataTable FetchAndFilter(Predicate<TEntity> predicate)
+        public virtual DataTable FetchAndFilter<TEntityType>(Predicate<TEntityType> predicate) where TEntityType : TEntity, new()
         {
-            List<TEntity> allValues = FetchValues().ToList();
-            List<TEntity> result = allValues.Where(e => predicate(e)).ToList();
+            List<TEntityType> allValues = FetchValues<TEntityType>().ToList();
+            List<TEntityType> result = allValues.Where(e => predicate(e)).ToList();
             DataTable table = DataTableConverter.ToDataTable(result);
             FillDataValues(table, result);
             return table;
@@ -55,41 +54,44 @@ namespace CanteenAIS_Models
         public abstract int CompareEntities(TEntity first, TEntity second);
         public abstract bool ContainsString(TEntity entity, string sample);
 
-        public virtual DataTable GetSearchResult(string search)
+        public virtual DataTable GetSearchResult<TEntityType>(string search) where TEntityType : TEntity, new()
         {
-            return FetchAndFilter(v => ContainsString(v, search));
+            return FetchAndFilter<TEntityType>(v => ContainsString(v, search));
         }
 
-        public virtual DataTable GetFiltered(TEntity filter)
+        public virtual DataTable GetFiltered<TEntityType>(TEntityType filter) where TEntityType : TEntity, new()
         {
-            return FetchAndFilter(v => CompareEntities(v, filter) == 0);
+            return FetchAndFilter<TEntityType>(v => CompareEntities(v, filter) == 0);
         }
 
-        public virtual IUserPerm GetPerms(uint elementId)
+        public virtual UserPermEntity GetPerms<TUserPerm>(uint elementId) where TUserPerm : UserPermEntity, new()
         {
-            IUserPerm perms;
-            List<IUserPerm> userPerms = DBContext.GetInstance().UserPerms.Read().ToList();
-            IUser currentUser = DBContext.GetInstance().CurrentUser;
+            UserPermEntity perms;
+            List<TUserPerm> userPerms = DBContext.GetInstance().UserPerms.Read<TUserPerm>().ToList();
+            UserEntity currentUser = DBContext.GetInstance().CurrentUser;
             perms = userPerms.Find(up => up.UserId == currentUser.Id && up.ElementId == elementId);
             if (perms.UserId != currentUser.Id)
-                perms = new UserPerm(
-                    new UserPermInfo
-                    {
-                        UserId = currentUser.Id,
-                        ElementId = elementId
-                    }
-                );
+                perms = new TUserPerm
+                {
+                    UserId = currentUser.Id,
+                    ElementId = elementId
+                };
             return perms;
         }
 
-        public abstract void Add(TEntityInfo info);
-        public abstract void Update(DataRow row, TEntityInfo info);
+        public virtual TResult GetEntity<TResult>(DataRow row)
+            where TResult : TEntity, new()
+        {
+            return DataValues[row] as TResult;
+        }
+
+        public abstract void Add<TResultType>(TEntity info) where TResultType : TEntity, new();
+        public abstract void Update<TResultType>(DataRow row, TEntity info) where TResultType : TEntity, new();
         public abstract void DeleteRow(DataRow row);
     }
 
-    public abstract class SimpleModel<TEntity, TEntityInfo> : TableModel<TEntity, TEntityInfo>
-        where TEntity : class, ISimpleEntity
-        where TEntityInfo : SimpleInfo
+    public abstract class SimpleModel<TEntity> : TableModel<TEntity>
+        where TEntity : SimpleEntity
     {
         public SimpleModel(BasicSimpleCRUD<TEntity> contextInstance) : base(contextInstance) { }
 
@@ -118,9 +120,8 @@ namespace CanteenAIS_Models
         }
     }
 
-    public abstract class DoubleModel<TEntity, TEntityInfo> : TableModel<TEntity, TEntityInfo>
-        where TEntity : class, IDoubleEntity
-        where TEntityInfo : DoubleInfo
+    public abstract class DoubleModel<TEntity> : TableModel<TEntity>
+        where TEntity : DoubleEntity
     {
         public DoubleModel(BasicDoubleCRUD<TEntity> contextInstance) : base(contextInstance) { }
 

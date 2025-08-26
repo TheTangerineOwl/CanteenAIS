@@ -4,24 +4,37 @@ using System.Data;
 
 namespace CanteenAIS_Models.Models
 {
-    public class StreetModel : SimpleModel<IStreet, StreetInfo>
+    public class StreetModel : SimpleModel<StreetEntity>
     {
         public override string TableName => "Улицы";
 
-        public StreetModel(BasicSimpleCRUD<IStreet> context) : base(context) { }
+        public StreetModel(BasicSimpleCRUD<StreetEntity> context) : base(context) { }
 
-        public override void Add(StreetInfo info)
+        public override void Add<TResult>(StreetEntity info)
         {
-            TableContext.Create(new Street(info));
+            TResult result = new TResult
+            {
+                Id = info.Id,
+                CityId = info.CityId,
+                CityName = info.CityName,
+                Name = info.Name
+            };
+            TableContext.Create(result);
         }
 
-        public override void Update(DataRow row, StreetInfo info)
+        public override void Update<TResult>(DataRow row, StreetEntity info)
         {
-            info.id = GetId(row);
-            TableContext.Update(new Street(info));
+            TResult result = new TResult
+            {
+                Id = GetId(row),
+                CityId = info.CityId,
+                CityName = info.CityName,
+                Name = info.Name
+            };
+            TableContext.Update(result);
         }
 
-        public override int CompareEntities(IStreet first, IStreet second)
+        public override int CompareEntities(StreetEntity first, StreetEntity second)
         {
             if (first == null)
                 return -1;
@@ -36,7 +49,7 @@ namespace CanteenAIS_Models.Models
             return 0;
         }
 
-        public override bool ContainsString(IStreet entity, string sample)
+        public override bool ContainsString(StreetEntity entity, string sample)
         {
             return (
                 entity.Id.ToString().Contains(sample) ||

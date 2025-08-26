@@ -4,24 +4,37 @@ using System.Data;
 
 namespace CanteenAIS_Models.Models
 {
-    public class SupplyModel : SimpleModel<ISupply, SupplyInfo>
+    public class SupplyModel : SimpleModel<SupplyEntity>
     {
         public override string TableName => "Поставки";
 
-        public SupplyModel(BasicSimpleCRUD<ISupply> context) : base(context) { }
+        public SupplyModel(BasicSimpleCRUD<SupplyEntity> context) : base(context) { }
 
-        public override void Add(SupplyInfo info)
+        public override void Add<TResult>(SupplyEntity info)
         {
-            TableContext.Create(new Supply(info));
+            TResult result = new TResult
+            {
+                Id = info.Id,
+                SupplierId = info.SupplierId,
+                SupplierName = info.SupplierName,
+                DateTime = info.DateTime
+            };
+            TableContext.Create(result);
         }
 
-        public override void Update(DataRow row, SupplyInfo info)
+        public override void Update<TResult>(DataRow row, SupplyEntity info)
         {
-            info.id = GetId(row);
-            TableContext.Update(new Supply(info));
+            TResult result = new TResult
+            {
+                Id = GetId(row),
+                SupplierId = info.SupplierId,
+                SupplierName = info.SupplierName,
+                DateTime = info.DateTime
+            };
+            TableContext.Update(result);
         }
 
-        public override int CompareEntities(ISupply first, ISupply second)
+        public override int CompareEntities(SupplyEntity first, SupplyEntity second)
         {
             if (first == null)
                 return -1;
@@ -35,7 +48,7 @@ namespace CanteenAIS_Models.Models
             return compared;
         }
 
-        public override bool ContainsString(ISupply entity, string sample)
+        public override bool ContainsString(SupplyEntity entity, string sample)
         {
             return (
                 entity.Id.ToString().Contains(sample) ||

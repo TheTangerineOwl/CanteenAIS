@@ -4,24 +4,42 @@ using System.Data;
 
 namespace CanteenAIS_Models.Models
 {
-    public class OrderProductModel : DoubleModel<IOrderProduct, OrderProductInfo>
+    public class OrderProductModel : DoubleModel<OrderProductEntity>
     {
         public override string TableName => "Продукты в заказе";
 
-        public OrderProductModel(BasicDoubleCRUD<IOrderProduct> context) : base(context) { }
+        public OrderProductModel(BasicDoubleCRUD<OrderProductEntity> context) : base(context) { }
 
-        public override void Add(OrderProductInfo info)
+        public override void Add<TResult>(OrderProductEntity info)
         {
-            TableContext.Create(new OrderProduct(info));
+            TResult result = new TResult
+            {
+                OrderId = info.OrderId,
+                ProductId = info.ProductId,
+                ProductName = info.ProductName,
+                UnitId = info.UnitId,
+                UnitName = info.UnitName,
+                Amount = info.Amount
+            };
+            TableContext.Create(result);
         }
 
-        public override void Update(DataRow row, OrderProductInfo info)
+        public override void Update<TResult>(DataRow row, OrderProductEntity info)
         {
-            (info.firstId, info.secondId) = GetPK(row);
-            TableContext.Update(new OrderProduct(info));
+            TResult result = new TResult
+            {
+                OrderId = info.OrderId,
+                ProductId = info.ProductId,
+                ProductName = info.ProductName,
+                UnitId = info.UnitId,
+                UnitName = info.UnitName,
+                Amount = info.Amount
+            };
+            (result.OrderId, result.ProductId) = GetPK(row);
+            TableContext.Update(result);
         }
 
-        public override int CompareEntities(IOrderProduct first, IOrderProduct second)
+        public override int CompareEntities(OrderProductEntity first, OrderProductEntity second)
         {
             if (first == null)
                 return -1;
@@ -38,7 +56,7 @@ namespace CanteenAIS_Models.Models
             return 0;
         }
 
-        public override bool ContainsString(IOrderProduct entity, string sample)
+        public override bool ContainsString(OrderProductEntity entity, string sample)
         {
             return (
                 entity.OrderId.ToString().Contains(sample) ||

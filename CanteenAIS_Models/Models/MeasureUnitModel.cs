@@ -4,24 +4,33 @@ using System.Data;
 
 namespace CanteenAIS_Models.Models
 {
-    public class MeasureUnitModel : SimpleModel<IMeasureUnit, MeasureUnitInfo>
+    public class MeasureUnitModel : SimpleModel<MeasureUnitEntity>
     {
         public override string TableName => "Единицы измерения";
 
-        public MeasureUnitModel(BasicSimpleCRUD<IMeasureUnit> context) : base(context) { }
+        public MeasureUnitModel(BasicSimpleCRUD<MeasureUnitEntity> context) : base(context) { }
 
-        public override void Add(MeasureUnitInfo info)
+        public override void Add<TResult>(MeasureUnitEntity info)
         {
-            TableContext.Create(new MeasureUnit(info));
+            TResult result = new TResult
+            {
+                Id = info.Id,
+                Name = info.Name
+            };
+            TableContext.Create(result);
         }
 
-        public override void Update(DataRow row, MeasureUnitInfo info)
+        public override void Update<TResult>(DataRow row, MeasureUnitEntity info)
         {
-            info.id = GetId(row);
-            TableContext.Update(new MeasureUnit(info));
+            TResult result = new TResult
+            {
+                Id = GetId(row),
+                Name = info.Name
+            };
+            TableContext.Update(result);
         }
 
-        public override int CompareEntities(IMeasureUnit first, IMeasureUnit second)
+        public override int CompareEntities(MeasureUnitEntity first, MeasureUnitEntity second)
         {
             if (first == null)
                 return -1;
@@ -34,7 +43,7 @@ namespace CanteenAIS_Models.Models
             return 0;
         }
 
-        public override bool ContainsString(IMeasureUnit entity, string sample)
+        public override bool ContainsString(MeasureUnitEntity entity, string sample)
         {
             return (
                 entity.Id.ToString().Contains(sample) ||
