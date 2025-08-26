@@ -42,6 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BasicViewModels\BasicActionVM.cs" />
+    <Compile Include="EntityViewModels\AssortmentGroup\AssortmentGroupAddVM.cs" />
+    <Compile Include="EntityViewModels\AssortmentGroup\AssortmentGroupEditVM.cs" />
+    <Compile Include="EntityViewModels\AssortmentGroup\AssortmentGroupFilterVM.cs" />
     <Compile Include="SQLQueryVM.cs" />
     <Compile Include="StaticViewModels\AboutProgramVM.cs" />
     <Compile Include="BasicViewModels\BasicVM.cs" />

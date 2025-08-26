@@ -7,23 +7,22 @@ using System.Windows.Input;
 
 namespace CanteenAIS_ViewModel.BasicViewModels
 {
-    public abstract class BasicVM<TEntity, TEntityInfo> : PropChanged
-        where TEntity : class, IEntity
-        where TEntityInfo : Info
+    public abstract class BasicVM<TEntity> : PropChanged
+        where TEntity : Entity, new()
     {
-        protected BasicVM(TableModel<TEntity, TEntityInfo> tableModel, uint menuElementId)
+        protected BasicVM(TableModel<TEntity> tableModel, uint menuElementId)
         {
             Model = tableModel;
-            Table = Model.GetTable();
-            Perm = Model.GetPerms(menuElementId);
+            Table = Model.GetTable<TEntity>();
+            Perm = Model.GetPerms<UserPerm>(menuElementId);
             writeVisible = Perm.CanWrite;
             editVisible = false;
             deleteVisible = false;
             selectedIndex = -1;
         }
 
-        protected virtual IUserPerm Perm { get; set; }
-        protected virtual TableModel<TEntity, TEntityInfo> Model { get; set; }
+        protected virtual UserPermEntity Perm { get; set; }
+        protected virtual TableModel<TEntity> Model { get; set; }
 
         protected DataTable table;
         public virtual DataTable Table
@@ -44,7 +43,7 @@ namespace CanteenAIS_ViewModel.BasicViewModels
             set
             {
                 Set(ref searchSample, value);
-                Table = Model.GetSearchResult(searchSample);
+                Table = Model.GetSearchResult<TEntity>(searchSample);
             }
         }
 
@@ -77,10 +76,10 @@ namespace CanteenAIS_ViewModel.BasicViewModels
         }
 
         public Action OnChangeSelection;
-        public Action<TableModel<TEntity, TEntityInfo>> OnFilter;
-        public Action<TableModel<TEntity, TEntityInfo>> OnAdd;
-        public Action<DataRow, TableModel<TEntity, TEntityInfo>> OnEdit;
-        public Action<DataRow, TableModel<TEntity, TEntityInfo>> OnDelete;
+        public Action<TableModel<TEntity>> OnFilter;
+        public Action<TableModel<TEntity>> OnAdd;
+        public Action<DataRow, TableModel<TEntity>> OnEdit;
+        public Action<DataRow, TableModel<TEntity>> OnDelete;
 
         public virtual ICommand ChangeSelection
         {
@@ -155,7 +154,7 @@ namespace CanteenAIS_ViewModel.BasicViewModels
 
         public virtual void UpdateDataTable()
         {
-            Table = Model.GetTable();
+            Table = Model.GetTable<TEntity>();
         }
     }
 }

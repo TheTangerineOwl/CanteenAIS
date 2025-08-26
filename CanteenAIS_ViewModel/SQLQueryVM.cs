@@ -11,11 +11,11 @@ namespace CanteenDBViewModels
 {
     public class SQLqueryVM : PropChanged
     {
-        private readonly IUserPerm Perm;
+        private readonly UserPermEntity Perm;
 
         public SQLqueryVM(uint elementId)
         {
-            List<IUserPerm> allPerms = DBContext.GetInstance().UserPerms.Read().ToList();
+            List<UserPerm> allPerms = DBContext.GetInstance().UserPerms.Read<UserPerm>().ToList();
             foreach (var perm in allPerms)
                 if (perm.UserId == DBContext.GetInstance().CurrentUser?.Id && perm.ElementId == elementId)
                     Perm = perm;
