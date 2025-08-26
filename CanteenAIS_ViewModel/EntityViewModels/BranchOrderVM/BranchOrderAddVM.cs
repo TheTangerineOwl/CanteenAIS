@@ -1,0 +1,21 @@
+﻿using CanteenAIS_Models;
+using CanteenAIS_ViewModel.BasicViewModels;
+using System;
+using Entities = CanteenAIS_DB.Database.Entities;
+
+namespace CanteenAIS_ViewModel.EntityViewModels.BranchOrder
+{
+    public class BranchOrderAddVM : BasicAddVM<Entities.BranchOrder>
+    {
+        protected BranchOrderAddVM(TableModel<Entities.BranchOrder> tableModel)
+            : base(tableModel) { }
+
+        protected override void Clear()
+        {
+            Fields.Id = 0;
+            Fields.BranchId = 0;
+            Fields.BranchName = string.Empty;
+            Fields.DateTime = DateTime.Now;
+        }
+    }
+}

@@ -1,13 +1,12 @@
 ﻿using CanteenAIS_DB;
 using CanteenAIS_DB.AppAuth.Entities;
 using CanteenAIS_Models;
-using CanteenAIS_ViewModel;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Windows.Input;
 
-namespace CanteenDBViewModels
+namespace CanteenAIS_ViewModel
 {
     public class SQLqueryVM : PropChanged
     {

@@ -42,14 +42,70 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BasicViewModels\BasicActionVM.cs" />
-    <Compile Include="EntityViewModels\AssortmentGroup\AssortmentGroupAddVM.cs" />
-    <Compile Include="EntityViewModels\AssortmentGroup\AssortmentGroupEditVM.cs" />
-    <Compile Include="EntityViewModels\AssortmentGroup\AssortmentGroupFilterVM.cs" />
+    <Compile Include="EntityViewModels\SupplyVM\SupplyAddVM.cs" />
+    <Compile Include="EntityViewModels\SupplyVM\SupplyEditVM.cs" />
+    <Compile Include="EntityViewModels\SupplyVM\SupplyFilterVM.cs" />
+    <Compile Include="EntityViewModels\SupplyVM\SupplyVM.cs" />
+    <Compile Include="EntityViewModels\SupplierVM\SupplierAddVM.cs" />
+    <Compile Include="EntityViewModels\SupplierVM\SupplierEditVM.cs" />
+    <Compile Include="EntityViewModels\SupplierVM\SupplierFilterVM.cs" />
+    <Compile Include="EntityViewModels\SupplierVM\SupplierVM.cs" />
+    <Compile Include="EntityViewModels\SupplierHeadVM\SupplierHeadAddVM.cs" />
+    <Compile Include="EntityViewModels\SupplierHeadVM\SupplierHeadEditVM.cs" />
+    <Compile Include="EntityViewModels\SupplierHeadVM\SupplierHeadFilterVM.cs" />
+    <Compile Include="EntityViewModels\SupplierHeadVM\SupplierHeadVM.cs" />
+    <Compile Include="EntityViewModels\StreetVM\StreetAddVM.cs" />
+    <Compile Include="EntityViewModels\StreetVM\StreetEditVM.cs" />
+    <Compile Include="EntityViewModels\StreetVM\StreetFilterVM.cs" />
+    <Compile Include="EntityViewModels\StreetVM\StreetVM.cs" />
+    <Compile Include="EntityViewModels\RealizationVM\RealizationAddVM.cs" />
+    <Compile Include="EntityViewModels\RealizationVM\RealizationEditVM.cs" />
+    <Compile Include="EntityViewModels\RealizationVM\RealizationFilterVM.cs" />
+    <Compile Include="EntityViewModels\RealizationVM\RealizationVM.cs" />
+    <Compile Include="EntityViewModels\ProductVM\ProductAddVM.cs" />
+    <Compile Include="EntityViewModels\ProductVM\ProductEditVM.cs" />
+    <Compile Include="EntityViewModels\ProductVM\ProductFilterVM.cs" />
+    <Compile Include="EntityViewModels\ProductVM\ProductVM.cs" />
+    <Compile Include="EntityViewModels\MeasureUnitVM\MeasureUnitAddVM.cs" />
+    <Compile Include="EntityViewModels\MeasureUnitVM\MeasureUnitEditVM.cs" />
+    <Compile Include="EntityViewModels\MeasureUnitVM\MeasureUnitFilterVM.cs" />
+    <Compile Include="EntityViewModels\MeasureUnitVM\MeasureUnitVM.cs" />
+    <Compile Include="EntityViewModels\DishVM\DishAddVM.cs" />
+    <Compile Include="EntityViewModels\DishVM\DishEditVM.cs" />
+    <Compile Include="EntityViewModels\DishVM\DishFilterVM.cs" />
+    <Compile Include="EntityViewModels\DishVM\DishVM.cs" />
+    <Compile Include="EntityViewModels\CityVM\CityAddVM.cs" />
+    <Compile Include="EntityViewModels\CityVM\CityEditVM.cs" />
+    <Compile Include="EntityViewModels\CityVM\CityFilterVM.cs" />
+    <Compile Include="EntityViewModels\CityVM\CityVM.cs" />
+    <Compile Include="EntityViewModels\BranchOrderVM\BranchOrderAddVM.cs" />
+    <Compile Include="EntityViewModels\BranchOrderVM\BranchOrderEditVM.cs" />
+    <Compile Include="EntityViewModels\BranchOrderVM\BranchOrderFilterVM.cs" />
+    <Compile Include="EntityViewModels\BranchOrderVM\BranchOrderVM.cs" />
+    <Compile Include="EntityViewModels\BranchVM\BranchAddVM.cs" />
+    <Compile Include="EntityViewModels\BranchVM\BranchEditVM.cs" />
+    <Compile Include="EntityViewModels\BranchVM\BranchFilterVM.cs" />
+    <Compile Include="EntityViewModels\BranchVM\BranchVM.cs" />
+    <Compile Include="EntityViewModels\BankVM\BankAddVM.cs" />
+    <Compile Include="EntityViewModels\BankVM\BankEditVM.cs" />
+    <Compile Include="EntityViewModels\BankVM\BankFilterVM.cs" />
+    <Compile Include="EntityViewModels\BankVM\BankVM.cs" />
+    <Compile Include="EntityViewModels\AssortmentGroupVM\AssortmentGroupAddVM.cs" />
+    <Compile Include="EntityViewModels\AssortmentGroupVM\AssortmentGroupEditVM.cs" />
+    <Compile Include="EntityViewModels\AssortmentGroupVM\AssortmentGroupFilterVM.cs" />
+    <Compile Include="MainVM.cs" />
+    <Compile Include="ManagementViewModels\UserPermVM\UserPermAddVM.cs" />
+    <Compile Include="ManagementViewModels\UserPermVM\UserPermEditVM.cs" />
+    <Compile Include="ManagementViewModels\UserPermVM\UserPermFilterVM.cs" />
+    <Compile Include="ManagementViewModels\UserPermVM\UserPermVM.cs" />
+    <Compile Include="ManagementViewModels\UserVM\ChangePasswordVM.cs" />
+    <Compile Include="ManagementViewModels\UserVM\LoginVM.cs" />
+    <Compile Include="ManagementViewModels\UserVM\RegistrationVM.cs" />
     <Compile Include="SQLQueryVM.cs" />
     <Compile Include="StaticViewModels\AboutProgramVM.cs" />
     <Compile Include="BasicViewModels\BasicVM.cs" />
     <Compile Include="Command.cs" />
-    <Compile Include="EntityViewModels\AssortmentGroup\AssortmentGroupVM.cs" />
+    <Compile Include="EntityViewModels\AssortmentGroupVM\AssortmentGroupVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropChanged.cs" />
     <Compile Include="StaticViewModels\ContentVM.cs" />
@@ -65,5 +121,6 @@
       <Name>CanteenAIS_Models</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -58,7 +58,11 @@ namespace CanteenAIS_ViewModel.BasicViewModels
             Fields = new TEntity();
         }
 
-        public abstract void Add();
+        public virtual void Add()
+        {
+            Model.Add<TEntity>(Fields);
+            Clear();
+        }
     }
 
     public abstract class BasicEditVM<TEntity> : BasicActionVM<TEntity>
@@ -74,7 +78,10 @@ namespace CanteenAIS_ViewModel.BasicViewModels
             Fields = Model.GetEntity<TEntity>(row);
         }
 
-        public abstract void Edit();
+        public virtual void Edit()
+        {
+            Model.Update<TEntity>(Row, Fields);
+        }
     }
 
     public abstract class BasicFilterVM<TEntity> : BasicActionVM<TEntity>
@@ -83,13 +90,11 @@ namespace CanteenAIS_ViewModel.BasicViewModels
         public override string WindowTitle => $"Фильтровать: {TableTitle}";
         public override string ButtonContent => "Фильтр";
 
-        protected DataRow Row;
-        protected BasicFilterVM(DataRow row, TableModel<TEntity> tableModel) : base(tableModel)
-        {
-            Row = row;
-            Fields = Model.GetEntity<TEntity>(row);
-        }
+        protected BasicFilterVM(TableModel<TEntity> tableModel) : base(tableModel) { }
 
-        public abstract void Filter();
+        public virtual void Filter()
+        {
+            Model.GetFiltered(Fields);
+        }
     }
 }
