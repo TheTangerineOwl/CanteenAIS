@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using CanteenAIS_Views;
 using System.Windows;
 
 namespace CanteenAIS
@@ -13,5 +8,10 @@ namespace CanteenAIS
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+            LoginWindow login = new LoginWindow();
+            login.Show();
+        }
     }
 }

@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CanteenAIS_Models", "..\Can
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CanteenAIS_ViewModel", "..\CanteenAIS_ViewModel\CanteenAIS_ViewModel.csproj", "{2CCF6CB4-D6F6-4DC8-9DE8-CC4465E81734}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CanteenAIS_Views", "..\CanteenAIS_Views\CanteenAIS_Views.csproj", "{9F501A8D-E8D9-433E-A3F2-E25675C9BE69}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,10 @@ Global
 		{2CCF6CB4-D6F6-4DC8-9DE8-CC4465E81734}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2CCF6CB4-D6F6-4DC8-9DE8-CC4465E81734}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2CCF6CB4-D6F6-4DC8-9DE8-CC4465E81734}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F501A8D-E8D9-433E-A3F2-E25675C9BE69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F501A8D-E8D9-433E-A3F2-E25675C9BE69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F501A8D-E8D9-433E-A3F2-E25675C9BE69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F501A8D-E8D9-433E-A3F2-E25675C9BE69}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
