@@ -15,7 +15,7 @@ namespace CanteenAIS_Models
         protected IDictionary<DataRow, TEntity> DataValues;
         protected DataRow Selected { get; set; }
 
-        protected readonly BasicEntityCRU<TEntity> TableContext;
+        private readonly BasicEntityCRU<TEntity> TableContext;
 
         protected TableModel(BasicEntityCRU<TEntity> contextInstance)
         {
@@ -64,19 +64,10 @@ namespace CanteenAIS_Models
             return FetchAndFilter<TEntityType>(v => CompareEntities(v, filter) == 0);
         }
 
-        public virtual UserPermEntity GetPerms<TUserPerm>(uint elementId) where TUserPerm : UserPermEntity, new()
+        public virtual UserPermEntity GetPerms<TUserPerm>(uint elementId)
+            where TUserPerm : UserPermEntity, new()
         {
-            UserPermEntity perms;
-            List<TUserPerm> userPerms = DBContext.GetInstance().UserPerms.Read<TUserPerm>().ToList();
-            UserEntity currentUser = DBContext.GetInstance().CurrentUser;
-            perms = userPerms.Find(up => up.UserId == currentUser.Id && up.ElementId == elementId);
-            if (perms.UserId != currentUser.Id)
-                perms = new TUserPerm
-                {
-                    UserId = currentUser.Id,
-                    ElementId = elementId
-                };
-            return perms;
+            return DBContext.GetInstance().GetCurrentPerm<UserPerm>(elementId);
         }
 
         public virtual TResult GetEntity<TResult>(DataRow row)
@@ -93,7 +84,12 @@ namespace CanteenAIS_Models
     public abstract class SimpleModel<TEntity> : TableModel<TEntity>
         where TEntity : SimpleEntity
     {
-        public SimpleModel(BasicSimpleCRUD<TEntity> contextInstance) : base(contextInstance) { }
+        protected BasicSimpleCRUD<TEntity> TableContext;
+
+        public SimpleModel(BasicSimpleCRUD<TEntity> contextInstance) : base(contextInstance)
+        {
+            TableContext = contextInstance;
+        }
 
         public uint GetId(DataRow row)
         {
@@ -107,7 +103,7 @@ namespace CanteenAIS_Models
 
         public override void DeleteRow(DataRow row)
         {
-            ((BasicSimpleCRUD<TEntity>)TableContext).Delete(GetId(row));
+            TableContext.Delete(GetId(row));
         }
 
         public override int CompareEntities(TEntity first, TEntity second)
@@ -123,7 +119,12 @@ namespace CanteenAIS_Models
     public abstract class DoubleModel<TEntity> : TableModel<TEntity>
         where TEntity : DoubleEntity
     {
-        public DoubleModel(BasicDoubleCRUD<TEntity> contextInstance) : base(contextInstance) { }
+        protected BasicDoubleCRUD<TEntity> TableContext;
+
+        public DoubleModel(BasicDoubleCRUD<TEntity> contextInstance) : base(contextInstance)
+        {
+            TableContext = contextInstance;
+        }
 
         public (uint, uint) GetPK(DataRow row)
         {
@@ -142,7 +143,7 @@ namespace CanteenAIS_Models
         public override void DeleteRow(DataRow row)
         {
             (uint firstId, uint secondId) = GetPK(row);
-            ((BasicDoubleCRUD<TEntity>)TableContext).Delete(firstId, secondId);
+            TableContext.Delete(firstId, secondId);
         }
 
         public override int CompareEntities(TEntity first, TEntity second)

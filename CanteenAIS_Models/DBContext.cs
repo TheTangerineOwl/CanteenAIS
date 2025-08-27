@@ -3,6 +3,7 @@ using CanteenAIS_DB.Database.Entities;
 using CanteenAIS_DB.Database.Queries;
 using CanteenAIS_DB.AppAuth.Entities;
 using CanteenAIS_DB.AppAuth.Queries;
+using System.Collections.Generic;
 
 namespace CanteenAIS_Models
 {
@@ -34,7 +35,35 @@ namespace CanteenAIS_Models
         private DBContext()
         {
             // УБРАТЬ
+            //UserService service = new UserService(new Encryptor());
+            //service.Registration<User>("admin", "admin");
             CurrentUser = Users.Read<User>()[0];
+            //UserPermEntity testperm = new UserPerm
+            //{
+            //    UserId = CurrentUser.Id,
+            //    UserLogin = CurrentUser.Login
+            //};
+
+        }
+
+        public IList<TUserPerm> GetCurrentUserPerms<TUserPerm>()
+            where TUserPerm : UserPermEntity, new()
+        {
+            return UserPerms.ReadId<TUserPerm>(CurrentUser.Id);
+        }
+
+        public TUserPerm GetCurrentPerm<TUserPerm>(uint elementId)
+            where TUserPerm : UserPermEntity, new()
+        {
+            IList<TUserPerm> perm = UserPerms.ReadId<TUserPerm>(CurrentUser.Id, elementId);
+            if (perm.Count < 1)
+                return new TUserPerm
+                {
+                    UserId = CurrentUser.Id,
+                    UserLogin = CurrentUser.Login,
+                    ElementId = elementId
+                };
+            return perm[0];
         }
 
         public static DBContext GetInstance()

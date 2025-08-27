@@ -58,8 +58,10 @@ namespace CanteenAIS_Models.Management.Models
             if (compared != 0) return compared;
             compared = first.Patronim.CompareTo(second.Patronim);
             if (compared != 0) return compared;
-            compared = first.DateOfBirth.CompareTo(second.DateOfBirth);
-            if (compared != 0) return compared;
+            if (first.DateOfBirth < second.DateOfBirth)
+                return -1;
+            else if (first.DateOfBirth > second.DateOfBirth)
+                return 1;
             return 0;
         }
 
