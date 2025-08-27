@@ -14,10 +14,7 @@ namespace CanteenAIS_ViewModel
 
         public SQLqueryVM(uint elementId)
         {
-            List<UserPerm> allPerms = DBContext.GetInstance().UserPerms.Read<UserPerm>().ToList();
-            foreach (var perm in allPerms)
-                if (perm.UserId == DBContext.GetInstance().CurrentUser?.Id && perm.ElementId == elementId)
-                    Perm = perm;
+            Perm = DBContext.GetInstance().GetCurrentPerm<UserPerm>(elementId);
         }
 
         public string Title => "SQL-запрос";
