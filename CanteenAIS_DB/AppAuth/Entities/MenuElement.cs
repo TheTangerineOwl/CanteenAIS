@@ -6,7 +6,7 @@ namespace CanteenAIS_DB.AppAuth.Entities
     {
         [DisplayName("Родитель")]
         public virtual string ParentName { get; set; }
-        public virtual uint ParentId { get; set; }
+        public virtual uint? ParentId { get; set; }
         [DisplayName("Имя")]
         public virtual string Name { get; set; }
         [DisplayName("Dll")]

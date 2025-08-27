@@ -10,29 +10,11 @@ namespace CanteenAIS_DB
 
         protected abstract string TableName { get; }
 
-        protected virtual string QueryCreate
-        {
-            get
-            {
-                return $"INSERT INTO {TableName} (`Name`) VALUES (@entityName);";
-            }
-        }
+        protected virtual string QueryCreate => $"INSERT INTO {TableName} (`Name`) VALUES (@entityName);";
 
-        protected virtual string QueryRead
-        {
-            get
-            {
-                return $"SELECT * FROM {TableName} ORDER BY `Id`;";
-            }
-        }
+        protected virtual string QueryRead => $"SELECT * FROM {TableName} ORDER BY `Id`;";
 
-        protected virtual string QueryUpdate
-        {
-            get
-            {
-                return $"UPDATE {TableName} SET `Name`=@entityName WHERE `Id`=@entityId;";
-            }
-        }
+        protected virtual string QueryUpdate => $"UPDATE {TableName} SET `Name`=@entityName WHERE `Id`=@entityId;";
 
         protected abstract MySqlParameterCollection FillParameters(T entity, MySqlCommand command, bool withId = true);
         protected abstract IList<TEntity> AddFromRows<TEntity>(DataTable table) where TEntity : T, new();
@@ -60,27 +42,31 @@ namespace CanteenAIS_DB
 
     public abstract class BasicSimpleCRUD<T> : BasicEntityCRU<T> where T : SimpleEntity
     {
-        protected virtual string QueryDelete
-        {
-            get
-            {
-                return $"DELETE FROM {TableName} WHERE Id={IdQueryParam}";
-            }
-        }
+        protected virtual string QueryDelete => $"DELETE FROM {TableName} WHERE Id={IdQueryParam}";
 
-        protected virtual string IdQueryParam
-        {
-            get
-            {
-                return "@entityId";
-            }
-        }
+        protected virtual string IdQueryParam => "@entityId";
 
         public virtual void Delete(uint id)
         {
             MySqlCommand command = new MySqlCommand(QueryDelete);
             command.Parameters.AddWithValue(IdQueryParam, id);
             DbConnection.GetInstance().ExecMySqlQuery(command, ref exception);
+        }
+
+        public virtual string ReadIdQuery =>
+            QueryRead.TrimEnd(';') +
+            $"WHERE `Id`={IdQueryParam};";
+
+        public abstract U ParseEntity<U>(DataRow row) where U : T, new();
+
+        public virtual U ReadId<U>(uint id) where U : T, new()
+        {
+            MySqlCommand command = new MySqlCommand(ReadIdQuery);
+            command.Parameters.AddWithValue(IdQueryParam, id);
+            DataTable dataTable = DbConnection.GetInstance().ExecMySqlQuery(command, ref exception);
+            if (dataTable.Rows.Count == 0)
+                return null;
+            return ParseEntity<U>(dataTable.Rows[0]);
         }
     }
 
@@ -89,5 +75,53 @@ namespace CanteenAIS_DB
         protected abstract string QueryDelete { get; }
 
         public abstract void Delete(uint firstId, uint secondId);
+
+        public virtual string ReadPKQuery =>
+            QueryRead.TrimEnd(';') +
+            $"WHERE `{FirstIdName}`={IdQueryParam1} AND" +
+            $"`{SecondIdName}`={IdQueryParam2};";
+        public virtual string ReadId1Query =>
+            QueryRead.TrimEnd(';') +
+            $"WHERE `{FirstIdName}`={IdQueryParam1};";
+        public virtual string ReadId2Query =>
+            QueryRead.TrimEnd(';') +
+            $"WHERE `{SecondIdName}`={IdQueryParam2};";
+
+        protected virtual string IdQueryParam1 => $"@entity{FirstIdName}";
+        protected virtual string IdQueryParam2 => $"@entity{SecondIdName}";
+
+        protected abstract string FirstIdName { get; }
+        protected abstract string SecondIdName { get; }
+
+        public abstract U ParseEntity<U>(DataRow row) where U : T, new();
+
+        public virtual IList<U> ReadId<U>(uint? firstId = null, uint? secondId = null)
+            where U : T, new()
+        {
+            MySqlCommand command = new MySqlCommand();
+            if (firstId is null)
+            {
+                if (secondId is null)
+                    return null;
+                command.CommandText = ReadId2Query;
+                command.Parameters.AddWithValue(IdQueryParam2, secondId);
+            }
+            else if (secondId is null)
+            {
+                command.CommandText = ReadId1Query;
+                command.Parameters.AddWithValue(IdQueryParam1, firstId);
+            }
+            else
+            {
+                command.CommandText = ReadPKQuery;
+                command.Parameters.AddWithValue(IdQueryParam1, firstId);
+                command.Parameters.AddWithValue(IdQueryParam2, secondId);
+            }
+            DataTable dataTable = DbConnection.GetInstance().ExecMySqlQuery(command, ref exception);
+            IList<U> res = new List<U>();
+            foreach (DataRow row in dataTable.Rows)
+                res.Add(ParseEntity<U>(row));
+            return res;
+        }
     }
 }

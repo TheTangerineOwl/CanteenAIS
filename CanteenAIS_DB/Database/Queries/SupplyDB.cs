@@ -12,7 +12,7 @@ namespace CanteenAIS_DB.Database.Queries
 
         protected override string QueryCreate =>
             "INSERT INTO supplies (" +
-            "`Id`, `ProductId`, `DateTime`" +
+            "`Id`, `SupplierId`, `DateTime`" +
             ") VALUES (" +
             "@entityId, @entitySupplierId, @entityDateTime" +
             ");";
@@ -20,16 +20,16 @@ namespace CanteenAIS_DB.Database.Queries
         protected override string QueryRead =>
             "SELECT " +
             "s.`Id` AS `Id`, " +
-            "s.`ProductId` AS `ProductId`, " +
-            "sr.`Name` AS `ProductName`, " +
+            "s.`SupplierId` AS `SupplierId`, " +
+            "sr.`Name` AS `SupplierName`, " +
             "s.`DateTime` AS `DateTime` " +
             "FROM supplies AS s " +
-            "LEFT JOIN suppliers AS sr ON sr.`Id`=s.`ProductId`;";
+            "LEFT JOIN suppliers AS sr ON sr.`Id`=s.`SupplierId`;";
 
         protected override string QueryUpdate =>
             "UPDATE supplies " +
             "SET " +
-            "`ProductId`=@entitySupplierId, " +
+            "`SupplierId`=@entitySupplierId, " +
             "`DateTime`=@entityDateTime " +
             "WHERE `Id`=@entityId;";
 
@@ -49,17 +49,19 @@ namespace CanteenAIS_DB.Database.Queries
             if (table == null)
                 return result;
             foreach (DataRow row in table.Rows)
-            {
-                TSupply info = new TSupply
-                {
-                    Id = uint.Parse(row["Id"].ToString()),
-                    SupplierId = uint.Parse(row["ProductId"].ToString()),
-                    SupplierName = row["ProductName"].ToString(),
-                    DateTime = DateTime.Parse(row["DateTime"].ToString())
-                };
-                result.Add(info);
-            }
+                result.Add(ParseEntity<TSupply>(row));
             return result;
+        }
+
+        public override TSupply ParseEntity<TSupply>(DataRow row)
+        {
+            return new TSupply
+            {
+                Id = uint.Parse(row["Id"].ToString()),
+                SupplierId = DataRowExtensions.Field<uint>(row, "SupplierId"),
+                SupplierName = DataRowExtensions.Field<string>(row, "SupplierName"),
+                DateTime = DataRowExtensions.Field<DateTime>(row, "DateTime")
+            };
         }
     }
 }

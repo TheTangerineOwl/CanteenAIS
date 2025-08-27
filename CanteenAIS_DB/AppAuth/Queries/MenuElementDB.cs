@@ -1,5 +1,6 @@
 ﻿using CanteenAIS_DB.AppAuth.Entities;
 using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Data;
 
@@ -22,8 +23,8 @@ namespace CanteenAIS_DB.AppAuth.Queries
                     "me.`DllName` AS `DllName`, " +
                     "me.`FuncName` AS `FuncName`, " +
                     "me.`Order` AS `Order` " +
-                    "FROM canteenapp.menuelements AS me " +
-                    "LEFT JOIN canteenapp.menuelements AS mep ON me.`ParentId`=mep.`Id`;";
+                    "FROM menuelements AS me " +
+                    "LEFT JOIN menuelements AS mep ON me.`ParentId`=mep.`Id`;";
 
         protected override string QueryUpdate => "UPDATE menuelements " +
                     "SET " +
@@ -53,19 +54,23 @@ namespace CanteenAIS_DB.AppAuth.Queries
             if (table == null)
                 return result;
             foreach (DataRow row in table.Rows)
-            {
-                TEntity info = new TEntity
-                {
-                    Id = uint.Parse(row["Id"].ToString()),
-                    Order = uint.Parse(row["Order"].ToString()),
-                    ParentId = uint.Parse(row["ParentId"].ToString()),
-                    Name = row["Name"].ToString(),
-                    DllName = row["DllName"].ToString(),
-                    FuncName = row["FuncName"].ToString()
-                };
-                result.Add(info);
-            }
+                result.Add(ParseEntity<TEntity>(row));
             return result;
+        }
+
+        public override TElement ParseEntity<TElement>(DataRow row)
+        {
+            TElement entity = new TElement
+            {
+                Id = uint.Parse(row["Id"].ToString()),
+                Order = DataRowExtensions.Field<uint>(row, "Order"),
+                Name = DataRowExtensions.Field<string>(row, "Name"),
+                ParentId = DataRowExtensions.Field<uint?>(row, "ParentId"),
+                ParentName = DataRowExtensions.Field<string>(row, "ParentName"),
+                DllName = DataRowExtensions.Field<string>(row, "DllName"),
+                FuncName = DataRowExtensions.Field<string>(row, "FuncName")
+            };
+            return entity;
         }
     }
 }

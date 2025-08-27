@@ -45,18 +45,20 @@ namespace CanteenAIS_DB.Database.Queries
             if (table == null)
                 return result;
             foreach (DataRow row in table.Rows)
-            {
-                THead info = new THead
-                {
-                    Id = uint.Parse(row["Id"].ToString()),
-                    LastName = row["LastName"].ToString(),
-                    FirstName = row["FirstName"].ToString(),
-                    Patronim = row["Patronim"].ToString(),
-                    Phone = row["Phone"].ToString()
-                };
-                result.Add(info);
-            }
+                result.Add(ParseEntity<THead>(row));
             return result;
+        }
+
+        public override THead ParseEntity<THead>(DataRow row)
+        {
+            return new THead
+            {
+                Id = uint.Parse(row["Id"].ToString()),
+                LastName = DataRowExtensions.Field<string>(row, "LastName"),
+                FirstName = DataRowExtensions.Field<string>(row, "FirstName"),
+                Patronim = DataRowExtensions.Field<string>(row, "Patronim"),
+                Phone = DataRowExtensions.Field<string>(row, "Phone")
+            };
         }
     }
 }

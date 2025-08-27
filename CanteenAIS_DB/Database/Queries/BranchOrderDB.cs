@@ -45,17 +45,19 @@ namespace CanteenAIS_DB.Database.Queries
             if (table == null)
                 return result;
             foreach (DataRow row in table.Rows)
-            {
-                TBranchOrder info = new TBranchOrder
-                {
-                    Id = uint.Parse(row["Id"].ToString()),
-                    DateTime = DateTime.Parse(row["DateTime"].ToString()),
-                    BranchId = uint.Parse(row["BranchId"].ToString()),
-                    BranchName = row["BranchName"].ToString()
-                };
-                result.Add(info);
-            }
+                result.Add(ParseEntity<TBranchOrder>(row));
             return result;
+        }
+
+        public override TBranchOrder ParseEntity<TBranchOrder>(DataRow row)
+        {
+            return new TBranchOrder
+            {
+                Id = uint.Parse(row["Id"].ToString()),
+                DateTime = DataRowExtensions.Field<DateTime>(row, "DateTime"),
+                BranchId = DataRowExtensions.Field<uint>(row, "BranchId"),
+                BranchName = DataRowExtensions.Field<string>(row, "BranchName")
+            };
         }
     }
 }

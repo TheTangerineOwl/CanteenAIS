@@ -64,23 +64,25 @@ namespace CanteenAIS_DB.Database.Queries
             if (table == null)
                 return result;
             foreach (DataRow row in table.Rows)
-            {
-                TDish info = new TDish
-                {
-                    Id = uint.Parse(row["Id"].ToString()),
-                    Name = row["Name"].ToString(),
-                    GroupId = uint.Parse(row["GroupId"].ToString()),
-                    GroupName = row["GroupName"].ToString(),
-                    Price = decimal.Parse(row["Price"].ToString()),
-                    Serving = double.Parse(row["Serving"].ToString()),
-                    UnitId = uint.Parse(row["UnitId"].ToString()),
-                    UnitName = row["UnitName"].ToString(),
-                    Recipe = row["Recipe"].ToString(),
-                    Picture = row["Picture"].ToString()
-                };
-                result.Add(info);
-            }
+                result.Add(ParseEntity<TDish>(row));
             return result;
+        }
+
+        public override TDish ParseEntity<TDish>(DataRow row)
+        {
+            return new TDish
+            {
+                Id = uint.Parse(row["Id"].ToString()),
+                Name = DataRowExtensions.Field<string>(row, "Name"),
+                GroupId = DataRowExtensions.Field<uint>(row, "GroupId"),
+                GroupName = DataRowExtensions.Field<string>(row, "GroupName"),
+                Price = DataRowExtensions.Field<decimal>(row, "Price"),
+                Serving = DataRowExtensions.Field<double>(row, "Serving"),
+                UnitId = DataRowExtensions.Field<uint>(row, "UnitId"),
+                UnitName = DataRowExtensions.Field<string>(row, "UnitName"),
+                Recipe = DataRowExtensions.Field<string>(row, "Recipe"),
+                Picture = DataRowExtensions.Field<string>(row, "Picture")
+            };
         }
     }
 }

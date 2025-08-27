@@ -23,15 +23,17 @@ namespace CanteenAIS_DB.Database.Queries
             if (table == null)
                 return result;
             foreach (DataRow row in table.Rows)
-            {
-                TMeasureUnit info = new TMeasureUnit
-                {
-                    Id = uint.Parse(row["Id"].ToString()),
-                    Name = row["Name"].ToString()
-                };
-                result.Add(info);
-            }
+                result.Add(ParseEntity<TMeasureUnit>(row));
             return result;
+        }
+
+        public override TUnit ParseEntity<TUnit>(DataRow row)
+        {
+            return new TUnit
+            {
+                Id = uint.Parse(row["Id"].ToString()),
+                Name = DataRowExtensions.Field<string>(row, "Name")
+            };
         }
     }
 }

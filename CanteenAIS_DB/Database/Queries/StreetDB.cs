@@ -44,17 +44,19 @@ namespace CanteenAIS_DB.Database.Queries
             if (table == null)
                 return result;
             foreach (DataRow row in table.Rows)
-            {
-                TStreet info = new TStreet
-                {
-                    Id = uint.Parse(row["Id"].ToString()),
-                    CityId = uint.Parse(row["CityId"].ToString()),
-                    CityName = row["CityName"].ToString(),
-                    Name = row["Name"].ToString()
-                };
-                result.Add(info);
-            }
+                result.Add(ParseEntity<TStreet>(row));
             return result;
+        }
+
+        public override TStreet ParseEntity<TStreet>(DataRow row)
+        {
+            return new TStreet
+            {
+                Id = uint.Parse(row["Id"].ToString()),
+                CityId = DataRowExtensions.Field<uint>(row, "CityId"),
+                CityName = DataRowExtensions.Field<string>(row, "CityName"),
+                Name = DataRowExtensions.Field<string>(row, "Name")
+            };
         }
     }
 }

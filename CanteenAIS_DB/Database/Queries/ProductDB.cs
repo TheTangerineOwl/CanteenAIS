@@ -57,21 +57,23 @@ namespace CanteenAIS_DB.Database.Queries
             if (table == null)
                 return result;
             foreach (DataRow row in table.Rows)
-            {
-                TProduct info = new TProduct
-                {
-                    Id = uint.Parse(row["Id"].ToString()),
-                    Name = row["Name"].ToString(),
-                    UnitId = uint.Parse(row["UnitId"].ToString()),
-                    UnitName = row["UnitName"].ToString(),
-                    Markup = decimal.Parse(row["Markup"].ToString()),
-                    Stock = double.Parse(row["Stock"].ToString()),
-                    SupplierId = uint.Parse(row["SupplierId"].ToString()),
-                    SupplierName = row["SupplierName"].ToString()
-                };
-                result.Add(info);
-            }
+                result.Add(ParseEntity<TProduct>(row));
             return result;
+        }
+
+        public override TProduct ParseEntity<TProduct>(DataRow row)
+        {
+            return new TProduct
+            {
+                Id = uint.Parse(row["Id"].ToString()),
+                Name = DataRowExtensions.Field<string>(row, "Name"),
+                UnitId = DataRowExtensions.Field<uint>(row, "UnitId"),
+                UnitName = DataRowExtensions.Field<string>(row, "UnitName"),
+                Markup = DataRowExtensions.Field<decimal>(row, "Markup"),
+                Stock = DataRowExtensions.Field<double>(row, "Stock"),
+                SupplierId = DataRowExtensions.Field<uint>(row, "SupplierId"),
+                SupplierName = DataRowExtensions.Field<string>(row, "SupplierName")
+            };
         }
     }
 }

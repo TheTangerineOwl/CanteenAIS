@@ -56,20 +56,22 @@ namespace CanteenAIS_DB.Database.Queries
             if (table == null)
                 return result;
             foreach (DataRow row in table.Rows)
-            {
-                TRealization info = new TRealization
-                {
-                    Id = uint.Parse(row["Id"].ToString()),
-                    DishId = uint.Parse(row["DishId"].ToString()),
-                    DishName = row["DishName"].ToString(),
-                    Amount = double.Parse(row["Amount"].ToString()),
-                    DateTime = DateTime.Parse(row["DateTime"].ToString()),
-                    UnitId = uint.Parse(row["UnitId"].ToString()),
-                    UnitName = row["UnitName"].ToString()
-                };
-                result.Add(info);
-            }
+                result.Add(ParseEntity<TRealization>(row));
             return result;
+        }
+
+        public override TRealization ParseEntity<TRealization>(DataRow row)
+        {
+            return new TRealization
+            {
+                Id = uint.Parse(row["Id"].ToString()),
+                DishId = DataRowExtensions.Field<uint>(row, "DishId"),
+                DishName = DataRowExtensions.Field<string>(row, "DishName"),
+                Amount = DataRowExtensions.Field<double>(row, "Amount"),
+                DateTime = DataRowExtensions.Field<DateTime>(row, "DateTime"),
+                UnitId = DataRowExtensions.Field<uint>(row, "UnitId"),
+                UnitName = DataRowExtensions.Field<string>(row, "UnitName")
+            };
         }
     }
 }

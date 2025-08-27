@@ -17,7 +17,7 @@ namespace CanteenAIS_DB.AppAuth.Entities
         [DisplayName("Отчество")]
         public virtual string Patronim { get; set; }
         [DisplayName("Дата рождения")]
-        public virtual DateTime DateOfBirth { get; set; }
+        public virtual DateTime? DateOfBirth { get; set; }
 
         public virtual ObservableCollection<UserPermEntity> UserPerms { get; set; }
 

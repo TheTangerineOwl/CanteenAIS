@@ -58,19 +58,7 @@ namespace CanteenAIS_DB.Database.Queries
             if (table == null)
                 return new List<TSupplyProduct>();
             foreach (DataRow row in table.Rows)
-            {
-                TSupplyProduct info = new TSupplyProduct
-                {
-                    SupplyId = uint.Parse(row["SupplyId"].ToString()),
-                    ProductId = uint.Parse(row["ProductId"].ToString()),
-                    ProductName = row["ProductName"].ToString(),
-                    UnitId = uint.Parse(row["UnitId"].ToString()),
-                    UnitName = row["UnitName"].ToString(),
-                    Amount = double.Parse(row["Amount"].ToString()),
-                    Price = decimal.Parse(row["Price"].ToString())
-                };
-                result.Add(info);
-            }
+                result.Add(ParseEntity<TSupplyProduct>(row));
             return result;
         }
 
@@ -80,6 +68,23 @@ namespace CanteenAIS_DB.Database.Queries
             command.Parameters.AddWithValue("@entitySupplyId", supplyId);
             command.Parameters.AddWithValue("@entityProductId", productId);
             DbConnection.GetInstance().ExecMySqlQuery(command, ref exception);
+        }
+
+        protected override string FirstIdName => "SupplyId";
+        protected override string SecondIdName => "ProductId";
+
+        public override TSupplyProduct ParseEntity<TSupplyProduct>(DataRow row)
+        {
+            return new TSupplyProduct
+            {
+                SupplyId = uint.Parse(row["SupplyId"].ToString()),
+                ProductId = uint.Parse(row["ProductId"].ToString()),
+                ProductName = DataRowExtensions.Field<string>(row, "ProductName"),
+                UnitId = DataRowExtensions.Field<uint>(row, "UnitId"),
+                UnitName = DataRowExtensions.Field<string>(row, "UnitName"),
+                Amount = DataRowExtensions.Field<double>(row, "Amount"),
+                Price = DataRowExtensions.Field<decimal>(row, "Price")
+            };
         }
     }
 }

@@ -2,6 +2,7 @@
 using MySql.Data.MySqlClient;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 namespace CanteenAIS_DB.AppAuth.Queries
 {
@@ -57,20 +58,7 @@ namespace CanteenAIS_DB.AppAuth.Queries
             if (table == null)
                 return new List<TUserPerm>();
             foreach (DataRow row in table.Rows)
-            {
-                TUserPerm info = new TUserPerm
-                {
-                    UserId = uint.Parse(row["UserId"].ToString()),
-                    UserLogin = row["UserLogin"].ToString(),
-                    ElementId = uint.Parse(row["ElementId"].ToString()),
-                    ElementName = row["ElementName"].ToString(),
-                    CanRead = bool.Parse(row["CanRead"].ToString()),
-                    CanWrite = bool.Parse(row["CanWrite"].ToString()),
-                    CanEdit = bool.Parse(row["CanEdit"].ToString()),
-                    CanDelete = bool.Parse(row["CanDelete"].ToString())
-                };
-                result.Add(info);
-            }
+                result.Add(ParseEntity<TUserPerm>(row));
             return result;
         }
 
@@ -80,6 +68,25 @@ namespace CanteenAIS_DB.AppAuth.Queries
             command.Parameters.AddWithValue("@entityUserId", userId);
             command.Parameters.AddWithValue("@entityElementId", elementId);
             DbConnection.GetInstance().ExecMySqlQuery(command, ref exception);
+        }
+
+        protected override string FirstIdName => "UserId";
+        protected override string SecondIdName => "ElementId";
+
+        public override TUserPerm ParseEntity<TUserPerm>(DataRow row)
+        {
+            string[] trueValues = { "1", "true", "True"};
+            return new TUserPerm
+            {
+                UserId = uint.Parse(row["UserId"].ToString()),
+                UserLogin = row["UserLogin"].ToString(),
+                ElementId = uint.Parse(row["ElementId"].ToString()),
+                ElementName = row["ElementName"].ToString(),
+                CanRead = trueValues.Contains(row["CanRead"].ToString()),
+                CanWrite = trueValues.Contains(row["CanWrite"].ToString()),
+                CanEdit = trueValues.Contains(row["CanEdit"].ToString()),
+                CanDelete = trueValues.Contains(row["CanDelete"].ToString())
+            };
         }
     }
 }

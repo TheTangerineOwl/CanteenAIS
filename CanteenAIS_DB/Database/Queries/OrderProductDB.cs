@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using CanteenAIS_DB.Database.Entities;
+using Org.BouncyCastle.Crypto;
 
 namespace CanteenAIS_DB.Database.Queries
 {
@@ -56,17 +57,7 @@ namespace CanteenAIS_DB.Database.Queries
             if (table == null)
                 return new List<TOrderProduct>();
             foreach (DataRow row in table.Rows)
-            {
-                TOrderProduct info = new TOrderProduct{
-                    OrderId = uint.Parse(row["OrderId"].ToString()),
-                    ProductId = uint.Parse(row["ProductId"].ToString()),
-                    ProductName = row["ProductName"].ToString(),
-                    UnitId = uint.Parse(row["UnitId"].ToString()),
-                    UnitName = row["UnitName"].ToString(),
-                    Amount = double.Parse(row["Amount"].ToString())
-                };
-                result.Add(info);
-            }
+                result.Add(ParseEntity<TOrderProduct>(row));
             return result;
         }
 
@@ -76,6 +67,22 @@ namespace CanteenAIS_DB.Database.Queries
             command.Parameters.AddWithValue("@entityOrderId", orderId);
             command.Parameters.AddWithValue("@entityProductId", productId);
             DbConnection.GetInstance().ExecMySqlQuery(command, ref exception);
+        }
+
+        protected override string FirstIdName => "OrderId";
+        protected override string SecondIdName => "ProductId";
+
+        public override TOrderProduct ParseEntity<TOrderProduct>(DataRow row)
+        {
+            return new TOrderProduct
+            {
+                OrderId = uint.Parse(row["OrderId"].ToString()),
+                ProductId = uint.Parse(row["ProductId"].ToString()),
+                ProductName = DataRowExtensions.Field<string>(row, "ProductName"),
+                UnitId = DataRowExtensions.Field<uint>(row, "UnitId"),
+                UnitName = DataRowExtensions.Field<string>(row, "UnitName"),
+                Amount = DataRowExtensions.Field<double>(row, "Amount")
+            };
         }
     }
 }

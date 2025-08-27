@@ -56,20 +56,7 @@ namespace CanteenAIS_DB.Database.Queries
             if (table == null)
                 return new List<TIngredient>();
             foreach (DataRow row in table.Rows)
-            {
-                TIngredient info = new TIngredient
-                {
-                    DishId = uint.Parse(row["DishId"].ToString()),
-                    DishName = row["DishName"].ToString(),
-                    ProductId = uint.Parse(row["ProductId"].ToString()),
-                    ProductName = row["ProductName"].ToString(),
-                    UnitId = uint.Parse(row["UnitId"].ToString()),
-                    UnitName = row["UnitName"].ToString(),
-                    Gross = double.Parse(row["Gross"].ToString()),
-                    Net = double.Parse(row["Net"].ToString())
-                };
-                result.Add(info);
-            }
+                result.Add(ParseEntity<TIngredient>(row));
             return result;
         }
 
@@ -79,6 +66,24 @@ namespace CanteenAIS_DB.Database.Queries
             command.Parameters.AddWithValue("@entityDishId", DishId);
             command.Parameters.AddWithValue("@entityProductId", ProductId);
             DbConnection.GetInstance().ExecMySqlQuery(command, ref exception);
+        }
+
+        protected override string FirstIdName => "DishId";
+        protected override string SecondIdName => "ProductId";
+
+        public override TIngredient ParseEntity<TIngredient>(DataRow row)
+        {
+            return new TIngredient
+            {
+                DishId = uint.Parse(row["DishId"].ToString()),
+                DishName = DataRowExtensions.Field<string>(row, "DishName"),
+                ProductId = uint.Parse(row["ProductId"].ToString()),
+                ProductName = DataRowExtensions.Field<string>(row, "ProductName"),
+                UnitId = DataRowExtensions.Field<uint>(row, "UnitId"),
+                UnitName = DataRowExtensions.Field<string>(row, "UnitName"),
+                Gross = DataRowExtensions.Field<double>(row, "Gross"),
+                Net = DataRowExtensions.Field<double>(row, "Net")
+            };
         }
     }
 }

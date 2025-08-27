@@ -55,20 +55,23 @@ namespace CanteenAIS_DB.AppAuth.Queries
             if (table == null)
                 return result;
             foreach (DataRow row in table.Rows)
-            {
-                TUser info = new TUser
-                {
-                    Id = uint.Parse(row["Id"].ToString()),
-                    Login = row["Login"].ToString(),
-                    Password = row["Password"].ToString(),
-                    LastName = row["LastName"].ToString(),
-                    FirstName = row["FirstName"].ToString(),
-                    Patronim = row["Patronim"].ToString(),
-                    DateOfBirth = DateTime.Parse(row["DateOfBirth"].ToString())
-                };
-                result.Add(info);
-            }
+                result.Add(ParseEntity<TUser>(row));
             return result;
+        }
+
+        public override TUser ParseEntity<TUser>(DataRow row)
+        {
+            TUser user = new TUser
+            {
+                Id = uint.Parse(row["Id"].ToString()),
+                Login = DataRowExtensions.Field<string>(row, "Login"),
+                Password = DataRowExtensions.Field<string>(row, "Password"),
+                LastName = DataRowExtensions.Field<string>(row, "LastName"),
+                FirstName = DataRowExtensions.Field<string>(row, "FirstName"),
+                Patronim = DataRowExtensions.Field<string>(row, "Patronim"),
+                DateOfBirth = DataRowExtensions.Field<DateTime?>(row, "DateOfBirth")
+            };
+            return user;
         }
     }
 }

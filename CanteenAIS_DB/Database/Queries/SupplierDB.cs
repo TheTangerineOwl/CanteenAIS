@@ -77,26 +77,28 @@ namespace CanteenAIS_DB.Database.Queries
             if (table == null)
                 return result;
             foreach (DataRow row in table.Rows)
-            {
-                TSupplier info = new TSupplier
-                {
-                    Id = uint.Parse(row["Id"].ToString()),
-                    Name = row["Name"].ToString(),
-                    StreetId = uint.Parse(row["StreetId"].ToString()),
-                    CityName = row["CityName"].ToString(),
-                    StreetName = row["StreetName"].ToString(),
-                    Building = row["Building"].ToString(),
-                    HeadId = uint.Parse(row["HeadId"].ToString()),
-                    HeadName = row["HeadName"].ToString(),
-                    HeadPhone = row["HeadPhone"].ToString(),
-                    BankId = uint.Parse(row["BankId"].ToString()),
-                    BankName = row["BankName"].ToString(),
-                    Account = row["Account"].ToString(),
-                    INN = row["INN"].ToString()
-                };
-                result.Add(info);
-            }
+                result.Add(ParseEntity<TSupplier>(row));
             return result;
+        }
+
+        public override TSupplier ParseEntity<TSupplier>(DataRow row)
+        {
+            return new TSupplier
+            {
+                Id = uint.Parse(row["Id"].ToString()),
+                Name = DataRowExtensions.Field<string>(row, "Name"),
+                StreetId = DataRowExtensions.Field<uint>(row, "StreetId"),
+                CityName = DataRowExtensions.Field<string>(row, "CityName"),
+                StreetName = DataRowExtensions.Field<string>(row, "StreetName"),
+                Building = DataRowExtensions.Field<string>(row, "Building"),
+                HeadId = DataRowExtensions.Field<uint>(row, "HeadId"),
+                HeadName = DataRowExtensions.Field<string>(row, "HeadName"),
+                HeadPhone = DataRowExtensions.Field<string>(row, "HeadPhone"),
+                BankId = DataRowExtensions.Field<uint>(row, "BankId"),
+                BankName = DataRowExtensions.Field<string>(row, "BankName"),
+                Account = DataRowExtensions.Field<string>(row, "Account"),
+                INN = DataRowExtensions.Field<string>(row, "INN")
+            };
         }
     }
 }

@@ -22,18 +22,6 @@ namespace CanteenAIS_DB.AppAuth.Entities
         [DisplayName("Удаление")]
         public virtual bool CanDelete { get; set; }
 
-        public override void Copy<TResult, TInfo>(ref TResult res, TInfo info)
-        {
-            base.Copy(ref res, info);
-            if (info is UserPermEntity _info &&
-                res is UserPermEntity _res)
-            {
-                if (_info.UserLogin != null) _res.UserLogin = _info.UserLogin;
-                if (_info.ElementName != null) _res.ElementName = _info.ElementName;
-
-            }
-        }
-
         public UserPermEntity() { }
 
         public UserPermEntity(UserPermEntity info)
