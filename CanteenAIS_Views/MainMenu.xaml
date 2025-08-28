@@ -7,7 +7,9 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Title="АИС Предприятие общественного питания | Главное меню" Height="60" Width="900"
-        ResizeMode="CanMinimize" Closing="Window_Closing">
+        ResizeMode="CanMinimize" Closing="Window_Closing"
+        MaxHeight="60" MinHeight="60" WindowState="Maximized"
+        >
     <Grid >
 
         <Grid x:Name="mainMenu"/>

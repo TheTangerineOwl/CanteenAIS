@@ -28,6 +28,7 @@ namespace CanteenAIS_ViewModel
         public Action<SimpleModel<RealizationEntity>, uint> OnRealizations;
         public Action<SimpleModel<SupplyEntity>, uint> OnSupplies;
         public Action<SimpleModel<StreetEntity>, uint> OnStreets;
+
         public Action OnAboutProgram;
         public Action OnContent;
         public Action OnExit;

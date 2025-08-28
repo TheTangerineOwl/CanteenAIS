@@ -31,7 +31,7 @@ namespace CanteenAIS_Models
 
         protected virtual IList<TEntityType> FetchValues<TEntityType>() where TEntityType : TEntity, new()
         {
-            return TableContext.Read<TEntityType>().ToList();
+            return TableContext.Read<TEntityType>();//.ToList();
         }
 
         public virtual DataTable GetTable<TEntityType>() where TEntityType : TEntity, new()

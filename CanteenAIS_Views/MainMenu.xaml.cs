@@ -1,18 +1,7 @@
 ﻿using CanteenAIS_ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using CanteenAIS_Views.Other;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.ComponentModel;
 
 namespace CanteenAIS_Views
 {
@@ -34,7 +23,23 @@ namespace CanteenAIS_Views
             MenuConstructor constructor = new MenuConstructor(vm);
             mainMenu.Children.Add(constructor.Construct());
 
+            vm.OnAboutProgram += About;
+            vm.OnContent += Contents;
             vm.OnExit += CloseWindow;
+
+
+        }
+
+        private void Contents()
+        {
+            ContentWindow content = new ContentWindow { Owner = this };
+            content.Show();
+        }
+
+        private void About()
+        {
+            AboutWindow about = new AboutWindow { Owner = this };
+            about.Show();
         }
 
         private void CloseWindow()
@@ -42,7 +47,7 @@ namespace CanteenAIS_Views
             this.Close();
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void Window_Closing(object sender, CancelEventArgs e)
         {
             parent.Show();
         }

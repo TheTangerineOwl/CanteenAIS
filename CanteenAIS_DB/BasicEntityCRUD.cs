@@ -38,6 +38,8 @@ namespace CanteenAIS_DB
             FillParameters(entity, command);
             DbConnection.GetInstance().ExecMySqlQuery(command, ref exception);
         }
+
+        public abstract U ParseEntity<U>(DataRow row) where U : T, new();
     }
 
     public abstract class BasicSimpleCRUD<T> : BasicEntityCRU<T> where T : SimpleEntity
@@ -56,8 +58,6 @@ namespace CanteenAIS_DB
         public virtual string ReadIdQuery =>
             QueryRead.TrimEnd(';') +
             $"WHERE `Id`={IdQueryParam};";
-
-        public abstract U ParseEntity<U>(DataRow row) where U : T, new();
 
         public virtual U ReadId<U>(uint id) where U : T, new()
         {
@@ -92,8 +92,6 @@ namespace CanteenAIS_DB
 
         protected abstract string FirstIdName { get; }
         protected abstract string SecondIdName { get; }
-
-        public abstract U ParseEntity<U>(DataRow row) where U : T, new();
 
         public virtual IList<U> ReadId<U>(uint? firstId = null, uint? secondId = null)
             where U : T, new()
