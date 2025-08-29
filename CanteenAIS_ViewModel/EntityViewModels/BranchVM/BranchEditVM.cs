@@ -5,9 +5,9 @@ using Entities = CanteenAIS_DB.Database.Entities;
 
 namespace CanteenAIS_ViewModel.EntityViewModels.Branch
 {
-    public class BranchEditVM : BasicEditVM<Entities.Branch>
+    public class BranchEditVM : BasicEditVM<Entities.BranchEntity, Entities.Branch>
     {
-        protected BranchEditVM(DataRow row, TableModel<Entities.Branch> tableModel)
+        public BranchEditVM(DataRow row, TableModel<Entities.BranchEntity> tableModel)
             : base(row, tableModel) { }
 
         protected override void Clear()

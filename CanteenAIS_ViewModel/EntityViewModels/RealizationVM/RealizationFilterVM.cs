@@ -1,14 +1,13 @@
 ﻿using CanteenAIS_Models;
 using CanteenAIS_ViewModel.BasicViewModels;
 using System;
-using System.Data;
 using Entities = CanteenAIS_DB.Database.Entities;
 
 namespace CanteenAIS_ViewModel.EntityViewModels.Realization
 {
-    public class RealizationFilterVM : BasicFilterVM<Entities.Realization>
+    public class RealizationFilterVM : BasicFilterVM<Entities.RealizationEntity, Entities.Realization>
     {
-        protected RealizationFilterVM(TableModel<Entities.Realization> tableModel)
+        public RealizationFilterVM(TableModel<Entities.RealizationEntity> tableModel)
             : base(tableModel) { }
 
         protected override void Clear()

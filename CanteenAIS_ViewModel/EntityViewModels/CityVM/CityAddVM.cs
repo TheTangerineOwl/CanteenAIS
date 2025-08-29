@@ -4,9 +4,9 @@ using Entities = CanteenAIS_DB.Database.Entities;
 
 namespace CanteenAIS_ViewModel.EntityViewModels.City
 {
-    public class CityAddVM : BasicAddVM<Entities.City>
+    public class CityAddVM : BasicAddVM<Entities.CityEntity, Entities.City>
     {
-        protected CityAddVM(TableModel<Entities.City> tableModel)
+        public CityAddVM(TableModel<Entities.CityEntity> tableModel)
             : base(tableModel) { }
 
         protected override void Clear()

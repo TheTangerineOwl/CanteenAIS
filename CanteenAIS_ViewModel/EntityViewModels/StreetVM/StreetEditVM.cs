@@ -5,9 +5,9 @@ using Entities = CanteenAIS_DB.Database.Entities;
 
 namespace CanteenAIS_ViewModel.EntityViewModels.Street
 {
-    public class StreetEditVM : BasicEditVM<Entities.Street>
+    public class StreetEditVM : BasicEditVM<Entities.StreetEntity, Entities.Street>
     {
-        protected StreetEditVM(DataRow row, TableModel<Entities.Street> tableModel)
+        public StreetEditVM(DataRow row, TableModel<Entities.StreetEntity> tableModel)
             : base(row, tableModel) { }
 
         protected override void Clear()

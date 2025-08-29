@@ -7,13 +7,15 @@ using System.Windows.Input;
 
 namespace CanteenAIS_ViewModel.BasicViewModels
 {
-    public abstract class BasicVM<TEntity> : PropChanged
-        where TEntity : Entity, new()
+    public abstract class BasicVM<TEntityBase, TEntity> : PropChanged
+        where TEntityBase : Entity
+        where TEntity : TEntityBase, new()
+
     {
-        protected BasicVM(TableModel<TEntity> tableModel, uint menuElementId)
+        protected BasicVM(TableModel<TEntityBase> tableModel, uint menuElementId)
         {
             Model = tableModel;
-            Table = Model.GetTable<TEntity>();
+            table = Model.GetTable<TEntity>();
             Perm = Model.GetPerms<UserPerm>(menuElementId);
             writeVisible = Perm.CanWrite;
             editVisible = false;
@@ -22,7 +24,7 @@ namespace CanteenAIS_ViewModel.BasicViewModels
         }
 
         protected virtual UserPermEntity Perm { get; set; }
-        protected virtual TableModel<TEntity> Model { get; set; }
+        protected virtual TableModel<TEntityBase> Model { get; set; }
 
         protected DataTable table;
         public virtual DataTable Table
@@ -76,10 +78,10 @@ namespace CanteenAIS_ViewModel.BasicViewModels
         }
 
         public Action OnChangeSelection;
-        public Action<TableModel<TEntity>> OnFilter;
-        public Action<TableModel<TEntity>> OnAdd;
-        public Action<DataRow, TableModel<TEntity>> OnEdit;
-        public Action<DataRow, TableModel<TEntity>> OnDelete;
+        public Action<TableModel<TEntityBase>> OnFilter;
+        public Action<TableModel<TEntityBase>> OnAdd;
+        public Action<DataRow, TableModel<TEntityBase>> OnEdit;
+        public Action<DataRow, TableModel<TEntityBase>> OnDelete;
 
         public virtual ICommand ChangeSelection
         {

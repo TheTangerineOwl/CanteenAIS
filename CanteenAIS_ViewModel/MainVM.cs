@@ -54,7 +54,7 @@ namespace CanteenAIS_ViewModel
             get => new Command((obj) =>
                 {
                     OnUserPerms?.Invoke(
-                        new UserPermModel(DBContext.GetInstance().UserPerms),
+                        MainServices.GetInstance().UserPerms,
                         MenuElementModel.GetCurrentMenuElemId(nameof(ClickUserPerms))
                     );
                 });
@@ -81,7 +81,7 @@ namespace CanteenAIS_ViewModel
             get => new Command((obj) =>
                 {
                     OnAssortmentGroups?.Invoke(
-                        new AssortmentGroupModel(DBContext.GetInstance().AssortmentGroups),
+                        MainServices.GetInstance().AssortmentGroups,
                         MenuElementModel.GetCurrentMenuElemId(nameof(ClickAssortmentGroups))
                     );
                 });
@@ -92,7 +92,7 @@ namespace CanteenAIS_ViewModel
             get => new Command((obj) =>
             {
                 OnBanks?.Invoke(
-                    new BankModel(DBContext.GetInstance().Banks),
+                    MainServices.GetInstance().Banks,
                     MenuElementModel.GetCurrentMenuElemId(nameof(ClickBanks))
                 );
             });
@@ -103,7 +103,7 @@ namespace CanteenAIS_ViewModel
             get => new Command((obj) =>
             {
                 OnBranches?.Invoke(
-                    new BranchModel(DBContext.GetInstance().Branches),
+                    MainServices.GetInstance().Branches,
                     MenuElementModel.GetCurrentMenuElemId(nameof(ClickBranches))
                 );
             });
@@ -114,7 +114,7 @@ namespace CanteenAIS_ViewModel
             get => new Command((obj) =>
             {
                 OnBranchOrders?.Invoke(
-                    new BranchOrderModel(DBContext.GetInstance().BranchOrders),
+                    MainServices.GetInstance().BranchOrders,
                     MenuElementModel.GetCurrentMenuElemId(nameof(ClickBranchOrders))
                 );
             });
@@ -125,7 +125,7 @@ namespace CanteenAIS_ViewModel
             get => new Command((obj) =>
             {
                 OnCities?.Invoke(
-                    new CityModel(DBContext.GetInstance().Cities),
+                    MainServices.GetInstance().Cities,
                     MenuElementModel.GetCurrentMenuElemId(nameof(ClickCities))
                 );
             });
@@ -136,7 +136,7 @@ namespace CanteenAIS_ViewModel
             get => new Command((obj) =>
             {
                 OnDishes?.Invoke(
-                    new DishModel(DBContext.GetInstance().Dishes),
+                    MainServices.GetInstance().Dishes,
                     MenuElementModel.GetCurrentMenuElemId(nameof(ClickDishes))
                 );
             });
@@ -147,7 +147,7 @@ namespace CanteenAIS_ViewModel
             get => new Command((obj) =>
             {
                 OnMeasureUnits?.Invoke(
-                    new MeasureUnitModel(DBContext.GetInstance().MeasureUnits),
+                    MainServices.GetInstance().MeasureUnits,
                     MenuElementModel.GetCurrentMenuElemId(nameof(ClickMeasureUnits))
                 );
             });
@@ -158,7 +158,7 @@ namespace CanteenAIS_ViewModel
             get => new Command((obj) =>
             {
                 OnSupplierHeads?.Invoke(
-                    new SupplierHeadModel(DBContext.GetInstance().SupplierHeads),
+                    MainServices.GetInstance().SupplierHeads,
                     MenuElementModel.GetCurrentMenuElemId(nameof(ClickSupplierHeads))
                 );
             });
@@ -169,7 +169,7 @@ namespace CanteenAIS_ViewModel
             get => new Command((obj) =>
             {
                 OnSuppliers?.Invoke(
-                    new SupplierModel(DBContext.GetInstance().Suppliers),
+                    MainServices.GetInstance().Suppliers,
                     MenuElementModel.GetCurrentMenuElemId(nameof(ClickSupplier))
                 );
             });
@@ -180,7 +180,7 @@ namespace CanteenAIS_ViewModel
             get => new Command((obj) =>
             {
                 OnProducts?.Invoke(
-                    new ProductModel(DBContext.GetInstance().Products),
+                    MainServices.GetInstance().Products,
                     MenuElementModel.GetCurrentMenuElemId(nameof(ClickProducts))
                 );
             });
@@ -191,7 +191,7 @@ namespace CanteenAIS_ViewModel
             get => new Command((obj) =>
             {
                 OnRealizations?.Invoke(
-                    new RealizationModel(DBContext.GetInstance().Realizations),
+                    MainServices.GetInstance().Realizations,
                     MenuElementModel.GetCurrentMenuElemId(nameof(ClickRealizations))
                 );
             });
@@ -202,7 +202,7 @@ namespace CanteenAIS_ViewModel
             get => new Command((obj) =>
             {
                 OnSupplies?.Invoke(
-                    new SupplyModel(DBContext.GetInstance().Supplies),
+                    MainServices.GetInstance().Supplies,
                     MenuElementModel.GetCurrentMenuElemId(nameof(ClickSupplies))
                 );
             });
@@ -213,7 +213,7 @@ namespace CanteenAIS_ViewModel
             get => new Command((obj) =>
             {
                 OnStreets?.Invoke(
-                    new StreetModel(DBContext.GetInstance().Streets),
+                    MainServices.GetInstance().Streets,
                     MenuElementModel.GetCurrentMenuElemId(nameof(ClickStreets))
                 );
             });
@@ -229,13 +229,10 @@ namespace CanteenAIS_ViewModel
 
         public ICommand ClickContent
         {
-            get
+            get => new Command((obj) =>
             {
-                return new Command((obj) =>
-                {
                     OnContent?.Invoke();
-                });
-            }
+            });
         }
     }
 }

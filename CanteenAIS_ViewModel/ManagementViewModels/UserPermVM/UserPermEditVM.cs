@@ -5,9 +5,9 @@ using System.Data;
 
 namespace CanteenAIS_ViewModel.ManagementViewModels.UserPerm
 {
-    public class UserPermEditVM : BasicEditVM<Entities.UserPerm>
+    public class UserPermEditVM : BasicEditVM<Entities.UserPermEntity, Entities.UserPerm>
     {
-        public UserPermEditVM(DataRow row, TableModel<Entities.UserPerm> tableModel)
+        public UserPermEditVM(DataRow row, TableModel<Entities.UserPermEntity> tableModel)
             : base(row, tableModel) { }
 
         protected override void Clear()

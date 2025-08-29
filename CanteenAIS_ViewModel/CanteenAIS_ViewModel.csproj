@@ -93,6 +93,7 @@
     <Compile Include="EntityViewModels\AssortmentGroupVM\AssortmentGroupAddVM.cs" />
     <Compile Include="EntityViewModels\AssortmentGroupVM\AssortmentGroupEditVM.cs" />
     <Compile Include="EntityViewModels\AssortmentGroupVM\AssortmentGroupFilterVM.cs" />
+    <Compile Include="MainServices.cs" />
     <Compile Include="MainVM.cs" />
     <Compile Include="ManagementViewModels\UserPermVM\UserPermAddVM.cs" />
     <Compile Include="ManagementViewModels\UserPermVM\UserPermEditVM.cs" />

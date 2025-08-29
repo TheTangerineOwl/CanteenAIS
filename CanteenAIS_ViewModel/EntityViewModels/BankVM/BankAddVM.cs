@@ -4,9 +4,9 @@ using Entities = CanteenAIS_DB.Database.Entities;
 
 namespace CanteenAIS_ViewModel.EntityViewModels.Bank
 {
-    public class BankAddVM : BasicAddVM<Entities.Bank>
+    public class BankAddVM : BasicAddVM<Entities.BankEntity, Entities.Bank>
     {
-        protected BankAddVM(TableModel<Entities.Bank> tableModel)
+        public BankAddVM(TableModel<Entities.BankEntity> tableModel)
             : base(tableModel) { }
 
         protected override void Clear()

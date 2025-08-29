@@ -1,4 +1,4 @@
-﻿using Entitites = CanteenAIS_DB.Database.Entities;
+﻿using Entities = CanteenAIS_DB.Database.Entities;
 using CanteenAIS_Models;
 using CanteenAIS_Models.Models;
 using CanteenAIS_ViewModel.BasicViewModels;
@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace CanteenAIS_ViewModel.EntityViewModels.AssortmentGroup
 {
-    public class AssortmentGroupVM : BasicVM<Entitites.AssortmentGroup>
+    public class AssortmentGroupVM : BasicVM<Entities.AssortmentGroupEntity, Entities.AssortmentGroup>
     {
         protected bool dishesVisible;
         public bool DishesVisibility
@@ -17,7 +17,7 @@ namespace CanteenAIS_ViewModel.EntityViewModels.AssortmentGroup
             set => Set(ref dishesVisible, value);
         }
 
-        public AssortmentGroupVM(SimpleModel<Entitites.AssortmentGroup> tableModel, uint menuElementId)
+        public AssortmentGroupVM(SimpleModel<Entities.AssortmentGroupEntity> tableModel, uint menuElementId)
             : base(tableModel, menuElementId)
         {
             dishesVisible = true;
@@ -25,8 +25,8 @@ namespace CanteenAIS_ViewModel.EntityViewModels.AssortmentGroup
 
         public Action<
             DataRow,
-            SimpleModel<Entitites.AssortmentGroup>,
-            SimpleModel<Entitites.DishEntity>
+            SimpleModel<Entities.AssortmentGroupEntity>,
+            SimpleModel<Entities.DishEntity>
         > OnDishes;
 
         public ICommand ClickDishes
@@ -34,7 +34,7 @@ namespace CanteenAIS_ViewModel.EntityViewModels.AssortmentGroup
             get => new Command((obj) =>
                 {
                     if (SelectedIndex >= 0 && SelectedIndex < Table.Rows.Count &&
-                        Model is SimpleModel<Entitites.AssortmentGroup> model
+                        Model is SimpleModel<Entities.AssortmentGroupEntity> model
                         )
                         OnDishes?.Invoke
                         (

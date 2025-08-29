@@ -1,13 +1,12 @@
 ﻿using CanteenAIS_Models;
 using CanteenAIS_ViewModel.BasicViewModels;
-using System.Data;
 using Entities = CanteenAIS_DB.Database.Entities;
 
 namespace CanteenAIS_ViewModel.EntityViewModels.Dish
 {
-    public class DishFilterVM : BasicFilterVM<Entities.Dish>
+    public class DishFilterVM : BasicFilterVM<Entities.DishEntity, Entities.Dish>
     {
-        protected DishFilterVM(TableModel<Entities.Dish> tableModel)
+        public DishFilterVM(TableModel<Entities.DishEntity> tableModel)
             : base(tableModel) { }
 
         protected override void Clear()

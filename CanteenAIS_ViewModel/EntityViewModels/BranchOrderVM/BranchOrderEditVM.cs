@@ -6,9 +6,9 @@ using Entities = CanteenAIS_DB.Database.Entities;
 
 namespace CanteenAIS_ViewModel.EntityViewModels.BranchOrder
 {
-    public class BranchOrderEditVM : BasicEditVM<Entities.BranchOrder>
+    public class BranchOrderEditVM : BasicEditVM<Entities.BranchOrderEntity, Entities.BranchOrder>
     {
-        protected BranchOrderEditVM(DataRow row, TableModel<Entities.BranchOrder> tableModel)
+        public BranchOrderEditVM(DataRow row, TableModel<Entities.BranchOrderEntity> tableModel)
             : base(row, tableModel) { }
 
         protected override void Clear()

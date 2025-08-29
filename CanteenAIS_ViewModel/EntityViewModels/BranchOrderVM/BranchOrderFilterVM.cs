@@ -6,9 +6,9 @@ using Entities = CanteenAIS_DB.Database.Entities;
 
 namespace CanteenAIS_ViewModel.EntityViewModels.BranchOrder
 {
-    public class BranchOrderFilterVM : BasicFilterVM<Entities.BranchOrder>
+    public class BranchOrderFilterVM : BasicFilterVM<Entities.BranchOrderEntity, Entities.BranchOrder>
     {
-        protected BranchOrderFilterVM(TableModel<Entities.BranchOrder> tableModel)
+        public BranchOrderFilterVM(TableModel<Entities.BranchOrderEntity> tableModel)
             : base(tableModel) { }
 
         protected override void Clear()

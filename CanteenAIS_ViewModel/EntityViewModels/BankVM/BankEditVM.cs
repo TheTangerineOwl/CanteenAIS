@@ -5,9 +5,9 @@ using Entities = CanteenAIS_DB.Database.Entities;
 
 namespace CanteenAIS_ViewModel.EntityViewModels.Bank
 {
-    public class BankEditVM : BasicEditVM<Entities.Bank>
+    public class BankEditVM : BasicEditVM<Entities.BankEntity, Entities.Bank>
     {
-        protected BankEditVM(DataRow row, TableModel<Entities.Bank> tableModel)
+        public BankEditVM(DataRow row, TableModel<Entities.BankEntity> tableModel)
             : base(row, tableModel) { }
 
         protected override void Clear()

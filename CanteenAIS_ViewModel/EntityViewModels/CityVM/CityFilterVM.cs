@@ -1,13 +1,12 @@
 ﻿using CanteenAIS_Models;
 using CanteenAIS_ViewModel.BasicViewModels;
-using System.Data;
 using Entities = CanteenAIS_DB.Database.Entities;
 
 namespace CanteenAIS_ViewModel.EntityViewModels.City
 {
-    public class CityFilterVM : BasicFilterVM<Entities.City>
+    public class CityFilterVM : BasicFilterVM<Entities.CityEntity, Entities.City>
     {
-        protected CityFilterVM(TableModel<Entities.City> tableModel)
+        public CityFilterVM(TableModel<Entities.CityEntity> tableModel)
             : base(tableModel) { }
 
         protected override void Clear()

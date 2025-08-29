@@ -5,9 +5,9 @@ using Entities = CanteenAIS_DB.Database.Entities;
 
 namespace CanteenAIS_ViewModel.EntityViewModels.SupplierHead
 {
-    public class SupplierHeadFilterVM : BasicFilterVM<Entities.SupplierHead>
+    public class SupplierHeadFilterVM : BasicFilterVM<Entities.SupplierHeadEntity, Entities.SupplierHead>
     {
-        protected SupplierHeadFilterVM(TableModel<Entities.SupplierHead> tableModel)
+        public SupplierHeadFilterVM(TableModel<Entities.SupplierHeadEntity> tableModel)
             : base(tableModel) { }
 
         protected override void Clear()

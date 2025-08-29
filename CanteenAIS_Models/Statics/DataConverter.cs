@@ -17,8 +17,17 @@ namespace CanteenAIS_Models.Statics
                 //if (prop.DisplayName != null)
                 //if (prop.DisplayName != "-")
                 {
-                    table.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
+                    //DataColumn column = table.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
+                    //column.Caption = prop.DisplayName;
                     //table.Columns.Add(prop.DisplayName, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
+
+                    DataColumn column = new DataColumn
+                    {
+                        ColumnName = prop.Name,
+                        DataType = Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType,
+                        Caption = prop.DisplayName
+                    };
+                    table.Columns.Add(column);
                 }
             }
             foreach (T item in list)
@@ -30,6 +39,7 @@ namespace CanteenAIS_Models.Statics
                     //if (prop.DisplayName != null)
                     {
                         row[prop.Name] = prop.GetValue(item) ?? DBNull.Value;
+                        
                         //row[prop.DisplayName] = prop.GetValue(item) ?? DBNull.Value;
                     }
                 }

@@ -4,9 +4,9 @@ using Entities = CanteenAIS_DB.Database.Entities;
 
 namespace CanteenAIS_ViewModel.EntityViewModels.Dish
 {
-    public class DishAddVM : BasicAddVM<Entities.Dish>
+    public class DishAddVM : BasicAddVM<Entities.DishEntity, Entities.Dish>
     {
-        protected DishAddVM(TableModel<Entities.Dish> tableModel)
+        public DishAddVM(TableModel<Entities.DishEntity> tableModel)
             : base(tableModel) { }
 
         protected override void Clear()

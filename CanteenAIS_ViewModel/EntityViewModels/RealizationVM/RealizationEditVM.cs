@@ -6,9 +6,9 @@ using Entities = CanteenAIS_DB.Database.Entities;
 
 namespace CanteenAIS_ViewModel.EntityViewModels.Realization
 {
-    public class RealizationEditVM : BasicEditVM<Entities.Realization>
+    public class RealizationEditVM : BasicEditVM<Entities.RealizationEntity, Entities.Realization>
     {
-        protected RealizationEditVM(DataRow row, TableModel<Entities.Realization> tableModel)
+        public RealizationEditVM(DataRow row, TableModel<Entities.RealizationEntity> tableModel)
             : base(row, tableModel) { }
 
         protected override void Clear()

@@ -1,12 +1,12 @@
-﻿using Entitites = CanteenAIS_DB.Database.Entities;
+﻿using Entities = CanteenAIS_DB.Database.Entities;
 using CanteenAIS_Models;
 using CanteenAIS_ViewModel.BasicViewModels;
 
 namespace CanteenAIS_ViewModel.EntityViewModels.Street
 {
-    public class StreetVM : BasicVM<Entitites.Street>
+    public class StreetVM : BasicVM<Entities.StreetEntity, Entities.Street>
     {
-        public StreetVM(SimpleModel<Entitites.Street> tableModel, uint menuElementId)
+        public StreetVM(SimpleModel<Entities.StreetEntity> tableModel, uint menuElementId)
             : base(tableModel, menuElementId) { }
     }
 }

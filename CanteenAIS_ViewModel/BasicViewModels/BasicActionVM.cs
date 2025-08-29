@@ -6,10 +6,11 @@ using System.Windows.Input;
 
 namespace CanteenAIS_ViewModel.BasicViewModels
 {
-    public abstract class BasicActionVM<TEntity> : PropChanged
-        where TEntity : Entity, new()
+    public abstract class BasicActionVM<TEntityBase, TEntity> : PropChanged
+        where TEntityBase : Entity
+        where TEntity : TEntityBase, new()
     {
-        protected TableModel<TEntity> Model;
+        protected TableModel<TEntityBase> Model;
 
         public Action OnApply;
         public Action OnCancel;
@@ -20,7 +21,7 @@ namespace CanteenAIS_ViewModel.BasicViewModels
 
         public virtual TEntity Fields { get; protected set; }
 
-        protected BasicActionVM(TableModel<TEntity> tableModel)
+        protected BasicActionVM(TableModel<TEntityBase> tableModel)
         {
             Model = tableModel;
             Fields = new TEntity();
@@ -47,13 +48,14 @@ namespace CanteenAIS_ViewModel.BasicViewModels
         protected abstract void Clear();
     }
 
-    public abstract class BasicAddVM<TEntity> : BasicActionVM<TEntity>
-        where TEntity : Entity, new()
+    public abstract class BasicAddVM<TEntityBase, TEntity> : BasicActionVM<TEntityBase, TEntity>
+        where TEntityBase : Entity
+        where TEntity : TEntityBase, new()
     {
         public override string WindowTitle => $"Добавление в таблицу: {TableTitle}";
         public override string ButtonContent => "Добавить";
 
-        protected BasicAddVM(TableModel<TEntity> tableModel) : base(tableModel)
+        protected BasicAddVM(TableModel<TEntityBase> tableModel) : base(tableModel)
         {
             Fields = new TEntity();
         }
@@ -65,14 +67,15 @@ namespace CanteenAIS_ViewModel.BasicViewModels
         }
     }
 
-    public abstract class BasicEditVM<TEntity> : BasicActionVM<TEntity>
-        where TEntity : Entity, new()
+    public abstract class BasicEditVM<TEntityBase, TEntity> : BasicActionVM<TEntityBase, TEntity>
+        where TEntityBase : Entity
+        where TEntity : TEntityBase, new()
     {
         public override string WindowTitle => $"Добавление в таблицу: {TableTitle}";
         public override string ButtonContent => "Добавить";
 
         protected DataRow Row;
-        protected BasicEditVM(DataRow row, TableModel<TEntity> tableModel) : base(tableModel)
+        protected BasicEditVM(DataRow row, TableModel<TEntityBase> tableModel) : base(tableModel)
         {
             Row = row;
             Fields = Model.GetEntity<TEntity>(row);
@@ -84,13 +87,14 @@ namespace CanteenAIS_ViewModel.BasicViewModels
         }
     }
 
-    public abstract class BasicFilterVM<TEntity> : BasicActionVM<TEntity>
-        where TEntity : Entity, new()
+    public abstract class BasicFilterVM<TEntityBase, TEntity> : BasicActionVM<TEntityBase, TEntity>
+        where TEntityBase : Entity
+        where TEntity : TEntityBase, new()
     {
         public override string WindowTitle => $"Фильтровать: {TableTitle}";
         public override string ButtonContent => "Фильтр";
 
-        protected BasicFilterVM(TableModel<TEntity> tableModel) : base(tableModel) { }
+        protected BasicFilterVM(TableModel<TEntityBase> tableModel) : base(tableModel) { }
 
         public virtual void Filter()
         {

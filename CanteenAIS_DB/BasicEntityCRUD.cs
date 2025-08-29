@@ -21,7 +21,7 @@ namespace CanteenAIS_DB
 
         public virtual void Create(T entity)
         {
-            MySqlCommand command = new MySqlCommand(QueryRead);
+            MySqlCommand command = new MySqlCommand(QueryCreate);
             FillParameters(entity, command, false);
             DbConnection.GetInstance().ExecMySqlQuery(command, ref exception);
         }

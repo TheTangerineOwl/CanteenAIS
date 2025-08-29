@@ -1,13 +1,12 @@
 ﻿using CanteenAIS_Models;
 using CanteenAIS_ViewModel.BasicViewModels;
-using System.Data;
 using Entities = CanteenAIS_DB.Database.Entities;
 
 namespace CanteenAIS_ViewModel.EntityViewModels.Branch
 {
-    public class BranchFilterVM : BasicFilterVM<Entities.Branch>
+    public class BranchFilterVM : BasicFilterVM<Entities.BranchEntity, Entities.Branch>
     {
-        protected BranchFilterVM(TableModel<Entities.Branch> tableModel)
+        public BranchFilterVM(TableModel<Entities.BranchEntity> tableModel)
             : base(tableModel) { }
 
         protected override void Clear()

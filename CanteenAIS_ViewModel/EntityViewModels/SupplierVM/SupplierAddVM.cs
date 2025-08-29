@@ -4,9 +4,9 @@ using Entities = CanteenAIS_DB.Database.Entities;
 
 namespace CanteenAIS_ViewModel.EntityViewModels.Supplier
 {
-    public class SupplierAddVM : BasicAddVM<Entities.Supplier>
+    public class SupplierAddVM : BasicAddVM<Entities.SupplierEntity, Entities.Supplier>
     {
-        protected SupplierAddVM(TableModel<Entities.Supplier> tableModel)
+        public SupplierAddVM(TableModel<Entities.SupplierEntity> tableModel)
             : base(tableModel) { }
 
         protected override void Clear()

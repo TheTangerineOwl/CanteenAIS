@@ -4,9 +4,9 @@ using Entities = CanteenAIS_DB.Database.Entities;
 
 namespace CanteenAIS_ViewModel.EntityViewModels.MeasureUnit
 {
-    public class MeasureUnitAddVM : BasicAddVM<Entities.MeasureUnit>
+    public class MeasureUnitAddVM : BasicAddVM<Entities.MeasureUnitEntity, Entities.MeasureUnit>
     {
-        protected MeasureUnitAddVM(TableModel<Entities.MeasureUnit> tableModel)
+        public MeasureUnitAddVM(TableModel<Entities.MeasureUnitEntity> tableModel)
             : base(tableModel) { }
 
         protected override void Clear()

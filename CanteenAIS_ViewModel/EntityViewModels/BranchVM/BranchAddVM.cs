@@ -4,9 +4,9 @@ using Entities = CanteenAIS_DB.Database.Entities;
 
 namespace CanteenAIS_ViewModel.EntityViewModels.Branch
 {
-    public class BranchAddVM : BasicAddVM<Entities.Branch>
+    public class BranchAddVM : BasicAddVM<Entities.BranchEntity, Entities.Branch>
     {
-        protected BranchAddVM(TableModel<Entities.Branch> tableModel)
+        public BranchAddVM(TableModel<Entities.BranchEntity> tableModel)
             : base(tableModel) { }
 
         protected override void Clear()

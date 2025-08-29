@@ -1,14 +1,13 @@
 ﻿using CanteenAIS_Models;
 using CanteenAIS_ViewModel.BasicViewModels;
 using System;
-using System.Data;
 using Entities = CanteenAIS_DB.Database.Entities;
 
 namespace CanteenAIS_ViewModel.EntityViewModels.Supply
 {
-    public class SupplyFilterVM : BasicFilterVM<Entities.Supply>
+    public class SupplyFilterVM : BasicFilterVM<Entities.SupplyEntity, Entities.Supply>
     {
-        protected SupplyFilterVM(TableModel<Entities.Supply> tableModel)
+        public SupplyFilterVM(TableModel<Entities.SupplyEntity> tableModel)
             : base(tableModel) { }
 
         protected override void Clear()

@@ -4,9 +4,9 @@ using CanteenAIS_Models;
 
 namespace CanteenAIS_ViewModel.ManagementViewModels.UserPerm
 {
-    public class UserPermAddVM : BasicAddVM<Entities.UserPerm>
+    public class UserPermAddVM : BasicAddVM<Entities.UserPermEntity, Entities.UserPerm>
     {
-        public UserPermAddVM(TableModel<Entities.UserPerm> tableModel)
+        public UserPermAddVM(TableModel<Entities.UserPermEntity> tableModel)
             : base(tableModel) { }
 
         protected override void Clear()

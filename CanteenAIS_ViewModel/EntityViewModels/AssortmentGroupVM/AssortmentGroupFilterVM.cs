@@ -1,13 +1,12 @@
 ﻿using CanteenAIS_Models;
 using CanteenAIS_ViewModel.BasicViewModels;
-using System.Data;
 using Entities = CanteenAIS_DB.Database.Entities;
 
 namespace CanteenAIS_ViewModel.EntityViewModels.AssortmentGroup
 {
-    public class AssortmentGroupFilterVM : BasicFilterVM<Entities.AssortmentGroup>
+    public class AssortmentGroupFilterVM : BasicFilterVM<Entities.AssortmentGroupEntity, Entities.AssortmentGroup>
     {
-        protected AssortmentGroupFilterVM(TableModel<Entities.AssortmentGroup> tableModel)
+        public AssortmentGroupFilterVM(TableModel<Entities.AssortmentGroupEntity> tableModel)
             : base(tableModel) { }
 
         protected override void Clear()

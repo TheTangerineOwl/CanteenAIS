@@ -4,9 +4,9 @@ using CanteenAIS_Models;
 
 namespace CanteenAIS_ViewModel.ManagementViewModels.UserPerm
 {
-    public class UserPermVM : BasicVM<Entities.UserPerm>
+    public class UserPermVM : BasicVM<Entities.UserPermEntity, Entities.UserPerm>
     {
-        public UserPermVM(TableModel<Entities.UserPerm> tableModel, uint menuElementId) : base(tableModel, menuElementId)
+        public UserPermVM(TableModel<Entities.UserPermEntity> tableModel, uint menuElementId) : base(tableModel, menuElementId)
         {
         }
     }

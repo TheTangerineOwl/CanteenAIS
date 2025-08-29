@@ -5,9 +5,9 @@ using Entities = CanteenAIS_DB.Database.Entities;
 
 namespace CanteenAIS_ViewModel.EntityViewModels.AssortmentGroup
 {
-    public class AssortmentGroupEditVM : BasicEditVM<Entities.AssortmentGroup>
+    public class AssortmentGroupEditVM : BasicEditVM<Entities.AssortmentGroupEntity, Entities.AssortmentGroup>
     {
-        protected AssortmentGroupEditVM(DataRow row, TableModel<Entities.AssortmentGroup> tableModel)
+        public AssortmentGroupEditVM(DataRow row, TableModel<Entities.AssortmentGroupEntity> tableModel)
             : base(row, tableModel) { }
 
         protected override void Clear()
