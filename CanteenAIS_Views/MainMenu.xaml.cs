@@ -58,6 +58,8 @@ namespace CanteenAIS_Views
 
         private void Window_Closing(object sender, CancelEventArgs e)
         {
+            foreach (Window w in OwnedWindows)
+                w.Close();
             parent.Show();
         }
     }

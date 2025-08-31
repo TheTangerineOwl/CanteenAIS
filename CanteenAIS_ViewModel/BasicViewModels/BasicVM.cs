@@ -91,17 +91,6 @@ namespace CanteenAIS_ViewModel.BasicViewModels
                 });
         }
 
-        protected TEntity filter;
-        public virtual TEntity FilterIn
-        {
-            get => filter;
-            set
-            {
-                Set(ref filter, value);
-                Table = Model.GetFiltered(filter);
-            }
-        }
-
         public virtual ICommand ClickFilter
         {
             get => new Command((obj) =>
@@ -151,11 +140,6 @@ namespace CanteenAIS_ViewModel.BasicViewModels
         public virtual void Delete()
         {
             Model.DeleteRow(Table.Rows[SelectedIndex]);
-            UpdateDataTable();
-        }
-
-        public virtual void UpdateDataTable()
-        {
             Table = Model.GetTable<TEntity>();
         }
     }

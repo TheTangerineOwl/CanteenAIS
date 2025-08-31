@@ -1,18 +1,22 @@
 ﻿using CanteenAIS_Models;
 using CanteenAIS_ViewModel.BasicViewModels;
 using System;
+using System.Data;
 using Entities = CanteenAIS_DB.Database.Entities;
 
 namespace CanteenAIS_ViewModel.EntityViewModels.AssortmentGroup
 {
     public class AssortmentGroupAddVM : BasicAddVM<Entities.AssortmentGroupEntity, Entities.AssortmentGroup>
     {
-        public AssortmentGroupAddVM(TableModel<Entities.AssortmentGroupEntity> tableModel) : base(tableModel) { }
+        public AssortmentGroupAddVM(TableModel<Entities.AssortmentGroupEntity> tableModel) : base(tableModel)
+        {
+            Clear();
+        }
 
         protected override void Clear()
         {
-            Fields.Id = 0;
-            Fields.Name = string.Empty;
+            //IdText = "1";
+            NameText = string.Empty;
         }
 
         private string idText;
@@ -21,10 +25,10 @@ namespace CanteenAIS_ViewModel.EntityViewModels.AssortmentGroup
             get => idText;
             set
             {
-                if (ValueChecker.CheckValueUint(idText) == 0)
-                    value = "1";
                 if (idText == null)
                     idText = value;
+                if (!ValueChecker.CheckValueUint(value, out uint _, true))
+                    value = "1";
                 Set(ref idText, value);
             }
         }
@@ -37,32 +41,20 @@ namespace CanteenAIS_ViewModel.EntityViewModels.AssortmentGroup
             {
                 if (nameText == null)
                     nameText = value;
+                if (!ValueChecker.CheckValueString(value, out value, 50, false))
+                    value = "";
                 Set(ref nameText, value);
             }
         }
 
-        public void ParseFields()
+        public override void ParseFields()
         {
-            uint id = ValueChecker.CheckValueUint(IdText);
-            if (id == 0)
-                throw new ArgumentException("Параметр не может быть 0!", nameof(IdText));
-            if (ValueChecker.CheckValueString(NameText) == null)
+            //if (!ValueChecker.CheckValueUint(IdText, out uint id, true))
+                //throw new ArgumentException("Параметр не может быть 0!", nameof(IdText));
+            if (!ValueChecker.CheckValueString(NameText, out string name, 50, false))
                 throw new ArgumentNullException("Строка не может быть пустой!", nameof(NameText));
-            Fields.Id = id;
-            Fields.Name = NameText;
-        }
-
-        public override void Add()
-        {
-            ParseFields();
-            base.Add();
-        }
-
-        public override void Cancel()
-        {
-            IdText = "0";
-            NameText = "";
-            base.Cancel();
+            //Fields.Id = id;
+            Fields.Name = name;
         }
     }
 }

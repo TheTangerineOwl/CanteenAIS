@@ -12,6 +12,13 @@ namespace CanteenAIS_ViewModel.BasicViewModels
     {
         protected TableModel<TEntityBase> Model;
 
+        private DataTable table;
+        protected DataTable Table
+        {
+            get => table;
+            set => Set(ref table, value);
+        }
+
         public Action OnApply;
         public Action OnCancel;
 
@@ -46,6 +53,8 @@ namespace CanteenAIS_ViewModel.BasicViewModels
         public virtual void Cancel() => Clear();
 
         protected abstract void Clear();
+
+        public abstract void ParseFields();
     }
 
     public abstract class BasicAddVM<TEntityBase, TEntity> : BasicActionVM<TEntityBase, TEntity>
@@ -62,7 +71,9 @@ namespace CanteenAIS_ViewModel.BasicViewModels
 
         public virtual void Add()
         {
+            ParseFields();
             Model.Add<TEntity>(Fields);
+            Table = Model.GetTable<TEntity>();
             Clear();
         }
     }
@@ -83,7 +94,9 @@ namespace CanteenAIS_ViewModel.BasicViewModels
 
         public virtual void Edit()
         {
+            ParseFields();
             Model.Update<TEntity>(Row, Fields);
+            Table = Model.GetTable<TEntity>();
         }
     }
 
@@ -98,7 +111,7 @@ namespace CanteenAIS_ViewModel.BasicViewModels
 
         public virtual void Filter()
         {
-            Model.GetFiltered(Fields);
+            Table = Model.GetFiltered(Fields);
         }
     }
 }

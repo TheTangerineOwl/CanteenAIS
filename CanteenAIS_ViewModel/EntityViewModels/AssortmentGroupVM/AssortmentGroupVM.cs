@@ -10,39 +10,39 @@ namespace CanteenAIS_ViewModel.EntityViewModels.AssortmentGroup
 {
     public class AssortmentGroupVM : BasicVM<Entities.AssortmentGroupEntity, Entities.AssortmentGroup>
     {
-        protected bool dishesVisible;
-        public bool DishesVisibility
-        {
-            get => dishesVisible;
-            set => Set(ref dishesVisible, value);
-        }
+        //protected bool dishesVisible;
+        //public bool DishesVisibility
+        //{
+        //    get => dishesVisible;
+        //    set => Set(ref dishesVisible, value);
+        //}
 
         public AssortmentGroupVM(SimpleModel<Entities.AssortmentGroupEntity> tableModel, uint menuElementId)
             : base(tableModel, menuElementId)
         {
-            dishesVisible = true;
+            //dishesVisible = true;
         }
 
-        public Action<
-            DataRow,
-            SimpleModel<Entities.AssortmentGroupEntity>,
-            SimpleModel<Entities.DishEntity>
-        > OnDishes;
+        //public Action<
+        //    DataRow,
+        //    SimpleModel<Entities.AssortmentGroupEntity>,
+        //    SimpleModel<Entities.DishEntity>
+        //> OnDishes;
 
-        public ICommand ClickDishes
-        {
-            get => new Command((obj) =>
-                {
-                    if (SelectedIndex >= 0 && SelectedIndex < Table.Rows.Count &&
-                        Model is SimpleModel<Entities.AssortmentGroupEntity> model
-                        )
-                        OnDishes?.Invoke
-                        (
-                            Table.Rows[SelectedIndex],
-                            model,
-                            new DishModel(DBContext.GetInstance().Dishes)
-                        );
-                });
-        }
+        //public ICommand ClickDishes
+        //{
+        //    get => new Command((obj) =>
+        //        {
+        //            if (SelectedIndex >= 0 && SelectedIndex < Table.Rows.Count &&
+        //                Model is SimpleModel<Entities.AssortmentGroupEntity> model
+        //                )
+        //                OnDishes?.Invoke
+        //                (
+        //                    Table.Rows[SelectedIndex],
+        //                    model,
+        //                    new DishModel(DBContext.GetInstance().Dishes)
+        //                );
+        //        });
+        //}
     }
 }

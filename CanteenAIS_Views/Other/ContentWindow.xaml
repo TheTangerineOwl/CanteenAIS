@@ -14,7 +14,8 @@
                        Margin="20,20,20,20"
                        Background="MintCream"
                        Text="{x:Static vmns:ContentVM.ContentText}"
-                       FontSize="10"
+                       FontSize="16" ScrollViewer.VerticalScrollBarVisibility="Visible"
+                       ScrollViewer.CanContentScroll="True"
                        Padding="20"
                        FontWeight="DemiBold"/>
         </DockPanel>

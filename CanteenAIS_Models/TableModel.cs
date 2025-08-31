@@ -3,8 +3,10 @@ using CanteenAIS_DB.AppAuth.Entities;
 using CanteenAIS_Models.Statics;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace CanteenAIS_Models
 {   
@@ -13,6 +15,14 @@ namespace CanteenAIS_Models
     {
         public abstract string TableName { get; }
         protected IDictionary<DataRow, TEntity> DataValues;
+
+        private DataTable _table;
+        public DataTable Table
+        {
+            get => _table;
+            set => _table = value;
+        }
+
         protected DataRow Selected { get; set; }
 
         private readonly BasicEntityCRU<TEntity> TableContext;
@@ -20,10 +30,12 @@ namespace CanteenAIS_Models
         protected TableModel(BasicEntityCRU<TEntity> contextInstance)
         {
             TableContext = contextInstance;
+            _table = new DataTable();
         }
 
         protected virtual void FillDataValues<TEntityType>(DataTable table, IList<TEntityType> values) where TEntityType : TEntity
         {
+            Table = table;
             DataValues = new Dictionary<DataRow, TEntity>();
             for (int i = 0; i < values.Count; i++)
                 DataValues.Add(table.Rows[i], values[i]);
@@ -61,6 +73,8 @@ namespace CanteenAIS_Models
 
         public virtual DataTable GetFiltered<TEntityType>(TEntityType filter) where TEntityType : TEntity, new()
         {
+            if (filter == null)
+                return GetTable<TEntityType>();
             return FetchAndFilter<TEntityType>(v => CompareEntities(v, filter) == 0);
         }
 

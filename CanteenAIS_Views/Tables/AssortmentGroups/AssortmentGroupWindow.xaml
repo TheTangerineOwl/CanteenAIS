@@ -32,8 +32,13 @@
                         Command="{Binding ClickAdd}"
                         IsEnabled="{Binding WriteVisibility, UpdateSourceTrigger=PropertyChanged}"
                 />
-                <TextBox Margin="5,10,5,10" DockPanel.Dock="Left"
-                    VerticalContentAlignment="Stretch" HorizontalContentAlignment="Left"
+                <Button Margin="5,10,5,10"
+                        Content="Фильтр" FontSize="16" FontWeight="SemiBold"
+                        DockPanel.Dock="Right"
+                        Command="{Binding ClickFilter}"
+                />
+                <TextBox Margin="5,10,5,10" DockPanel.Dock="Left" FontSize="16"
+                    VerticalContentAlignment="Center" HorizontalContentAlignment="Left"
                     Text="{Binding SearchSample, UpdateSourceTrigger=PropertyChanged}"/>
             </DockPanel>
             <DataGrid FontSize="16" Margin="20,20,20,0"
@@ -42,7 +47,7 @@
                 VerticalScrollBarVisibility="Auto"
                 SelectionMode="Single" SelectedIndex="{Binding SelectedIndex, UpdateSourceTrigger=PropertyChanged}"
                 ItemsSource="{Binding Table, UpdateSourceTrigger=PropertyChanged}"
-                      IsReadOnly="True" MouseDown="DataGrid_MouseDown" MouseLeave="DataGrid_MouseLeave" SelectionChanged="DataGrid_SelectionChanged"
+                      IsReadOnly="True" SelectionChanged="DataGrid_SelectionChanged"
             />
         </DockPanel>
     </Grid>
