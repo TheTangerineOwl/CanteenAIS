@@ -20,6 +20,7 @@ namespace CanteenAIS_DB
     public abstract class SimpleEntity : Entity
     {
         [DisplayName("Id")]
+        [ColumnOrder(0)]
         public virtual uint Id { get; set; }
 
         public SimpleEntity() : base() { }
@@ -33,7 +34,9 @@ namespace CanteenAIS_DB
     }
     public abstract class DoubleEntity : Entity
     {
+        [ColumnOrder(0)]
         public virtual uint FirstId { get; set; }
+        [ColumnOrder(1)]
         public virtual uint SecondId { get; set; }
 
         public DoubleEntity() : base() { }

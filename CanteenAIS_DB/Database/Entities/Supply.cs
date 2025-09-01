@@ -7,8 +7,10 @@ namespace CanteenAIS_DB.Database.Entities
     {
         public virtual uint SupplierId { get; set; }
         [DisplayName("Поставщик")]
+        [ColumnOrder(1)]
         public virtual string SupplierName { get; set; }
         [DisplayName("Время")]
+        [ColumnOrder(2)]
         public virtual DateTime DateTime { get; set; }
 
         public SupplyEntity() { }

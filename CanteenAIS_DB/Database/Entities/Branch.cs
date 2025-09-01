@@ -5,6 +5,7 @@ namespace CanteenAIS_DB.Database.Entities
     public abstract class BranchEntity : SimpleEntity
     {
         [DisplayName("Имя")]
+        [ColumnOrder(1)]
         public virtual string Name { get; set; }
 
         public BranchEntity() { }

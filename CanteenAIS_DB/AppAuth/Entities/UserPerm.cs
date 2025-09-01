@@ -9,17 +9,23 @@ namespace CanteenAIS_DB.AppAuth.Entities
 
         public virtual uint UserId { get; set; }
         [DisplayName("Логин")]
+        [ColumnOrder(0)]
         public virtual string UserLogin { get; set; }
         public virtual uint ElementId { get; set; }
         [DisplayName("Элемент меню")]
+        [ColumnOrder(1)]
         public virtual string ElementName { get; set; }
         [DisplayName("Чтение")]
+        [ColumnOrder(2)]
         public virtual bool CanRead { get; set; }
         [DisplayName("Добавление")]
+        [ColumnOrder(3)]
         public virtual bool CanWrite { get; set; }
         [DisplayName("Редактирование")]
+        [ColumnOrder(4)]
         public virtual bool CanEdit { get; set; }
         [DisplayName("Удаление")]
+        [ColumnOrder(5)]
         public virtual bool CanDelete { get; set; }
 
         public UserPermEntity() { }

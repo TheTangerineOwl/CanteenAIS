@@ -6,8 +6,10 @@ namespace CanteenAIS_DB.Database.Entities
     {
         public virtual uint CityId { get; set; }
         [DisplayName("Город")]
+        [ColumnOrder(1)]
         public virtual string CityName { get; set; }
         [DisplayName("Название")]
+        [ColumnOrder(2)]
         public virtual string Name { get; set; }
 
         public StreetEntity() { }

@@ -10,13 +10,17 @@ namespace CanteenAIS_DB.Database.Entities
         public virtual uint SupplyId { get; set; }
         public virtual uint ProductId { get; set; }
         [DisplayName("Продукт")]
+        [ColumnOrder(1)]
         public virtual string ProductName { get; set; }
         public virtual uint UnitId { get; set; }
         [DisplayName("Единица измерения")]
+        [ColumnOrder(2)]
         public virtual string UnitName { get; set; }
         [DisplayName("Закупочная цена")]
+        [ColumnOrder(3)]
         public virtual decimal Price { get; set; }
         [DisplayName("Количество")]
+        [ColumnOrder(4)]
         public virtual double Amount { get; set; }
 
         public SupplyProductEntity() { }

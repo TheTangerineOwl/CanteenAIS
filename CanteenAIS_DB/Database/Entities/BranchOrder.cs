@@ -7,8 +7,10 @@ namespace CanteenAIS_DB.Database.Entities
     {
         public virtual uint BranchId { get; set; }
         [DisplayName("Подразделение")]
+        [ColumnOrder(1)]
         public virtual string BranchName { get; set; }
         [DisplayName("Дата")]
+        [ColumnOrder(2)]
         public virtual DateTime DateTime { get; set; }
 
         public BranchOrderEntity() { }
