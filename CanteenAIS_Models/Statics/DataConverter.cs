@@ -25,7 +25,7 @@ namespace CanteenAIS_Models.Statics
                     {
                         ColumnName = prop.Name,
                         DataType = Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType,
-                        Caption = prop.DisplayName
+                        Caption = prop.DisplayName ?? prop.Name
                     };
                     table.Columns.Add(column);
                 }

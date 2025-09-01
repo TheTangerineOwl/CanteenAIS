@@ -5,6 +5,7 @@ using System.ComponentModel;
 using CanteenAIS_Models;
 using CanteenAIS_DB.Database.Entities;
 using CanteenAIS_Views.Tables.AssortmentGroups;
+using CanteenAIS_Views.Tables.Banks;
 
 namespace CanteenAIS_Views
 {
@@ -31,12 +32,19 @@ namespace CanteenAIS_Views
             vm.OnExit += CloseWindow;
 
             vm.OnAssortmentGroups += ShowAssortmentGroups;
+            vm.OnBanks += ShowBanks;
         }
 
         private void ShowAssortmentGroups(SimpleModel<AssortmentGroupEntity> model, uint elementId)
         {
             AssortmentGroupWindow groups = new AssortmentGroupWindow(model, elementId);
             groups.Show();
+        }
+
+        private void ShowBanks(SimpleModel<BankEntity> model, uint elementId)
+        {
+            BankWindow banks = new BankWindow(model, elementId);
+            banks.Show();
         }
 
         private void ShowContents()

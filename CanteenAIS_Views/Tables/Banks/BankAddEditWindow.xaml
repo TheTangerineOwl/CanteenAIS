@@ -1,0 +1,59 @@
+﻿<Window x:Class="CanteenAIS_Views.Tables.Banks.BankAddEditWindow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CanteenAIS_Views.Tables.Banks"
+             mc:Ignorable="d"
+        Title="{Binding WindowTitle}" ResizeMode="NoResize"
+        Background="LightGreen" SizeToContent="WidthAndHeight"
+        >
+    <Grid>
+        <DockPanel>
+            <Grid DockPanel.Dock="Bottom">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="1" Margin="5,5,15,5"
+                        Content="Отменить" FontSize="16" FontWeight="SemiBold"
+                        DockPanel.Dock="Right" HorizontalAlignment="Right"
+                        Command="{Binding ClickCancel}" IsCancel="True"/>
+                <Button Grid.Column="0" Margin="15,5,5,5"
+                        Content="{Binding ButtonContent}" FontSize="16" FontWeight="SemiBold"
+                        DockPanel.Dock="Left" HorizontalAlignment="Left"
+                        Command="{Binding ClickApply}"/>
+            </Grid>
+            <GroupBox Margin="5,5,5,5" Background="MintCream">
+                <GroupBox.Header>
+                    <Border Background="MintCream">
+                        <Label Content="{Binding TableTitle}"/>
+                    </Border>
+                </GroupBox.Header>
+                <GroupItem VerticalAlignment="Center">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition x:Name="idRow" Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto" MinWidth="200"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Margin="5" HorizontalAlignment="Right" Grid.Row="0" Grid.Column="0" FontSize="14" FontWeight="SemiBold">Id</Label>
+                        <TextBox Margin="5" HorizontalContentAlignment="Left" HorizontalAlignment="Stretch" Grid.Row="0" Grid.Column="1"
+                                 VerticalContentAlignment="Center" FontSize="14"
+                                 Text="{Binding IdText, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label Margin="5" HorizontalAlignment="Right" Grid.Row="1" Grid.Column="0" FontSize="14" FontWeight="SemiBold">Имя</Label>
+                        <TextBox Margin="5" HorizontalContentAlignment="Left" HorizontalAlignment="Stretch" Grid.Row="1" Grid.Column="1"
+                                 VerticalContentAlignment="Center" FontSize="14" MaxLength="100"
+                                 Text="{Binding NameText, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Grid>
+                </GroupItem>
+            </GroupBox>
+        </DockPanel>
+    </Grid>
+</Window>
