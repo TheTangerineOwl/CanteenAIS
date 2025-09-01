@@ -10,14 +10,14 @@
         >
     <Grid>
         <DockPanel LastChildFill="True">
-            <TextBlock x:Name="AboutText"
-                       Margin="20,20,20,20"
-                       Background="MintCream"
+            <ScrollViewer Margin="20,20,20,20" Background="MintCream">
+                <TextBlock x:Name="AboutText"
                        Text="{x:Static vmns:ContentVM.ContentText}"
-                       FontSize="16" ScrollViewer.VerticalScrollBarVisibility="Visible"
-                       ScrollViewer.CanContentScroll="True"
+                       TextWrapping="WrapWithOverflow"
+                       FontSize="16"
                        Padding="20"
                        FontWeight="DemiBold"/>
+            </ScrollViewer>
         </DockPanel>
     </Grid>
 </Window>
