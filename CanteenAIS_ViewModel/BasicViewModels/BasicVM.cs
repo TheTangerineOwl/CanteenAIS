@@ -96,6 +96,7 @@ namespace CanteenAIS_ViewModel.BasicViewModels
             get => new Command((obj) =>
                 {
                     OnFilter?.Invoke(Model);
+                    Table = Model.Table;
                 });
         }
 
@@ -104,6 +105,7 @@ namespace CanteenAIS_ViewModel.BasicViewModels
             get => new Command((obj) =>
                 {
                     OnAdd?.Invoke(Model);
+                    Table = Model.Table;
                 });
         }
 
@@ -113,6 +115,7 @@ namespace CanteenAIS_ViewModel.BasicViewModels
                 {
                     if (SelectedIndex >= 0 && SelectedIndex < Table.Rows.Count)
                         OnEdit?.Invoke(Table.Rows[SelectedIndex], Model);
+                    Table = Model.Table;
                 });
         }
 
@@ -122,6 +125,7 @@ namespace CanteenAIS_ViewModel.BasicViewModels
                 {
                     if (SelectedIndex >= 0 && SelectedIndex < Table.Rows.Count)
                         OnDelete?.Invoke(Table.Rows[SelectedIndex], Model);
+                    Table = Model.Table;
                 });
         }
 

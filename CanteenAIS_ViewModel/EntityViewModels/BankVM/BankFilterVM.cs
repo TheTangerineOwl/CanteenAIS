@@ -76,5 +76,14 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Bank
                 Fields.Name = name;
             }
         }
+
+        public override void Filter()
+        {
+            ParseFields();
+            Model.FetchAndFilter<Entities.Bank>((item) =>
+                !(IdCheck && item.Id != Fields.Id) &&
+                !(NameCheck && !string.Equals(item.Name, Fields.Name))
+            );
+        }
     }
 }

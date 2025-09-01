@@ -24,7 +24,6 @@ namespace CanteenAIS_Views.Tables.AssortmentGroups
             vm.OnFilter += Filter;
             vm.OnDelete += Delete;
             DataContext = vm;
-
         }
 
         private void Add(TableModel<AssortmentGroupEntity> model)
@@ -33,7 +32,6 @@ namespace CanteenAIS_Views.Tables.AssortmentGroups
             {
                 AssortmentGroupAddEditWindow addGroup = new AssortmentGroupAddEditWindow(this, model1, false);
                 addGroup.ShowDialog();
-                vm.Table = model1.Table;
             }
         }
 
@@ -43,7 +41,6 @@ namespace CanteenAIS_Views.Tables.AssortmentGroups
             {
                 AssortmentGroupAddEditWindow editGroup = new AssortmentGroupAddEditWindow(this, model1, true, row);
                 editGroup.ShowDialog();
-                vm.Table = model1.Table;
             }
         }
 
@@ -51,27 +48,16 @@ namespace CanteenAIS_Views.Tables.AssortmentGroups
         {
             if (model is SimpleModel<AssortmentGroupEntity> model1)
             {
-                //AssortmentGroupAddEditWindow editGroup = new AssortmentGroupAddEditWindow(this, model1, ActionMode.Filter, null);
-                //editGroup.ShowDialog();
                 AssortmentGroupFilterWindow filter = new AssortmentGroupFilterWindow(this, model1);
                 filter.ShowDialog();
-                vm.Table = model1.Table;
-                //if (_filter.ShowDialog() == true)
-                //    vm.FilterIn = _filter.vm.Fields;
             }
         }
 
         private void Delete(DataRow row, TableModel<AssortmentGroupEntity> model)
         {
-            // AssortmentGroupEditWindow editGroup = new AssortmentGroupEditWindow(...);
-            // editGroup.ShowDialog();
             MessageBoxResult dr = MessageBox.Show("Удалить запись?", "Удаление данных", MessageBoxButton.YesNo);
-            //if (dr.HasFlag(MessageBoxResult.Yes))
             if (dr == MessageBoxResult.Yes)
-            {
                 vm.Delete();
-                vm.Table = model.Table;
-            }
         }
 
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
