@@ -1,27 +1,27 @@
 ﻿using CanteenAIS_DB.Database.Entities;
 using CanteenAIS_Models;
-using CanteenAIS_ViewModel.EntityViewModels.Bank;
+using CanteenAIS_ViewModel.EntityViewModels.BranchOrder;
 using System.Windows;
 using System;
 using CanteenAIS_ViewModel.BasicViewModels;
 using System.Data;
 
-namespace CanteenAIS_Views.Tables.Banks
+namespace CanteenAIS_Views.Tables.BranchOrders
 {
     /// <summary>
-    /// Логика взаимодействия для BankAddEditWindow.xaml
+    /// Логика взаимодействия для BranchOrderAddEditWindow.xaml
     /// </summary>
-    public partial class BankAddEditWindow : Window
+    public partial class BranchOrderAddEditWindow : Window
     {
-        private readonly BasicActionVM<BankEntity, Bank> vm;
+        private readonly BasicActionVM<BranchOrderEntity, BranchOrder> vm;
 
-        public BankAddEditWindow(BankWindow parent, SimpleModel<BankEntity> model, bool editMode, DataRow row = null)
+        public BranchOrderAddEditWindow(BranchOrderWindow parent, SimpleModel<BranchOrderEntity> model, bool editMode, DataRow row = null)
         {
             InitializeComponent();
             Owner = parent;
             if (!editMode)
             {
-                vm = new BankAddVM(model);
+                vm = new BranchOrderAddVM(model);
                 vm.OnApply += Add;
                 idRow.Visibility = Visibility.Collapsed;
             }
@@ -29,7 +29,7 @@ namespace CanteenAIS_Views.Tables.Banks
             {
                 if (row == null)
                     this.Close();
-                vm = new BankEditVM(row, model);
+                vm = new BranchOrderEditVM(row, model);
                 vm.OnApply += Edit;
             }
 
@@ -39,7 +39,7 @@ namespace CanteenAIS_Views.Tables.Banks
 
         private void Add()
         {
-            if (vm is BankAddVM vmAdd)
+            if (vm is BranchOrderAddVM vmAdd)
             {
                 try
                 {
@@ -56,7 +56,7 @@ namespace CanteenAIS_Views.Tables.Banks
 
         private void Edit()
         {
-            if (vm is BankEditVM vmEdit)
+            if (vm is BranchOrderEditVM vmEdit)
             {
                 try
                 {

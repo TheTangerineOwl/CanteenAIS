@@ -1,21 +1,21 @@
 ﻿using CanteenAIS_DB.Database.Entities;
 using CanteenAIS_Models;
-using CanteenAIS_ViewModel.EntityViewModels.AssortmentGroup;
+using CanteenAIS_ViewModel.EntityViewModels.BranchOrder;
 using System.Data;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace CanteenAIS_Views.Tables.AssortmentGroups
+namespace CanteenAIS_Views.Tables.BranchOrders
 {
-    public partial class AssortmentGroupWindow : Window
+    public partial class BranchOrderWindow : Window
     {
-        public readonly AssortmentGroupVM vm;
+        public readonly BranchOrderVM vm;
 
-        public AssortmentGroupWindow(SimpleModel<AssortmentGroupEntity> model, uint elementId)
+        public BranchOrderWindow(SimpleModel<BranchOrderEntity> model, uint elementId)
         {
             InitializeComponent();
 
-            vm = new AssortmentGroupVM(model, elementId);
+            vm = new BranchOrderVM(model, elementId);
             vm.OnAdd += Add;
             vm.OnEdit += Edit;
             vm.OnFilter += Filter;
@@ -23,34 +23,34 @@ namespace CanteenAIS_Views.Tables.AssortmentGroups
             DataContext = vm;
         }
 
-        private void Add(TableModel<AssortmentGroupEntity> model)
+        private void Add(TableModel<BranchOrderEntity> model)
         {
-            if (model is SimpleModel<AssortmentGroupEntity> model1)
+            if (model is SimpleModel<BranchOrderEntity> model1)
             {
-                AssortmentGroupAddEditWindow addGroup = new AssortmentGroupAddEditWindow(this, model1, false);
+                BranchOrderAddEditWindow addGroup = new BranchOrderAddEditWindow(this, model1, false);
                 addGroup.ShowDialog();
             }
         }
 
-        private void Edit(DataRow row, TableModel<AssortmentGroupEntity> model)
+        private void Edit(DataRow row, TableModel<BranchOrderEntity> model)
         {
-            if (model is SimpleModel<AssortmentGroupEntity> model1)
+            if (model is SimpleModel<BranchOrderEntity> model1)
             {
-                AssortmentGroupAddEditWindow editGroup = new AssortmentGroupAddEditWindow(this, model1, true, row);
+                BranchOrderAddEditWindow editGroup = new BranchOrderAddEditWindow(this, model1, true, row);
                 editGroup.ShowDialog();
             }
         }
 
-        private void Filter(TableModel<AssortmentGroupEntity> model)
+        private void Filter(TableModel<BranchOrderEntity> model)
         {
-            if (model is SimpleModel<AssortmentGroupEntity> model1)
+            if (model is SimpleModel<BranchOrderEntity> model1)
             {
-                AssortmentGroupFilterWindow filter = new AssortmentGroupFilterWindow(this, model1);
+                BranchOrderFilterWindow filter = new BranchOrderFilterWindow(this, model1);
                 filter.ShowDialog();
             }
         }
 
-        private void Delete(DataRow row, TableModel<AssortmentGroupEntity> model)
+        private void Delete(DataRow row, TableModel<BranchOrderEntity> model)
         {
             MessageBoxResult dr = MessageBox.Show("Удалить запись?", "Удаление данных", MessageBoxButton.YesNo);
             if (dr == MessageBoxResult.Yes)

@@ -11,9 +11,9 @@ namespace CanteenAIS_DB.AppAuth.Queries
         protected override string TableName => "menuelements";
 
         protected override string QueryCreate => "INSERT INTO menuelements (" +
-                    "`Id`, `ParentId`, `Name`, `DllName`, `FuncName`, `Order`" +
+                    "`ParentId`, `Name`, `DllName`, `FuncName`, `Order`" +
                     ") VALUES (" +
-                    "@entityId, @entityParentId, @entityName, @entityDllName, @entityFuncName, @entityOrder);";
+                    "@entityParentId, @entityName, @entityDllName, @entityFuncName, @entityOrder);";
 
         protected override string QueryRead => "SELECT " +
                     "me.`Id` AS `Id`, " +

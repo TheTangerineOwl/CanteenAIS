@@ -10,7 +10,7 @@ namespace CanteenAIS_ViewModel.BasicViewModels
         where TEntityBase : Entity
         where TEntity : TEntityBase, new()
     {
-        protected TableModel<TEntityBase> Model;
+        protected virtual TableModel<TEntityBase> Model { get; private set; }
 
         private DataTable table;
         protected DataTable Table

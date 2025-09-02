@@ -13,7 +13,7 @@ namespace CanteenAIS_DB.Database.Queries
         protected override string QueryCreate => $"INSERT INTO branchorders (" +
             $"`BranchId`, `DateTime`" +
             $") VALUES (" +
-            $"@entityId, @entityDateTime" +
+            $"@entityBranchId, @entityDateTime" +
             $");";
 
         protected override string QueryRead => $"SELECT " +

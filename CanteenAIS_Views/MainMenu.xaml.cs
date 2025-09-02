@@ -6,6 +6,7 @@ using CanteenAIS_Models;
 using CanteenAIS_DB.Database.Entities;
 using CanteenAIS_Views.Tables.AssortmentGroups;
 using CanteenAIS_Views.Tables.Banks;
+using CanteenAIS_Views.Tables.BranchOrders;
 
 namespace CanteenAIS_Views
 {
@@ -33,6 +34,7 @@ namespace CanteenAIS_Views
 
             vm.OnAssortmentGroups += ShowAssortmentGroups;
             vm.OnBanks += ShowBanks;
+            vm.OnBranchOrders += ShowBranchOrders;
         }
 
         private void ShowAssortmentGroups(SimpleModel<AssortmentGroupEntity> model, uint elementId)
@@ -45,6 +47,12 @@ namespace CanteenAIS_Views
         {
             BankWindow banks = new BankWindow(model, elementId);
             banks.Show();
+        }
+
+        private void ShowBranchOrders(SimpleModel<BranchOrderEntity> model, uint elementId)
+        {
+            BranchOrderWindow branchOrders = new BranchOrderWindow(model, elementId);
+            branchOrders.Show();
         }
 
         private void ShowContents()

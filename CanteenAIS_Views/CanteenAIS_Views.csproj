@@ -48,6 +48,9 @@
     <Compile Include="BaseTemplates\DialogButtons.xaml.cs">
       <DependentUpon>DialogButtons.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BaseTemplates\ComboFormField.xaml.cs">
+      <DependentUpon>ComboFormField.xaml</DependentUpon>
+    </Compile>
     <Compile Include="BaseTemplates\TextFormField.xaml.cs">
       <DependentUpon>TextFormField.xaml</DependentUpon>
     </Compile>
@@ -70,6 +73,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BaseTemplates\TableControlPanel.xaml.cs">
       <DependentUpon>TableControlPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tables\BranchOrders\BranchOrderAddEditWindow.xaml.cs">
+      <DependentUpon>BranchOrderAddEditWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tables\BranchOrders\BranchOrderFilterWindow.xaml.cs">
+      <DependentUpon>BranchOrderFilterWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tables\BranchOrders\BranchOrderWindow.xaml.cs">
+      <DependentUpon>BranchOrderWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Tables\Banks\BankAddEditWindow.xaml.cs">
       <DependentUpon>BankAddEditWindow.xaml</DependentUpon>
@@ -109,6 +121,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="BaseTemplates\ComboFormField.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="BaseTemplates\TextFormField.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -138,6 +154,18 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="BaseTemplates\TableControlPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tables\BranchOrders\BranchOrderAddEditWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tables\BranchOrders\BranchOrderFilterWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tables\BranchOrders\BranchOrderWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

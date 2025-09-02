@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="CanteenAIS_Views.BaseTemplates.TextFormField"
+﻿<UserControl x:Class="CanteenAIS_Views.BaseTemplates.ComboFormField"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -10,16 +10,16 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition SharedSizeGroup="Labels" Width="Auto"/>
-            <ColumnDefinition SharedSizeGroup="Values" Width="Auto" MinWidth="200"/>
+            <ColumnDefinition SharedSizeGroup="Values" Width="*" MinWidth="200"/>
         </Grid.ColumnDefinitions>
 
         <Label Grid.Column="0"
                Style="{StaticResource FormLabelStyle}"
                Content="{Binding LabelText, ElementName=root}"/>
-
-        <TextBox Grid.Column="1"
-                 Style="{StaticResource FormTextBoxStyle}"
-                 Text="{Binding Text, ElementName=root, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                 MaxLength="{Binding MaxLength, ElementName=root}"/>
+        <ComboBox Grid.Column="1"
+                  Style="{StaticResource FormComboBoxStyle}"
+                  ItemsSource="{Binding ItemsSource, ElementName=root, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                  SelectedIndex="{Binding SelectedIndex, ElementName=root, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                  SelectedItem="{Binding SelectedItem, ElementName=root, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
     </Grid>
 </UserControl>

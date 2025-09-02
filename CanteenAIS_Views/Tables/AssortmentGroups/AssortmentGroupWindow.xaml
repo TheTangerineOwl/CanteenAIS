@@ -1,21 +1,9 @@
 ﻿<Window x:Class="CanteenAIS_Views.Tables.AssortmentGroups.AssortmentGroupWindow"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:CanteenAIS_Views.Tables.AssortmentGroups"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:template="clr-namespace:CanteenAIS_Views.BaseTemplates"
-            xmlns:vm="clr-namespace:CanteenAIS_ViewModel.EntityViewModels.AssortmentGroup;assembly=CanteenAIS_ViewModel"
-            Title="{Binding Title}"
-        Style="{DynamicResource WindowStyle}"
-        >
-    <Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/CanteenAIS_Views;component/Styles/GenericWindowStyle.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Window.Resources>
+        Title="{Binding Title}"
+        Style="{StaticResource WindowStyle}">
 
     <Grid>
         <DockPanel LastChildFill="True">

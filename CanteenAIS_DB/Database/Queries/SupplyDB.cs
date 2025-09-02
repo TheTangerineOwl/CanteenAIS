@@ -12,9 +12,9 @@ namespace CanteenAIS_DB.Database.Queries
 
         protected override string QueryCreate =>
             "INSERT INTO supplies (" +
-            "`Id`, `SupplierId`, `DateTime`" +
+            "`SupplierId`, `DateTime`" +
             ") VALUES (" +
-            "@entityId, @entitySupplierId, @entityDateTime" +
+            "@entitySupplierId, @entityDateTime" +
             ");";
 
         protected override string QueryRead =>

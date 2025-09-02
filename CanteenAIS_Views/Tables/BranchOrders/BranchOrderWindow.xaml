@@ -1,4 +1,4 @@
-﻿<Window x:Class="CanteenAIS_Views.Tables.Banks.BankWindow"
+﻿<Window x:Class="CanteenAIS_Views.Tables.BranchOrders.BranchOrderWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:template="clr-namespace:CanteenAIS_Views.BaseTemplates"

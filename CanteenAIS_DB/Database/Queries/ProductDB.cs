@@ -11,9 +11,9 @@ namespace CanteenAIS_DB.Database.Queries
 
         protected override string QueryCreate =>
             "INSERT INTO products (" +
-            "`Id`, `Name`, `UnitId`, `Markup`, `Stock`, `ProductId`" +
+            "`Name`, `UnitId`, `Markup`, `Stock`, `ProductId`" +
             ") VALUES (" +
-            "@entityId, @entityName, @entityUnitId, @entityMarkup, @entityStock, @entitySupplierId);";
+            "@entityName, @entityUnitId, @entityMarkup, @entityStock, @entitySupplierId);";
 
         protected override string QueryRead =>
             $"SELECT " +

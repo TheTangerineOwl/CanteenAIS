@@ -24,9 +24,9 @@ namespace CanteenAIS_DB.Database.Queries
             "LEFT JOIN cities AS c ON c.`Id`=`CityId`;";
 
         protected override string QueryUpdate => "INSERT INTO streets (" +
-            "`Id`, `CityId`, `Name`" +
+            "`CityId`, `Name`" +
             ") VALUES (" +
-            "@entityId, @entityCityId, @entityName" +
+            "@entityCityId, @entityName" +
             ");";
 
         protected override MySqlParameterCollection FillParameters(StreetEntity entity, MySqlCommand command, bool withId = true)

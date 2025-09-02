@@ -1,24 +1,24 @@
 ﻿using CanteenAIS_DB.Database.Entities;
 using CanteenAIS_Models;
-using CanteenAIS_ViewModel.EntityViewModels.AssortmentGroup;
+using CanteenAIS_ViewModel.EntityViewModels.BranchOrder;
 using System.Windows;
 using CanteenAIS_ViewModel.BasicViewModels;
 
-namespace CanteenAIS_Views.Tables.AssortmentGroups
+namespace CanteenAIS_Views.Tables.BranchOrders
 {
     /// <summary>
-    /// Логика взаимодействия для AssortmentGroupFilterWindow.xaml
+    /// Логика взаимодействия для BranchOrderFilterWindow.xaml
     /// </summary>
-    public partial class AssortmentGroupFilterWindow : Window
+    public partial class BranchOrderFilterWindow : Window
     {
-        public readonly BasicFilterVM<AssortmentGroupEntity, AssortmentGroup> vm;
+        public readonly BasicFilterVM<BranchOrderEntity, BranchOrder> vm;
 
-        public AssortmentGroupFilterWindow(AssortmentGroupWindow parent, SimpleModel<AssortmentGroupEntity> model)
+        public BranchOrderFilterWindow(BranchOrderWindow parent, SimpleModel<BranchOrderEntity> model)
         {
             InitializeComponent();
             Owner = parent;
 
-            vm = new AssortmentGroupFilterVM(model);
+            vm = new BranchOrderFilterVM(model);
             vm.OnApply += Filter;
             vm.OnCancel += Cancel;
             DataContext = vm;

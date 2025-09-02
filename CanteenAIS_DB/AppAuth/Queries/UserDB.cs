@@ -11,9 +11,9 @@ namespace CanteenAIS_DB.AppAuth.Queries
         protected override string TableName => "users";
 
         protected override string QueryCreate => "INSERT INTO users (" +
-                    "`Id`, `Login`, `Password`, `LastName`, `FirstName`, `Patronim`, `DateOfBirth`" +
+                    "`Login`, `Password`, `LastName`, `FirstName`, `Patronim`, `DateOfBirth`" +
                     ") VALUES (" +
-                    "@entityId, @entityLogin, @entityPassword, @entityLastName, @entityFirstName, @entityPatronim, @entityDateOfBirth" +
+                    "@entityLogin, @entityPassword, @entityLastName, @entityFirstName, @entityPatronim, @entityDateOfBirth" +
                     ");";
 
         protected override string QueryRead => "SELECT " +

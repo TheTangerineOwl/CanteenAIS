@@ -16,18 +16,15 @@ namespace CanteenAIS_Views.Tables.AssortmentGroups
         //private readonly AssortmentGroupAddVM vm;
         private readonly BasicActionVM<AssortmentGroupEntity, AssortmentGroup> vm;
 
-        private readonly AssortmentGroupWindow _parent;
-
         public AssortmentGroupAddEditWindow(AssortmentGroupWindow parent, SimpleModel<AssortmentGroupEntity> model, bool editMode, DataRow row = null)
         {
             InitializeComponent();
-            _parent = parent;
             Owner = parent;
             if (!editMode)
             {
                 vm = new AssortmentGroupAddVM(model);
                 vm.OnApply += Add;
-                idRow.MaxHeight = 0;
+                idRow.Visibility = Visibility.Collapsed;
             }
             else
             {

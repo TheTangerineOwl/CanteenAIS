@@ -1,12 +1,9 @@
 ﻿using CanteenAIS_DB.Database.Entities;
 using CanteenAIS_Models;
-using CanteenAIS_Models.Models;
-using CanteenAIS_ViewModel;
 using CanteenAIS_ViewModel.EntityViewModels.Bank;
 using System.Data;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace CanteenAIS_Views.Tables.Banks
 {

@@ -41,7 +41,7 @@ namespace CanteenAIS_Models
                 DataValues.Add(table.Rows[i], values[i]);
         }
 
-        protected virtual IList<TEntityType> FetchValues<TEntityType>() where TEntityType : TEntity, new()
+        public virtual IList<TEntityType> FetchValues<TEntityType>() where TEntityType : TEntity, new()
         {
             return TableContext.Read<TEntityType>();//.ToList();
         }

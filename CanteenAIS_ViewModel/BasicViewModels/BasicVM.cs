@@ -24,7 +24,7 @@ namespace CanteenAIS_ViewModel.BasicViewModels
         }
 
         protected virtual UserPermEntity Perm { get; set; }
-        protected virtual TableModel<TEntityBase> Model { get; set; }
+        protected virtual TableModel<TEntityBase> Model { get; private set; }
 
         protected DataTable table;
         public virtual DataTable Table
