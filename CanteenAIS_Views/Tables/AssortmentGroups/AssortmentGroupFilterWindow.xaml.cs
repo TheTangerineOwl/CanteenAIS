@@ -11,7 +11,6 @@ namespace CanteenAIS_Views.Tables.AssortmentGroups
     /// </summary>
     public partial class AssortmentGroupFilterWindow : Window
     {
-        //private readonly AssortmentGroupAddVM vm;
         public readonly BasicFilterVM<AssortmentGroupEntity, AssortmentGroup> vm;
 
         private readonly AssortmentGroupWindow _parent;
@@ -31,8 +30,6 @@ namespace CanteenAIS_Views.Tables.AssortmentGroups
         private void Filter()
         {
             vm.Filter();
-            //_parent.vm.FilterIn = vm.Fields;
-            //_parent.UpdateTable();
             this.Close();
         }
 

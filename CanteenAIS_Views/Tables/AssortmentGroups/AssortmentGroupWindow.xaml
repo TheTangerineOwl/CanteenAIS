@@ -4,52 +4,28 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CanteenAIS_Views.Tables.AssortmentGroups"
+        xmlns:template="clr-namespace:CanteenAIS_Views.BaseTemplates"
             xmlns:vm="clr-namespace:CanteenAIS_ViewModel.EntityViewModels.AssortmentGroup;assembly=CanteenAIS_ViewModel"
             Title="{Binding Title}"
-             Height="450" Width="800" Background="PaleGreen"
+        Style="{DynamicResource WindowStyle}"
         >
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/CanteenAIS_Views;component/Styles/GenericWindowStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
     <Grid>
         <DockPanel LastChildFill="True">
-            <DockPanel DockPanel.Dock="Bottom" LastChildFill="True">
-                <Label Margin="10,10,5,10" DockPanel.Dock="Left" VerticalAlignment="Center"
-                           FontWeight="SemiBold" FontSize="16"
-                    Content="Поиск"/>
-                <Button Margin="5,10,20,10"
-                        Content="Удалить" FontSize="16" FontWeight="SemiBold"
-                        DockPanel.Dock="Right"
-                        Command="{Binding ClickDelete}"
-                        IsEnabled="{Binding DeleteVisibility, UpdateSourceTrigger=PropertyChanged}"
-                />
-                <Button Margin="5,10,5,10"
-                        Content="Изменить" FontSize="16" FontWeight="SemiBold"
-                        DockPanel.Dock="Right"
-                        Command="{Binding ClickEdit}"
-                        IsEnabled="{Binding EditVisibility, UpdateSourceTrigger=PropertyChanged}"
-                />
-                <Button Margin="5,10,5,10"
-                        Content="Добавить" FontSize="16" FontWeight="SemiBold"
-                        DockPanel.Dock="Right"
-                        Command="{Binding ClickAdd}"
-                        IsEnabled="{Binding WriteVisibility, UpdateSourceTrigger=PropertyChanged}"
-                />
-                <Button Margin="5,10,5,10"
-                        Content="Фильтр" FontSize="16" FontWeight="SemiBold"
-                        DockPanel.Dock="Right"
-                        Command="{Binding ClickFilter}"
-                />
-                <TextBox Margin="5,10,5,10" DockPanel.Dock="Left" FontSize="16"
-                    VerticalContentAlignment="Center" HorizontalContentAlignment="Left"
-                    Text="{Binding SearchSample, UpdateSourceTrigger=PropertyChanged}"/>
-            </DockPanel>
-            <DataGrid x:Name="dtGrid" FontSize="16" Margin="20,20,20,0"
-                CanUserAddRows="False" CanUserDeleteRows="False" CanUserSortColumns="False"
-                HorizontalScrollBarVisibility="Auto"
-                VerticalScrollBarVisibility="Auto"
-                SelectionMode="Single" SelectedIndex="{Binding SelectedIndex, UpdateSourceTrigger=PropertyChanged}"
-                ItemsSource="{Binding Table, UpdateSourceTrigger=PropertyChanged}"
-                      AutoGenerateColumns="True"
-                      IsReadOnly="True" SelectionChanged="DataGrid_SelectionChanged" AutoGeneratingColumn="DataGrid_AutoGeneratingColumn"
-            />
+            <template:TableControlPanel Margin="10,5,10,5" DockPanel.Dock="Bottom"/>
+
+            <DataGrid x:Name="dtGrid" Style="{StaticResource TableDataGridStyle}"
+                     SelectedIndex="{Binding SelectedIndex, UpdateSourceTrigger=PropertyChanged}"
+                     ItemsSource="{Binding Table, UpdateSourceTrigger=PropertyChanged}"
+                     SelectionChanged="DataGrid_SelectionChanged" 
+                     AutoGeneratingColumn="DataGrid_AutoGeneratingColumn"/>
         </DockPanel>
     </Grid>
 </Window>
