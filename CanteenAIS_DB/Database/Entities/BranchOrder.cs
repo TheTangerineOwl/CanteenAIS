@@ -22,6 +22,11 @@ namespace CanteenAIS_DB.Database.Entities
             BranchName = info.BranchName;
             DateTime = info.DateTime;
         }
+
+        public override string ToString()
+        {
+            return $"{BranchName}_{DateTime}";
+        }
     }
 
     public class BranchOrder : BranchOrderEntity

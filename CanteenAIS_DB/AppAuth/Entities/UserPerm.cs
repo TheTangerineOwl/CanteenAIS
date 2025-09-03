@@ -41,6 +41,11 @@ namespace CanteenAIS_DB.AppAuth.Entities
             CanEdit = info.CanEdit;
             CanDelete = info.CanDelete;
         }
+
+        public override string ToString()
+        {
+            return $"({UserLogin}, {ElementName})";
+        }
     }
 
     public class UserPerm : UserPermEntity

@@ -33,6 +33,11 @@ namespace CanteenAIS_DB.Database.Entities
             UnitName = info.UnitName;
             Amount = info.Amount;
         }
+
+        public override string ToString()
+        {
+            return $"{OrderId}, {ProductName}";
+        }
     }
 
     public class OrderProduct : OrderProductEntity

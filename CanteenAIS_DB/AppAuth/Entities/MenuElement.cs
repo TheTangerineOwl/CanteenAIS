@@ -33,6 +33,11 @@ namespace CanteenAIS_DB.AppAuth.Entities
             FuncName = info.FuncName;
             Order = info.Order;
         }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 
     public class MenuElement : MenuElementEntity

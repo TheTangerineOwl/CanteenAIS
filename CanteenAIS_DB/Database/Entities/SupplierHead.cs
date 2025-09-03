@@ -27,6 +27,11 @@ namespace CanteenAIS_DB.Database.Entities
             Patronim = info.Patronim;
             Phone = info.Phone;
         }
+
+        public override string ToString()
+        {
+            return $"{LastName} {FirstName} {Patronim}";
+        }
     }
 
     public class SupplierHead : SupplierHeadEntity

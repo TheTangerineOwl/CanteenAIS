@@ -22,6 +22,11 @@ namespace CanteenAIS_DB.Database.Entities
             SupplierName = info.SupplierName;
             DateTime = info.DateTime;
         }
+
+        public override string ToString()
+        {
+            return $"{SupplierName}_{DateTime}";
+        }
     }
 
     public class Supply : SupplyEntity

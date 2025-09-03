@@ -11,7 +11,7 @@ namespace CanteenAIS_DB.Database.Queries
 
         protected override string QueryCreate =>
             "INSERT INTO products (" +
-            "`Name`, `UnitId`, `Markup`, `Stock`, `ProductId`" +
+            "`Name`, `UnitId`, `Markup`, `Stock`, `SupplierId`" +
             ") VALUES (" +
             "@entityName, @entityUnitId, @entityMarkup, @entityStock, @entitySupplierId);";
 
@@ -23,11 +23,11 @@ namespace CanteenAIS_DB.Database.Queries
             $"mu.`Name` AS `UnitName`, " +
             $"p.`Markup` AS `Markup`, " +
             $"p.`Stock` AS `Stock`, " +
-            $"p.`ProductId` AS `ProductId`, " +
-            $"sr.`Name` AS `ProductName` " +
+            $"p.`SupplierId` AS `SupplierId`, " +
+            $"sr.`Name` AS `SupplierName` " +
             $"FROM products AS p " +
             $"LEFT JOIN measureunits AS mu ON mu.`Id`=p.`UnitId` " +
-            $"LEFT JOIN suppliers AS sr ON sr.`Id`=p.`ProductId`;";
+            $"LEFT JOIN suppliers AS sr ON sr.`Id`=p.`SupplierId`;";
 
         protected override string QueryUpdate =>
             "UPDATE products " +
@@ -36,7 +36,7 @@ namespace CanteenAIS_DB.Database.Queries
             "`UnitId`=@entityUnitId, " +
             "`Markup`=@entityMarkup, " +
             "`Stock`=@entityStock, " +
-            "`ProductId`=@entitySupplierId " +
+            "`SupplierId`=@entitySupplierId " +
             "WHERE `Id`=@entityId;";
 
         protected override MySqlParameterCollection FillParameters(ProductEntity entity, MySqlCommand command, bool withId = true)

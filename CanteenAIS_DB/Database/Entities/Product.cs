@@ -35,6 +35,11 @@ namespace CanteenAIS_DB.Database.Entities
             SupplierId = info.SupplierId;
             SupplierName = info.SupplierName;
         }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 
     public class Product : ProductEntity

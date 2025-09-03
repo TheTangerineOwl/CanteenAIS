@@ -21,6 +21,11 @@ namespace CanteenAIS_DB.Database.Entities
             CityId = info.CityId;
             CityName = info.CityName;
         }
+
+        public override string ToString()
+        {
+            return $"{CityName}, {Name}";
+        }
     }
 
     public class Street : StreetEntity

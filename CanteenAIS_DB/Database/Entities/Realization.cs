@@ -32,6 +32,11 @@ namespace CanteenAIS_DB.Database.Entities
             UnitId = info.UnitId;
             UnitName = info.UnitName;
         }
+
+        public override string ToString()
+        {
+            return $"{DateTime}_{DishName}";
+        }
     }
 
     public class Realization : RealizationEntity

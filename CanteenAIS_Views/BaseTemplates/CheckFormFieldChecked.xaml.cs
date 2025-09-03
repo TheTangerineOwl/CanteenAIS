@@ -9,16 +9,16 @@ namespace CanteenAIS_Views.BaseTemplates
     public partial class CheckFormFieldChecked : UserControl
     {
         public static readonly DependencyProperty LabelTextProperty =
-            DependencyProperty.Register("LabelText", typeof(string), typeof(CheckFormField));
+            DependencyProperty.Register("LabelText", typeof(string), typeof(CheckFormFieldChecked));
 
         public static readonly DependencyProperty IsValueCheckedProperty =
-            DependencyProperty.Register("IsValueChecked", typeof(bool), typeof(CheckFormField));
+            DependencyProperty.Register("IsValueChecked", typeof(bool), typeof(CheckFormFieldChecked));
 
         public static readonly DependencyProperty DefaultProperty =
-            DependencyProperty.Register("Default", typeof(bool), typeof(CheckFormField));
+            DependencyProperty.Register("Default", typeof(bool), typeof(CheckFormFieldChecked));
 
         public static readonly DependencyProperty IsCheckedProperty =
-            DependencyProperty.Register("IsChecked", typeof(bool), typeof(UIntFormFieldChecked));
+            DependencyProperty.Register("IsChecked", typeof(bool), typeof(CheckFormFieldChecked));
 
         public string LabelText
         {

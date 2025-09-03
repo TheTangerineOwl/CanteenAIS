@@ -43,6 +43,11 @@ namespace CanteenAIS_DB.Database.Entities
             Recipe = info.Recipe;
             Picture = info.Picture;
         }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 
     public class Dish : DishEntity

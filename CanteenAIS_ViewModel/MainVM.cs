@@ -164,13 +164,13 @@ namespace CanteenAIS_ViewModel
             });
         }
 
-        public ICommand ClickSupplier
+        public ICommand ClickSuppliers
         {
             get => new Command((obj) =>
             {
                 OnSuppliers?.Invoke(
                     MainServices.GetInstance().Suppliers,
-                    MenuElementModel.GetCurrentMenuElemId(nameof(ClickSupplier))
+                    MenuElementModel.GetCurrentMenuElemId(nameof(ClickSuppliers))
                 );
             });
         }

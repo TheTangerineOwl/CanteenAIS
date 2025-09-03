@@ -39,6 +39,11 @@ namespace CanteenAIS_DB.Database.Entities
             UnitId = info.UnitId;
             UnitName = info.UnitName;
         }
+
+        public override string ToString()
+        {
+            return $"{ProductName} в {DishName}";
+        }
     }
 
     public class Ingredient : IngredientEntity

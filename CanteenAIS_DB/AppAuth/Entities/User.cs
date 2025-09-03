@@ -40,6 +40,11 @@ namespace CanteenAIS_DB.AppAuth.Entities
             DateOfBirth = info.DateOfBirth;
             UserPerms = info.UserPerms;
         }
+
+        public override string ToString()
+        {
+            return Login + " (" + string.Join(" ", LastName, FirstName, Patronim) + ")";
+        }
     }
 
     public class User : UserEntity

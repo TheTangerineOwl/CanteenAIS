@@ -54,6 +54,11 @@ namespace CanteenAIS_DB.Database.Entities
             Account = info.Account;
             INN = info.INN;
         }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 
     public class Supplier : SupplierEntity

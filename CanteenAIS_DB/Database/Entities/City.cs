@@ -15,6 +15,11 @@ namespace CanteenAIS_DB.Database.Entities
             Id = info.Id;
             Name = info.Name;
         }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 
     public class City : CityEntity
