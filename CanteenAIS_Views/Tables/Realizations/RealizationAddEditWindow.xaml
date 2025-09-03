@@ -28,10 +28,21 @@
                 <template:UIntFormField x:Name="idRow" LabelText="Id"
                     ValuePick="{Binding Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     Minimum="1" Default="1" Maximum="1000000000"/>
-
-                <template:TextFormField LabelText="Имя"
-                    Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    MaxLength="100"/>
+                <template:DateTimeFormField LabelText="Время"
+                    ValuePick="{Binding DateTimePick, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                />
+                <template:ComboFormField LabelText="Блюдо"
+                    ItemsSource="{Binding Dishes, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedItem="{Binding Dish, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                />
+                <template:DoubleFormField LabelText="Количество"
+                    ValuePick="{Binding Amount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Minimum="0" Default="0" Maximum="10000000000"
+                />
+                <template:ComboFormField LabelText="Единица измерения"
+                    ItemsSource="{Binding Units, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedItem="{Binding Unit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                />
             </StackPanel>
         </GroupBox>
     </DockPanel>

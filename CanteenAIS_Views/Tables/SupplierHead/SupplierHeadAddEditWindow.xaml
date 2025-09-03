@@ -29,9 +29,18 @@
                     ValuePick="{Binding Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     Minimum="1" Default="1" Maximum="1000000000"/>
 
+                <template:TextFormField LabelText="Фамилия"
+                    Text="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    MaxLength="50"/>
                 <template:TextFormField LabelText="Имя"
-                    Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    MaxLength="100"/>
+                    Text="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    MaxLength="50"/>
+                <template:TextFormField LabelText="Отчество"
+                    Text="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    MaxLength="50"/>
+                <template:TextFormField LabelText="Телефон"
+                    Text="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    MaxLength="13"/>
             </StackPanel>
         </GroupBox>
     </DockPanel>

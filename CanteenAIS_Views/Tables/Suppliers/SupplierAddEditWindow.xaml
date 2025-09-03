@@ -28,10 +28,33 @@
                 <template:UIntFormField x:Name="idRow" LabelText="Id"
                     ValuePick="{Binding Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     Minimum="1" Default="1" Maximum="1000000000"/>
-
                 <template:TextFormField LabelText="Имя"
                     Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     MaxLength="100"/>
+                <template:ComboFormField LabelText="Улица"
+                    ItemsSource="{Binding Streets, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedItem="{Binding Street, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                />
+                <template:TextFormField LabelText="Здание"
+                    Text="{Binding Building, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    MaxLength="16"
+                />
+                <template:ComboFormField LabelText="Руководитель"
+                    ItemsSource="{Binding Heads, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedItem="{Binding Head, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                />
+                <template:ComboFormField LabelText="Банк"
+                    ItemsSource="{Binding Banks, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedItem="{Binding Bank, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                />
+                <template:TextFormField LabelText="Расчетный счет"
+                    Text="{Binding Account, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    MaxLength="20"
+                />
+                <template:TextFormField LabelText="ИНН"
+                    Text="{Binding INN, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    MaxLength="10"
+                />
             </StackPanel>
         </GroupBox>
     </DockPanel>

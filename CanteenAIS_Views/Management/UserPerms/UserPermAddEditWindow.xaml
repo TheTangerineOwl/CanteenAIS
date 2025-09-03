@@ -25,16 +25,29 @@
             </GroupBox.HeaderTemplate>
 
             <StackPanel Margin="10" Grid.IsSharedSizeScope="True">
-                <template:UIntFormField x:Name="idRow" LabelText="Id"
-                    ValuePick="{Binding Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    Minimum="1" Default="1" Maximum="1000000000"/>
-
-                <template:ComboFormField LabelText="Подразделение"
-                    ItemsSource="{Binding Branches, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                    SelectedItem="{Binding Branch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                <template:ComboFormField LabelText="Пользователь"
+                    ItemsSource="{Binding Users, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedItem="{Binding User, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 />
-                <template:DateTimeFormField LabelText="Время"
-                    ValuePick="{Binding DateTimePick, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                <template:ComboFormField LabelText="Пункт меню"
+                    ItemsSource="{Binding Elements, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedItem="{Binding Element, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                />
+                <template:CheckFormField LabelText="Чтение"
+                    Default="False"
+                    IsValueChecked="{Binding CanRead, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                />
+                <template:CheckFormField LabelText="Запись"
+                    Default="False"
+                    IsValueChecked="{Binding CanWrite, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                />
+                <template:CheckFormField LabelText="Редактирование"
+                    Default="False"
+                    IsValueChecked="{Binding CanEdit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                />
+                <template:CheckFormField LabelText="Удаление"
+                    Default="False"
+                    IsValueChecked="{Binding CanDelete, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 />
             </StackPanel>
         </GroupBox>

@@ -23,7 +23,6 @@ namespace CanteenAIS_Views.Management.UserPerms
             {
                 vm = new UserPermAddVM(model);
                 vm.OnApply += Add;
-                idRow.Visibility = Visibility.Collapsed;
             }
             else
             {

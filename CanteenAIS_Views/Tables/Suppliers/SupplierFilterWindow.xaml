@@ -26,14 +26,43 @@
 
             <StackPanel Margin="10" Grid.IsSharedSizeScope="True">
                 <template:UIntFormFieldChecked x:Name="idRow" LabelText="Id"
-                    IsChecked="{Binding IdCheck, Mode=TwoWay}"
+                    IsChecked="{Binding IdCheck, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     ValuePick="{Binding Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     Minimum="1" Default="1" Maximum="1000000000"/>
-
                 <template:TextFormFieldChecked LabelText="Имя"
-                    IsChecked="{Binding NameCheck, Mode=TwoWay}"
+                    IsChecked="{Binding NameCheck, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     MaxLength="100"/>
+                <template:ComboFormFieldChecked LabelText="Улица"
+                    IsChecked="{Binding StreetCheck, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    ItemsSource="{Binding Streets, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedItem="{Binding Street, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                />
+                <template:TextFormFieldChecked LabelText="Здание"
+                    IsChecked="{Binding BuildingCheck, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Text="{Binding Building, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    MaxLength="16"
+                />
+                <template:ComboFormFieldChecked LabelText="Руководитель"
+                    IsChecked="{Binding HeadCheck, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    ItemsSource="{Binding Heads, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedItem="{Binding Head, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                />
+                <template:ComboFormFieldChecked LabelText="Банк"
+                    IsChecked="{Binding BankCheck, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    ItemsSource="{Binding Banks, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedItem="{Binding Bank, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                />
+                <template:TextFormFieldChecked LabelText="Расчетный счет"
+                    IsChecked="{Binding AccountCheck, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Text="{Binding Account, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    MaxLength="20"
+                />
+                <template:TextFormFieldChecked LabelText="ИНН"
+                    IsChecked="{Binding INNCheck, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Text="{Binding INN, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    MaxLength="10"
+                />
             </StackPanel>
         </GroupBox>
     </DockPanel>

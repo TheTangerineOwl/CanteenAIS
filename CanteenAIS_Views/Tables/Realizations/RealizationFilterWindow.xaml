@@ -26,14 +26,28 @@
 
             <StackPanel Margin="10" Grid.IsSharedSizeScope="True">
                 <template:UIntFormFieldChecked x:Name="idRow" LabelText="Id"
-                    IsChecked="{Binding IdCheck, Mode=TwoWay}"
+                    IsChecked="{Binding IdCheck, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     ValuePick="{Binding Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     Minimum="1" Default="1" Maximum="1000000000"/>
-
-                <template:TextFormFieldChecked LabelText="Имя"
-                    IsChecked="{Binding NameCheck, Mode=TwoWay}"
-                    Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    MaxLength="100"/>
+                <template:DateTimeFormFieldChecked LabelText="Время"
+                    IsChecked="{Binding TimeCheck, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    ValuePick="{Binding DateTimePick, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                />
+                <template:ComboFormFieldChecked LabelText="Блюдо"
+                    IsChecked="{Binding DishCheck, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    ItemsSource="{Binding Dishes, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedItem="{Binding Dish, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                />
+                <template:DoubleFormFieldChecked LabelText="Количество"
+                    IsChecked="{Binding AmountCheck, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    ValuePick="{Binding Amount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Minimum="0" Default="0" Maximum="10000000000"
+                />
+                <template:ComboFormFieldChecked LabelText="Единица измерения"
+                    IsChecked="{Binding UnitCheck, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    ItemsSource="{Binding Units, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedItem="{Binding Unit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                />
             </StackPanel>
         </GroupBox>
     </DockPanel>

@@ -25,19 +25,35 @@
             </GroupBox.HeaderTemplate>
 
             <StackPanel Margin="10" Grid.IsSharedSizeScope="True">
-                <template:UIntFormFieldChecked x:Name="idRow" LabelText="Id"
-                    IsChecked="{Binding IdCheck, Mode=TwoWay}"
-                    ValuePick="{Binding Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    Minimum="1" Default="1" Maximum="1000000000"/>
-
-                <template:ComboFormFieldChecked LabelText="Подразделение"
-                    IsChecked="{Binding BranchCheck, Mode=TwoWay}"
-                    ItemsSource="{Binding Branches, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                    SelectedItem="{Binding Branch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                <template:ComboFormFieldChecked LabelText="Пользователь"
+                    IsChecked="{Binding UserCheck, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    ItemsSource="{Binding Users, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedItem="{Binding User, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 />
-                <template:DateTimeFormFieldChecked LabelText="Время"
-                    IsChecked="{Binding DateTimeCheck, Mode=TwoWay}"
-                    ValuePick="{Binding DateTimePick, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                <template:ComboFormFieldChecked LabelText="Пункт меню"
+                    IsChecked="{Binding ElementCheck, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    ItemsSource="{Binding Elements, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedItem="{Binding Element, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                />
+                <template:CheckFormFieldChecked LabelText="Чтение"
+                    IsChecked="{Binding ReadCheck, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Default="False"
+                    IsValueChecked="{Binding CanRead, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                />
+                <template:CheckFormFieldChecked LabelText="Запись"
+                    IsChecked="{Binding WriteCheck, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Default="False"
+                    IsValueChecked="{Binding CanWrite, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                />
+                <template:CheckFormFieldChecked LabelText="Редактирование"
+                    IsChecked="{Binding EditCheck, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Default="False"
+                    IsValueChecked="{Binding CanEdit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                />
+                <template:CheckFormFieldChecked LabelText="Удаление"
+                    IsChecked="{Binding DeleteCheck, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Default="False"
+                    IsValueChecked="{Binding CanDelete, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 />
             </StackPanel>
         </GroupBox>

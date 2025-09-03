@@ -75,6 +75,12 @@
     <Compile Include="BaseTemplates\DecimalFormField.xaml.cs">
       <DependentUpon>DecimalFormField.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BaseTemplates\CheckFormField.xaml.cs">
+      <DependentUpon>CheckFormField.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BaseTemplates\CheckFormFieldChecked.xaml.cs">
+      <DependentUpon>CheckFormFieldChecked.xaml</DependentUpon>
+    </Compile>
     <Compile Include="BaseTemplates\UIntFormFieldChecked.xaml.cs">
       <DependentUpon>UIntFormFieldChecked.xaml</DependentUpon>
     </Compile>
@@ -275,6 +281,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="BaseTemplates\DecimalFormField.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="BaseTemplates\CheckFormField.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="BaseTemplates\CheckFormFieldChecked.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

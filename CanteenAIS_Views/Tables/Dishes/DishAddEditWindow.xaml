@@ -28,10 +28,33 @@
                 <template:UIntFormField x:Name="idRow" LabelText="Id"
                     ValuePick="{Binding Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     Minimum="1" Default="1" Maximum="1000000000"/>
-
                 <template:TextFormField LabelText="Имя"
                     Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     MaxLength="100"/>
+                <template:ComboFormField LabelText="Группа ассортимента"
+                    ItemsSource="{Binding Groups, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedItem="{Binding Group, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                />
+                <template:DecimalFormField LabelText="Цена, руб."
+                    ValuePick="{Binding Price, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Minimum="0" Default="0" Maximum="10000000000"
+                />
+                <template:DoubleFormField LabelText="Размер порции"
+                    ValuePick="{Binding Serving, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Minimum="0" Default="0" Maximum="10000000000"
+                />
+                <template:ComboFormField LabelText="Единица измерения"
+                    ItemsSource="{Binding Units, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedItem="{Binding Unit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                />
+                <template:TextFormField LabelText="Рецепт"
+                    Text="{Binding Recipe, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    MaxLength="2500"
+                />
+                <template:TextFormField LabelText="Ссылка на фото"
+                    Text="{Binding Picture, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    MaxLength="200"
+                />
             </StackPanel>
         </GroupBox>
     </DockPanel>

@@ -26,14 +26,18 @@
 
             <StackPanel Margin="10" Grid.IsSharedSizeScope="True">
                 <template:UIntFormFieldChecked x:Name="idRow" LabelText="Id"
-                    IsChecked="{Binding IdCheck, Mode=TwoWay}"
+                    IsChecked="{Binding IdCheck, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     ValuePick="{Binding Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     Minimum="1" Default="1" Maximum="1000000000"/>
-
-                <template:TextFormFieldChecked LabelText="Имя"
-                    IsChecked="{Binding NameCheck, Mode=TwoWay}"
-                    Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    MaxLength="100"/>
+                <template:ComboFormFieldChecked LabelText="Поставщик"
+                    IsChecked="{Binding SupplierCheck, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    ItemsSource="{Binding Suppliers, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedItem="{Binding Supplier, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                />
+                <template:DateTimeFormFieldChecked LabelText="Время"
+                    IsChecked="{Binding TimeCheck, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    ValuePick="{Binding Time, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                />
             </StackPanel>
         </GroupBox>
     </DockPanel>
