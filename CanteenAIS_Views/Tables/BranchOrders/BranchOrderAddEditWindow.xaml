@@ -25,8 +25,8 @@
             </GroupBox.HeaderTemplate>
 
             <StackPanel Margin="10" Grid.IsSharedSizeScope="True">
-                <template:IntFormField x:Name="idRow" LabelText="Id"
-                    IntPick="{Binding Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                <template:UIntFormField x:Name="idRow" LabelText="Id"
+                    UIntPick="{Binding Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     Minimum="1" Default="1" Maximum="1000000000"/>
 
                 <template:ComboFormField LabelText="Подразделение"

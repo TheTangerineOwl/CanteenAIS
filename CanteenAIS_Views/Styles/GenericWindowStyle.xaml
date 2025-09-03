@@ -75,7 +75,7 @@
         <Setter Property="Maximum" Value="3000-01-01"/>
     </Style>
 
-    <Style x:Key="FormIntPickerStyle" TargetType="xctk:IntegerUpDown">
+    <Style x:Key="FormUIntPickerStyle" TargetType="xctk:UIntegerUpDown">
         <Setter Property="Margin" Value="5"/>
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
@@ -85,6 +85,30 @@
         <Setter Property="AllowSpin" Value="True"/>
         <Setter Property="AllowTextInput" Value="True"/>
         <Setter Property="Increment" Value="1"/>
+    </Style>
+
+    <Style x:Key="FormDecimalPickerStyle" TargetType="xctk:DecimalUpDown">
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="ClipValueToMinMax" Value="True"/>
+        <Setter Property="AllowSpin" Value="True"/>
+        <Setter Property="AllowTextInput" Value="True"/>
+        <Setter Property="Increment" Value="1"/>
+        <Setter Property="FormatString" Value="F2"/>
+    </Style>
+
+    <Style x:Key="FormDoublePickerStyle" TargetType="xctk:DoubleUpDown">
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="ClipValueToMinMax" Value="True"/>
+        <Setter Property="AllowSpin" Value="True"/>
+        <Setter Property="AllowTextInput" Value="True"/>
+        <Setter Property="Increment" Value="1"/>
+        <Setter Property="FormatString" Value="F3"/>
     </Style>
 
     <!-- Стиль для чекбоксов в формах -->

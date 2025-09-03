@@ -63,11 +63,23 @@
     <Compile Include="BaseTemplates\ComboFormFieldChecked.xaml.cs">
       <DependentUpon>ComboFormFieldChecked.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BaseTemplates\IntFormFieldChecked.xaml.cs">
-      <DependentUpon>IntFormFieldChecked.xaml</DependentUpon>
+    <Compile Include="BaseTemplates\DoubleFormField.xaml.cs">
+      <DependentUpon>DoubleFormField.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BaseTemplates\IntFormField.xaml.cs">
-      <DependentUpon>IntFormField.xaml</DependentUpon>
+    <Compile Include="BaseTemplates\DoubleFormFieldChecked.xaml.cs">
+      <DependentUpon>DoubleFormFieldChecked.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BaseTemplates\DecimalFormFieldChecked.xaml.cs">
+      <DependentUpon>DecimalFormFieldChecked.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BaseTemplates\DecimalFormField.xaml.cs">
+      <DependentUpon>DecimalFormField.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BaseTemplates\UIntFormFieldChecked.xaml.cs">
+      <DependentUpon>UIntFormFieldChecked.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BaseTemplates\UIntFormField.xaml.cs">
+      <DependentUpon>UIntFormField.xaml</DependentUpon>
     </Compile>
     <Compile Include="BaseTemplates\DateTimeFormField.xaml.cs">
       <DependentUpon>DateTimeFormField.xaml</DependentUpon>
@@ -151,11 +163,27 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="BaseTemplates\IntFormFieldChecked.xaml">
+    <Page Include="BaseTemplates\DoubleFormField.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="BaseTemplates\IntFormField.xaml">
+    <Page Include="BaseTemplates\DoubleFormFieldChecked.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="BaseTemplates\DecimalFormFieldChecked.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="BaseTemplates\DecimalFormField.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="BaseTemplates\UIntFormFieldChecked.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="BaseTemplates\UIntFormField.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
