@@ -1,7 +1,8 @@
 ﻿using CanteenAIS_Models;
 using CanteenAIS_ViewModel.BasicViewModels;
 using System;
-using System.Data;
+using System.Collections.Generic;
+using System.Linq;
 using Entities = CanteenAIS_DB.Database.Entities;
 
 namespace CanteenAIS_ViewModel.EntityViewModels.BranchOrder
@@ -9,96 +10,120 @@ namespace CanteenAIS_ViewModel.EntityViewModels.BranchOrder
     public class BranchOrderFilterVM : BasicFilterVM<Entities.BranchOrderEntity, Entities.BranchOrder>
     {
         public BranchOrderFilterVM(TableModel<Entities.BranchOrderEntity> tableModel)
-            : base(tableModel) { }
+            : base(tableModel)
+        {
+            _branches = MainServices.GetInstance().Branches.FetchValues<Entities.Branch>().ToList<Entities.BranchEntity>();
+            _branch = Branches.Where(item => item.Id == Fields.BranchId).FirstOrDefault();
+            _branchCheck = false;
+            _dateTimePick = Fields.DateTime;
+            _dateTimeCheck = false;
+            _id = (int)Fields.Id;
+            _idCheck = false;
+        }
 
         protected override void Clear()
         {
-            IdText = "0";
-            BranchIdText = "0";
-            DateTimeBefore = DateTime.MinValue;
+            Id = (int)Fields.Id;
+            IdCheck = false;
+            Branch = Branches?.Where(item => item.Id == Fields.BranchId).FirstOrDefault();
+            BranchCheck = false;
+            DateTimePick = Fields.DateTime;
+            DateTimeCheck = false;
         }
 
-        private string idText;
-        public string IdText
+        private IList<Entities.BranchEntity> _branches;
+        public IList<Entities.BranchEntity> Branches
         {
-            get => idText;
+            get => _branches;
             set
             {
-                if (idText == null)
-                    idText = value;
-                if (!ValueChecker.CheckValueUint(value, out uint _, true))
-                    value = "1";
-                Set(ref idText, value);
+                Set(ref _branches, value);
             }
         }
 
-        private string branchIdText;
-        public string BranchIdText
+        private int _id;
+        public int Id
         {
-            get => branchIdText;
+            get => _id;
             set
             {
-                if (branchIdText == null)
-                    branchIdText = value;
-                if (!ValueChecker.CheckValueUint(value, out uint _))
-                    value = "0";
-                Set(ref branchIdText, value);
+                if (!ValueChecker.CheckValueUint(value.ToString(), out uint _, true))
+                    value = 0;
+                Set(ref _id, value);
             }
         }
 
-        private DateTime dateTimeBefore;
-        public DateTime DateTimeBefore
+        private Entities.BranchEntity _branch;
+        public Entities.BranchEntity Branch
         {
-            get => dateTimeBefore;
+            get => _branch;
+            set => Set(ref _branch, value);
+        }
+
+        private DateTime _dateTimePick;
+        public DateTime DateTimePick
+        {
+            get => _dateTimePick;
             set
             {
                 if (!ValueChecker.CheckValueDateTime(value.ToString(), out DateTime _))
                     value = DateTime.MinValue;
-                Set(ref dateTimeBefore, value);
+                Set(ref _dateTimePick, value);
             }
         }
 
-        private bool idCheck;
+        private bool _idCheck;
         public bool IdCheck
         {
-            get => idCheck;
-            set => Set(ref idCheck, value);
+            get => _idCheck;
+            set => Set(ref _idCheck, value);
         }
 
-        private bool branchIdCheck;
-        public bool BranchIdCheck
+        private bool _branchCheck;
+        public bool BranchCheck
         {
-            get => branchIdCheck;
-            set => Set(ref branchIdCheck, value);
+            get => _branchCheck;
+            set => Set(ref _branchCheck, value);
         }
 
-        private bool timeBeforeCheck;
-        public bool TimeBeforeCheck
+        private bool _dateTimeCheck;
+        public bool DateTimeCheck
         {
-            get => timeBeforeCheck;
-            set => Set(ref timeBeforeCheck, value);
+            get => _dateTimeCheck;
+            set => Set(ref _dateTimeCheck, value);
         }
 
         public override void ParseFields()
         {
-            if (idCheck)
+            if (_idCheck)
             {
-                if (!ValueChecker.CheckValueUint(IdText, out uint id, true))
-                    throw new ArgumentException("Параметр не может быть 0!", nameof(IdText));
+                if (!ValueChecker.CheckValueUint(Id.ToString(), out uint id, true))
+                    throw new ArgumentException("Параметр не может быть 0!", nameof(Id));
                 Fields.Id = id;
             }
-            if (branchIdCheck)
+            if (_branchCheck)
             {
-                if (!ValueChecker.CheckValueUint(BranchIdText, out uint branchId))
-                    throw new ArgumentException("Параметр не может быть 0!", nameof(BranchIdText));
+                int BranchId = (int?)Branch?.Id ?? -1;
+                if (!ValueChecker.CheckValueUint(BranchId.ToString(), out uint branchId))
+                    throw new ArgumentException("Параметр не может быть 0!", nameof(BranchId));
                 Fields.BranchId = branchId;
             }
-            if (timeBeforeCheck)
+            if (_dateTimeCheck)
             {
-                if (!ValueChecker.CheckValueDateTime(DateTimeBefore.ToString(), out DateTime time))
-                    throw new ArgumentException("Некорректное время!", nameof(DateTimeBefore));
-                Fields.DateTime = DateTimeBefore;
+                if (!ValueChecker.CheckValueDateTime(DateTimePick.ToString(), out DateTime time))
+                    throw new ArgumentException("Некорректное время!", nameof(DateTimePick));
+                Fields.DateTime = time;
             }
+        }
+
+        public override void Filter()
+        {
+            ParseFields();
+            Model.FetchAndFilter<Entities.BranchOrder>((item) =>
+                !(IdCheck && item.Id != Fields.Id) &&
+                !(BranchCheck && item.BranchId != Fields.BranchId) &&
+                !(DateTimeCheck && item.DateTime != Fields.DateTime)
+            );
         }
     }
 }

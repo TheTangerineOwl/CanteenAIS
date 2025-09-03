@@ -14,18 +14,16 @@ namespace CanteenAIS_ViewModel.EntityViewModels.BranchOrder
             : base(row, tableModel)
         {
             _branches = MainServices.GetInstance().Branches.FetchValues<Entities.Branch>().ToList<Entities.BranchEntity>();
-            branch = Branches.Where(item => item.Id == Fields.Id).FirstOrDefault();
-            dateTimeFill = Fields.DateTime;
-            idText = Fields.Id.ToString();
-            //Clear();
+            _branch = Branches.Where(item => item.Id == Fields.BranchId).FirstOrDefault();
+            _dateTimePick = Fields.DateTime;
+            _id = (int)Fields.Id;
         }
 
         protected override void Clear()
         {
-            IdText = Fields.Id.ToString();
-            //BranchId = (int)Fields.BranchId;
-            Branch = Branches?.Where(item => item.Id == Fields.Id).FirstOrDefault();
-            DateTimeFill = Fields.DateTime;
+            Id = (int)Fields.Id;
+            Branch = Branches?.Where(item => item.Id == Fields.BranchId).FirstOrDefault();
+            DateTimePick = Fields.DateTime;
         }
 
         private IList<Entities.BranchEntity> _branches;
@@ -38,61 +36,49 @@ namespace CanteenAIS_ViewModel.EntityViewModels.BranchOrder
             }
         }
 
-        private string idText;
-        public string IdText
+        private int _id;
+        public int Id
         {
-            get => idText;
+            get => _id;
             set
             {
-                if (idText == null)
-                    idText = value;
-                if (!ValueChecker.CheckValueUint(value, out uint _, true))
-                    value = "1";
-                Set(ref idText, value);
+                if (!ValueChecker.CheckValueUint(value.ToString(), out uint _))
+                    value = (int)Fields.Id;
+                Set(ref _id, value);
             }
         }
 
-        //private int branchId;
-        //public int BranchId
-        //{
-        //    get => branchId;
-        //    set
-        //    {
-        //        Set(ref branchId, value);
-        //    }
-        //}
-
-        private Entities.BranchEntity branch;
+        private Entities.BranchEntity _branch;
         public Entities.BranchEntity Branch
         {
-            get => branch;
-            set => Set(ref branch, value);
+            get => _branch;
+            set => Set(ref _branch, value);
         }
 
-        private DateTime dateTimeFill;
-        public DateTime DateTimeFill
+        private DateTime _dateTimePick;
+        public DateTime DateTimePick
         {
-            get => dateTimeFill;
+            get => _dateTimePick;
             set
             {
                 if (!ValueChecker.CheckValueDateTime(value.ToString(), out DateTime _))
-                    value = DateTime.Now;
-                Set(ref dateTimeFill, value);
+                    value = Fields.DateTime;
+                Set(ref _dateTimePick, value);
             }
         }
 
         public override void ParseFields()
         {
             int BranchId = (int?)Branch?.Id ?? -1;
-            if (!ValueChecker.CheckValueUint(IdText, out uint id, true))
-                throw new ArgumentException("Параметр не может быть 0!", nameof(IdText));
+            if (!ValueChecker.CheckValueUint(Id.ToString(), out uint id))
+                throw new ArgumentException("Параметр не может быть 0!", nameof(Id));
             if (!ValueChecker.CheckValueUint(BranchId.ToString(), out uint branchId))
                 throw new ArgumentException("Параметр не может быть 0!", nameof(BranchId));
-            if (!ValueChecker.CheckValueDateTime(DateTimeFill.ToString(), out DateTime time))
-                throw new ArgumentException("Некорректное время!", nameof(DateTimeFill));
+            if (!ValueChecker.CheckValueDateTime(DateTimePick.ToString(), out DateTime time))
+                throw new ArgumentException("Некорректное время!", nameof(DateTimePick));
             Fields.Id = id;
             Fields.BranchId = branchId;
-            Fields.DateTime = DateTimeFill;
+            Fields.DateTime = time;
         }
     }
 }

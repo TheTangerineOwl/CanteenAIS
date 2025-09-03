@@ -75,6 +75,11 @@ namespace CanteenAIS_Models.Management.Models
         //    );
         //}
 
+        public static IList<MenuElement> FetchValues()
+        {
+            return DBContext.GetInstance().MenuElements.Read<MenuElement>();//.ToList();
+        }
+
         public static uint GetCurrentMenuElemId(string elementName)
         {
             IList<MenuElement> res = DBContext.GetInstance().MenuElements.Read<MenuElement>();

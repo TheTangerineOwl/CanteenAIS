@@ -1,6 +1,8 @@
 ﻿using CanteenAIS_Models;
 using CanteenAIS_ViewModel.BasicViewModels;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Entities = CanteenAIS_DB.Database.Entities;
 
 namespace CanteenAIS_ViewModel.EntityViewModels.Realization
@@ -8,143 +10,177 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Realization
     public class RealizationFilterVM : BasicFilterVM<Entities.RealizationEntity, Entities.Realization>
     {
         public RealizationFilterVM(TableModel<Entities.RealizationEntity> tableModel)
-            : base(tableModel) { }
+            : base(tableModel)
+        {
+            _units = MainServices.GetInstance().MeasureUnits.FetchValues<Entities.MeasureUnit>().ToList();
+            _unit = Units.FirstOrDefault();
+            _unitCheck = false;
+            _dishes = MainServices.GetInstance().Dishes.FetchValues<Entities.Dish>().ToList();
+            _dish = Dishes.FirstOrDefault();
+            _dishCheck = false;
+            _amount = 0;
+            _amountCheck = false;
+            _dateTimePick = DateTime.Now;
+            _timeCheck = false;
+        }
 
         protected override void Clear()
         {
-            IdText = "0";
-            idCheck = false;
-            Unit = 0;
-            unitCheck = false;
-            Dish = 0;
-            dishCheck = false;
-            AmountText = "0";
-            amountCheck = false;
-            DateTimeFill = DateTime.Now;
-            timeCheck = false;
+            Id = 0;
+            IdCheck = false;
+            Unit = Units.FirstOrDefault();
+            UnitCheck = false;
+            Dish = Dishes.FirstOrDefault();
+            DishCheck = false;
+            Amount = 0;
+            AmountCheck = false;
+            DateTimePick = DateTime.Now;
+            TimeCheck = false;
         }
 
-        private string idText;
-        public string IdText
+        private IList<Entities.MeasureUnit> _units;
+        public IList<Entities.MeasureUnit> Units
         {
-            get => idText;
+            get => _units;
+            set => Set(ref _units, value);
+        }
+
+        private IList<Entities.Dish> _dishes;
+        public IList<Entities.Dish> Dishes
+        {
+            get => _dishes;
+            set => Set(ref _dishes, value);
+        }
+
+        private int _id;
+        public int Id
+        {
+            get => _id;
             set
             {
-                if (idText == null)
-                    idText = value;
-                if (!ValueChecker.CheckValueUint(value, out uint _, true))
-                    value = "1";
-                Set(ref idText, value);
+                if (!ValueChecker.CheckValueUint(value.ToString(), out uint _, true))
+                    value = 0;
+                Set(ref _id, value);
             }
         }
 
-        private int unit;
-        public int Unit
+        private Entities.MeasureUnit _unit;
+        public Entities.MeasureUnit Unit
         {
-            get => unit;
-            set => Set(ref unit, value);
+            get => _unit;
+            set => Set(ref _unit, value);
         }
 
-        private int dish;
-        public int Dish
+        private Entities.Dish _dish;
+        public Entities.Dish Dish
         {
-            get => dish;
-            set => Set(ref dish, value);
+            get => _dish;
+            set => Set(ref _dish, value);
         }
 
-        private string amountText;
-        public string AmountText
+        private double _amount;
+        public double Amount
         {
-            get => amountText;
+            get => _amount;
             set
             {
-                if (amountText == null)
-                    amountText = value;
-                if (!ValueChecker.CheckValueDouble(value, out double _, false))
-                    value = "0";
-                Set(ref amountText, value);
+                if (!ValueChecker.CheckValueDouble(value.ToString(), out double _, false))
+                    value = 0;
+                Set(ref _amount, value);
             }
         }
 
-        private DateTime dateTimeFill;
-        public DateTime DateTimeFill
+        private DateTime _dateTimePick;
+        public DateTime DateTimePick
         {
-            get => dateTimeFill;
+            get => _dateTimePick;
             set
             {
                 if (!ValueChecker.CheckValueDateTime(value.ToString(), out DateTime _))
                     value = DateTime.Now;
-                Set(ref dateTimeFill, value);
+                Set(ref _dateTimePick, value);
             }
         }
 
-        private bool idCheck;
+        private bool _idCheck;
         public bool IdCheck
         {
-            get => idCheck;
-            set => Set(ref idCheck, value);
+            get => _idCheck;
+            set => Set(ref _idCheck, value);
         }
 
-        private bool unitCheck;
+        private bool _unitCheck;
         public bool UnitCheck
         {
-            get => unitCheck;
-            set => Set(ref unitCheck, value);
+            get => _unitCheck;
+            set => Set(ref _unitCheck, value);
         }
 
-        private bool dishCheck;
+        private bool _dishCheck;
         public bool DishCheck
         {
-            get => dishCheck;
-            set => Set(ref dishCheck, value);
+            get => _dishCheck;
+            set => Set(ref _dishCheck, value);
         }
 
-        private bool amountCheck;
+        private bool _amountCheck;
         public bool AmountCheck
         {
-            get => amountCheck;
-            set => Set(ref amountCheck, value);
+            get => _amountCheck;
+            set => Set(ref _amountCheck, value);
         }
 
-        private bool timeCheck;
+        private bool _timeCheck;
         public bool TimeCheck
         {
-            get => timeCheck;
-            set => Set(ref timeCheck, value);
+            get => _timeCheck;
+            set => Set(ref _timeCheck, value);
         }
 
         public override void ParseFields()
         {
-            if (idCheck)
+            if (_idCheck)
             {
-                if (!ValueChecker.CheckValueUint(IdText, out uint id, true))
-                    throw new ArgumentException("Параметр не может быть 0!", nameof(IdText));
+                if (!ValueChecker.CheckValueUint(Id.ToString(), out uint id, true))
+                    throw new ArgumentException("Параметр не может быть 0!", nameof(Id));
                 Fields.Id = id;
             }
-            if (unitCheck)
+            if (_unitCheck)
             {
-                if (!ValueChecker.CheckValueUint(Unit.ToString(), out uint unit))
-                    throw new ArgumentException("Некорректный параметр!", nameof(Unit));
+                if (!ValueChecker.CheckValueUint(Unit.Id.ToString(), out uint unit))
+                    throw new ArgumentException("Некорректный параметр!", nameof(Unit.Id));
                 Fields.UnitId = unit;
             }
-            if (dishCheck)
+            if (_dishCheck)
             {
-                if (!ValueChecker.CheckValueUint(Dish.ToString(), out uint dish))
-                    throw new ArgumentException("Некорректный параметр!", nameof(Dish));
+                if (!ValueChecker.CheckValueUint(Dish.Id.ToString(), out uint dish))
+                    throw new ArgumentException("Некорректный параметр!", nameof(Dish.Id));
                 Fields.DishId = dish;
             }
-            if (amountCheck)
+            if (_amountCheck)
             {
-                if (!ValueChecker.CheckValueDouble(AmountText, out double amount))
-                    throw new ArgumentException("Некорректный параметр!", nameof(AmountText));
+                if (!ValueChecker.CheckValueDouble(Amount.ToString(), out double amount))
+                    throw new ArgumentException("Некорректный параметр!", nameof(Amount));
                 Fields.Amount = amount;
             }
-            if (timeCheck)
+            if (_timeCheck)
             {
-                if (!ValueChecker.CheckValueDateTime(DateTimeFill.ToString(), out DateTime time))
-                    throw new ArgumentException("Некорректное время!", nameof(DateTimeFill));
+                if (!ValueChecker.CheckValueDateTime(DateTimePick.ToString(), out DateTime time))
+                    throw new ArgumentException("Некорректное время!", nameof(DateTimePick));
                 Fields.DateTime = time;
             }
+        }
+
+        public override void Filter()
+        {
+            ParseFields();
+            Model.FetchAndFilter<Entities.Realization>((item) =>
+                !(IdCheck && item.Id != Fields.Id) &&
+                !(UnitCheck && item.UnitId != Fields.UnitId) &&
+                !(DishCheck && item.DishId != Fields.DishId) &&
+                !(AmountCheck && item.Amount != Fields.Amount) &&
+                !(TimeCheck && item.DateTime != Fields.DateTime)
+            );
         }
     }
 }

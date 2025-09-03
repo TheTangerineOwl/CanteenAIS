@@ -1,6 +1,9 @@
 ﻿using CanteenAIS_Models;
+using CanteenAIS_Models.Management.Models;
 using CanteenAIS_ViewModel.BasicViewModels;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Entities = CanteenAIS_DB.AppAuth.Entities;
 
 namespace CanteenAIS_ViewModel.ManagementViewModels.UserPerm
@@ -8,124 +11,173 @@ namespace CanteenAIS_ViewModel.ManagementViewModels.UserPerm
     public class UserPermFilterVM : BasicFilterVM<Entities.UserPermEntity, Entities.UserPerm>
     {
         public UserPermFilterVM(TableModel<Entities.UserPermEntity> tableModel)
-            : base(tableModel) { }
+            : base(tableModel)
+        {
+            _users = MainServices.GetInstance().Users.FetchValues<Entities.User>().ToList();
+            _user = Users.FirstOrDefault();
+            _userCheck = false;
+            _elements = MenuElementModel.FetchValues().ToList();
+            _element = Elements.FirstOrDefault();
+            _elementCheck = false;
+            _canRead = false;
+            _readCheck = false;
+            _canWrite = false;
+            _writeCheck = false;
+            _canEdit = false;
+            _editCheck = false;
+            _canDelete = false;
+            _deleteCheck = false;
+        }
 
         protected override void Clear()
         {
-            UserId = 0;
-            ElementId = 0;
+            User = Users.FirstOrDefault();
+            UserCheck = false;
+            Element = Elements.FirstOrDefault();
+            ElementCheck = false;
             CanWrite = false;
+            WriteCheck = false;
             CanRead = false;
+            ReadCheck = false;
             CanDelete = false;
+            DeleteCheck = false;
             CanEdit = false;
+            EditCheck = false;
         }
 
-        private int userId;
-        public int UserId
+        private IList<Entities.User> _users;
+        public IList<Entities.User> Users
         {
-            get => userId;
-            set => Set(ref userId, value);
+            get => _users;
+            set => Set(ref _users, value);
         }
 
-        private int elementId;
-        public int ElementId
+        private IList<Entities.MenuElement> _elements;
+        public IList<Entities.MenuElement> Elements
         {
-            get => elementId;
-            set => Set(ref elementId, value);
+            get => _elements;
+            set => Set(ref _elements, value);
         }
 
-        private bool canRead;
+        private Entities.User _user;
+        public Entities.User User
+        {
+            get => _user;
+            set => Set(ref _user, value);
+        }
+
+        private Entities.MenuElement _element;
+        public Entities.MenuElement Element
+        {
+            get => _element;
+            set => Set(ref _element, value);
+        }
+
+        private bool _canRead;
         public bool CanRead
         {
-            get => canRead;
-            set => Set(ref canRead, value);
+            get => _canRead;
+            set => Set(ref _canRead, value);
         }
 
-        private bool canWrite;
+        private bool _canWrite;
         public bool CanWrite
         {
-            get => canWrite;
-            set => Set(ref canWrite, value);
+            get => _canWrite;
+            set => Set(ref _canWrite, value);
         }
 
-        private bool canEdit;
+        private bool _canEdit;
         public bool CanEdit
         {
-            get => canEdit;
-            set => Set(ref canEdit, value);
+            get => _canEdit;
+            set => Set(ref _canEdit, value);
         }
 
-        private bool canDelete;
+        private bool _canDelete;
         public bool CanDelete
         {
-            get => canDelete;
-            set => Set(ref canDelete, value);
+            get => _canDelete;
+            set => Set(ref _canDelete, value);
         }
 
-        private bool userCheck;
+        private bool _userCheck;
         public bool UserCheck
         {
-            get => userCheck;
-            set => Set(ref userCheck, value);
+            get => _userCheck;
+            set => Set(ref _userCheck, value);
         }
 
-        private bool elementCheck;
+        private bool _elementCheck;
         public bool ElementCheck
         {
-            get => elementCheck;
-            set => Set(ref elementCheck, value);
+            get => _elementCheck;
+            set => Set(ref _elementCheck, value);
         }
 
-        private bool readCheck;
+        private bool _readCheck;
         public bool ReadCheck
         {
-            get => readCheck;
-            set => Set(ref readCheck, value);
+            get => _readCheck;
+            set => Set(ref _readCheck, value);
         }
 
-        private bool writeCheck;
+        private bool _writeCheck;
         public bool WriteCheck
         {
-            get => writeCheck;
-            set => Set(ref writeCheck, value);
+            get => _writeCheck;
+            set => Set(ref _writeCheck, value);
         }
 
-        private bool editCheck;
+        private bool _editCheck;
         public bool EditCheck
         {
-            get => editCheck;
-            set => Set(ref editCheck, value);
+            get => _editCheck;
+            set => Set(ref _editCheck, value);
         }
 
-        private bool deleteCheck;
+        private bool _deleteCheck;
         public bool DeleteCheck
         {
-            get => deleteCheck;
-            set => Set(ref deleteCheck, value);
+            get => _deleteCheck;
+            set => Set(ref _deleteCheck, value);
         }
 
         public override void ParseFields()
         {
-            if (userCheck)
+            if (_userCheck)
             {
-                if (!ValueChecker.CheckValueUint(UserId.ToString(), out uint userid, true))
-                    throw new ArgumentException("Параметр не может быть 0!", nameof(UserId));
+                if (!ValueChecker.CheckValueUint(User.Id.ToString(), out uint userid, true))
+                    throw new ArgumentException("Параметр не может быть 0!", nameof(User.Id));
                 Fields.UserId = userid;
             }
-            if (elementCheck)
+            if (_elementCheck)
             {
-                if (!ValueChecker.CheckValueUint(ElementId.ToString(), out uint elementid, true))
-                    throw new ArgumentException("Параметр не может быть 0!", nameof(ElementId));
+                if (!ValueChecker.CheckValueUint(Element.Id.ToString(), out uint elementid, true))
+                    throw new ArgumentException("Параметр не может быть 0!", nameof(Element.Id));
                 Fields.ElementId = elementid;
             }
-            if (editCheck)
+            if (_editCheck)
                 Fields.CanEdit = CanEdit;
-            if (readCheck)
+            if (_readCheck)
                 Fields.CanRead = CanRead;
-            if (writeCheck)
+            if (_writeCheck)
                 Fields.CanWrite = CanWrite;
-            if (deleteCheck)
+            if (_deleteCheck)
                 Fields.CanDelete = CanDelete;
+        }
+
+        public override void Filter()
+        {
+            ParseFields();
+            Model.FetchAndFilter<Entities.UserPerm>((item) =>
+                !(UserCheck && item.UserId != Fields.UserId) &&
+                !(ElementCheck && item.ElementId != Fields.ElementId) &&
+                !(ReadCheck && item.CanRead != Fields.CanRead) &&
+                !(WriteCheck && item.CanWrite != Fields.CanWrite) &&
+                !(EditCheck && item.CanEdit != Fields.CanEdit) &&
+                !(DeleteCheck && item.CanDelete != Fields.CanDelete)
+            );
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using CanteenAIS_Models;
 using CanteenAIS_ViewModel.BasicViewModels;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Entities = CanteenAIS_DB.Database.Entities;
 
 namespace CanteenAIS_ViewModel.EntityViewModels.Supply
@@ -8,59 +10,51 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Supply
     public class SupplyAddVM : BasicAddVM<Entities.SupplyEntity, Entities.Supply>
     {
         public SupplyAddVM(TableModel<Entities.SupplyEntity> tableModel)
-            : base(tableModel) { }
+            : base(tableModel)
+        {
+            _suppliers = MainServices.GetInstance().Suppliers.FetchValues<Entities.Supplier>().ToList();
+            _supplier = Suppliers.FirstOrDefault();
+            _time = DateTime.Now;
+        }
 
         protected override void Clear()
         {
-            IdText = "0";
-            Supplier = 0;
+            Supplier = Suppliers.FirstOrDefault();
             Time = DateTime.Now;
         }
 
-        private string idText;
-        public string IdText
+        private IList<Entities.Supplier> _suppliers;
+        public IList<Entities.Supplier> Suppliers
         {
-            get => idText;
-            set
-            {
-                if (idText == null)
-                    idText = value;
-                if (!ValueChecker.CheckValueUint(value, out uint _, true))
-                    value = "1";
-                Set(ref idText, value);
-            }
+            get => _suppliers;
+            set => Set(ref _suppliers, value);
         }
 
-        private int supplier;
-        public int Supplier
+        private Entities.Supplier _supplier;
+        public Entities.Supplier Supplier
         {
-            get => supplier;
-            set => Set(ref supplier, value);
+            get => _supplier;
+            set => Set(ref _supplier, value);
         }
 
-        private DateTime time;
+        private DateTime _time;
         public DateTime Time
         {
-            get => time;
+            get => _time;
             set
             {
-                if (time == DateTime.MinValue)
-                    time = value;
                 if (!ValueChecker.CheckValueDateTime(value.ToString(), out DateTime _))
                     value = DateTime.Now;
-                Set(ref time, value);
+                Set(ref _time, value);
             }
         }
 
         public override void ParseFields()
         {
-            if (!ValueChecker.CheckValueUint(IdText, out uint id, true))
-                throw new ArgumentException("Параметр не может быть 0!", nameof(IdText));
-            if (!ValueChecker.CheckValueUint(Supplier.ToString(), out uint supplier))
-                throw new ArgumentException("Некорректный параметр!", nameof(Supplier));
+            if (!ValueChecker.CheckValueUint(Supplier.Id.ToString(), out uint supplier))
+                throw new ArgumentException("Некорректный параметр!", nameof(Supplier.Id));
             if (!ValueChecker.CheckValueDateTime(Time.ToString(), out DateTime time))
                 throw new ArgumentException("Некорректный параметр!", nameof(Time));
-            Fields.Id = id;
             Fields.SupplierId = supplier;
             Fields.DateTime = time;
         }

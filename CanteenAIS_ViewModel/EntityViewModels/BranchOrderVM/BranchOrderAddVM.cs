@@ -14,17 +14,14 @@ namespace CanteenAIS_ViewModel.EntityViewModels.BranchOrder
             : base(tableModel)
         {
             _branches = MainServices.GetInstance().Branches.FetchValues<Entities.Branch>().ToList<BranchEntity>();
-            branch = _branches.FirstOrDefault();
-            dateTimeFill = DateTime.Now;
-            //Clear();
+            _branch = _branches.FirstOrDefault();
+            _dateTimePick = DateTime.Now;
         }
 
         protected override void Clear()
         {
-            //IdText = "0";
-            //BranchId = -1;
             Branch = Branches?.FirstOrDefault();
-            DateTimeFill = DateTime.Now;
+            DateTimePick = DateTime.Now;
         }
 
         private IList<Entities.BranchEntity> _branches;
@@ -37,61 +34,34 @@ namespace CanteenAIS_ViewModel.EntityViewModels.BranchOrder
             }
         }
 
-        //private string idText;
-        //public string IdText
-        //{
-        //    get => idText;
-        //    set
-        //    {
-        //        if (idText == null)
-        //            idText = value;
-        //        if (!ValueChecker.CheckValueUint(value, out uint _, true))
-        //            value = "1";
-        //        Set(ref idText, value);
-        //    }
-        //}
-
-        //private int branchId;
-        //public int BranchId
-        //{
-        //    get => branchId;
-        //    set
-        //    {
-        //        Set(ref branchId, value);
-        //    }
-        //}
-
-        private Entities.BranchEntity branch;
+        private Entities.BranchEntity _branch;
         public Entities.BranchEntity Branch
         {
-            get => branch;
-            set => Set(ref branch, value);
+            get => _branch;
+            set => Set(ref _branch, value);
         }
 
-        private DateTime dateTimeFill;
-        public DateTime DateTimeFill
+        private DateTime _dateTimePick;
+        public DateTime DateTimePick
         {
-            get => dateTimeFill;
+            get => _dateTimePick;
             set
             {
                 if (!ValueChecker.CheckValueDateTime(value.ToString(), out DateTime _))
                     value = DateTime.Now;
-                Set(ref dateTimeFill, value);
+                Set(ref _dateTimePick, value);
             }
         }
 
         public override void ParseFields()
         {
             int BranchId = (int?)Branch?.Id ?? -1;
-            //if (!ValueChecker.CheckValueUint(IdText, out uint id, true))
-            //    throw new ArgumentException("Параметр не может быть 0!", nameof(IdText));
             if (!ValueChecker.CheckValueUint(BranchId.ToString(), out uint branchId))
                 throw new ArgumentException("Параметр не может быть 0!", nameof(BranchId));
-            if (!ValueChecker.CheckValueDateTime(DateTimeFill.ToString(), out DateTime time))
-                throw new ArgumentException("Некорректное время!", nameof(DateTimeFill));
-            //Fields.Id = id;
+            if (!ValueChecker.CheckValueDateTime(DateTimePick.ToString(), out DateTime time))
+                throw new ArgumentException("Некорректное время!", nameof(DateTimePick));
             Fields.BranchId = branchId;
-            Fields.DateTime = DateTimeFill;
+            Fields.DateTime = time;
         }
     }
 }

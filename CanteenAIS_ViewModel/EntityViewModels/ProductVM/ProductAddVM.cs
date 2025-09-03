@@ -1,6 +1,9 @@
 ﻿using CanteenAIS_Models;
 using CanteenAIS_ViewModel.BasicViewModels;
 using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 using Entities = CanteenAIS_DB.Database.Entities;
 
 namespace CanteenAIS_ViewModel.EntityViewModels.Product
@@ -8,107 +11,109 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Product
     public class ProductAddVM : BasicAddVM<Entities.ProductEntity, Entities.Product>
     {
         public ProductAddVM(TableModel<Entities.ProductEntity> tableModel)
-            : base(tableModel) { }
+            : base(tableModel)
+        {
+            _units = MainServices.GetInstance().MeasureUnits.FetchValues<Entities.MeasureUnit>().ToList();
+            _unit = Units.FirstOrDefault();
+            _suppliers = MainServices.GetInstance().Suppliers.FetchValues<Entities.Supplier>().ToList();
+            _supplier = Suppliers.FirstOrDefault();
+            _name = string.Empty;
+            _markup = 0;
+            _stock = 0;
+        }
 
         protected override void Clear()
         {
-            IdText = "0";
-            NameText = string.Empty;
-            Unit = 0;
-            MarkupText = "0";
-            StockText = "0";
-            Supplier = 0;
+            Name = string.Empty;
+            Unit = Units.FirstOrDefault();
+            Markup = 0;
+            Stock = 0;
+            Supplier = Suppliers.FirstOrDefault();
         }
 
-        private string idText;
-        public string IdText
+        private IList<Entities.MeasureUnit> _units;
+        public IList<Entities.MeasureUnit> Units
         {
-            get => idText;
-            set
-            {
-                if (idText == null)
-                    idText = value;
-                if (!ValueChecker.CheckValueUint(value, out uint _, true))
-                    value = "1";
-                Set(ref idText, value);
-            }
+            get => _units;
+            set => Set(ref _units, value);
         }
 
-        private string nameText;
-        public string NameText
+        private IList<Entities.Supplier> _suppliers;
+        public IList<Entities.Supplier> Suppliers
         {
-            get => nameText;
+            get => _suppliers;
+            set => Set(ref _suppliers, value);
+        }
+
+
+        private string _name;
+        public string Name
+        {
+            get => _name;
             set
             {
-                if (nameText == null)
-                    nameText = value;
+                if (_name == null)
+                    _name = value;
                 if (!ValueChecker.CheckValueString(value, out value, 100, false))
-                    value = "";
-                Set(ref nameText, value);
+                    value = string.Empty;
+                Set(ref _name, value);
             }
         }
 
-        private int unit;
-        public int Unit
+        private Entities.MeasureUnit _unit;
+        public Entities.MeasureUnit Unit
         {
-            get => unit;
-            set => Set(ref unit, value);
+            get => _unit;
+            set => Set(ref _unit, value);
         }
 
-        private string markupText;
-        public string MarkupText
+        private decimal _markup;
+        public decimal Markup
         {
-            get => markupText;
+            get => _markup;
             set
             {
-                if (markupText == null)
-                    markupText = value;
-                if (!ValueChecker.CheckValueDecimal(value, out decimal _))
-                    value = "0";
-                Set(ref markupText, value);
+                if (!ValueChecker.CheckValueDecimal(value.ToString(), out decimal _))
+                    value = 0;
+                Set(ref _markup, value);
             }
         }
 
-        private string stockText;
-        public string StockText
+        private double _stock;
+        public double Stock
         {
-            get => stockText;
+            get => _stock;
             set
             {
-                if (stockText == null)
-                    stockText = value;
-                if (!ValueChecker.CheckValueDouble(value, out double _))
-                    value = "0";
-                Set(ref stockText, value);
+                if (!ValueChecker.CheckValueDouble(value.ToString(), out double _))
+                    value = 0;
+                Set(ref _stock, value);
             }
         }
 
-        private int supplier;
-        public int Supplier
+        private Entities.Supplier _supplier;
+        public Entities.Supplier Supplier
         {
-            get => supplier;
-            set => Set(ref supplier, value);
+            get => _supplier;
+            set => Set(ref _supplier, value);
         }
 
         public override void ParseFields()
         {
-            if (!ValueChecker.CheckValueUint(IdText, out uint id, true))
-                throw new ArgumentException("Параметр не может быть 0!", nameof(IdText));
-            if (!ValueChecker.CheckValueString(NameText, out string name, 100, false))
-                throw new ArgumentNullException("Строка не может быть пустой!", nameof(NameText));
-            if (!ValueChecker.CheckValueUint(Unit.ToString(), out uint unit))
-                throw new ArgumentException("Параметр не может быть 0!", nameof(Unit));
-            if (!ValueChecker.CheckValueDecimal(MarkupText, out decimal markup))
-                throw new ArgumentException("Параметр не может быть 0!", nameof(MarkupText));
-            if (!ValueChecker.CheckValueDouble(StockText, out double stock))
-                throw new ArgumentException("Параметр не может быть 0!", nameof(StockText));
-            if (!ValueChecker.CheckValueUint(Supplier.ToString(), out uint supplier))
-                throw new ArgumentException("Параметр не может быть 0!", nameof(Supplier));
-            Fields.Id = id;
+            if (!ValueChecker.CheckValueString(Name, out string name, 100, false))
+                throw new ArgumentNullException("Строка не может быть пустой!", nameof(Name));
             Fields.Name = name;
+            if (!ValueChecker.CheckValueUint(Unit.Id.ToString(), out uint unit))
+                throw new ArgumentException("Параметр не может быть 0!", nameof(Unit));
             Fields.UnitId = unit;
+            if (!ValueChecker.CheckValueDecimal(Markup.ToString(), out decimal markup))
+                throw new ArgumentException("Параметр не может быть 0!", nameof(Markup));
             Fields.Markup = markup;
+            if (!ValueChecker.CheckValueDouble(Stock.ToString(), out double stock))
+                throw new ArgumentException("Параметр не может быть 0!", nameof(Stock));
             Fields.Stock = stock;
+            if (!ValueChecker.CheckValueUint(Supplier.Id.ToString(), out uint supplier))
+                throw new ArgumentException("Параметр не может быть 0!", nameof(Supplier));
             Fields.SupplierId = supplier;
         }
     }

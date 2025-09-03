@@ -1,8 +1,9 @@
-﻿<UserControl x:Class="CanteenAIS_Views.BaseTemplates.ComboFormField"
+﻿<UserControl x:Class="CanteenAIS_Views.BaseTemplates.DateTimeFormField"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d"
              d:DesignHeight="40" d:DesignWidth="300"
              x:Name="root">
@@ -16,10 +17,8 @@
         <Label Grid.Column="0"
                Style="{StaticResource FormLabelStyle}"
                Content="{Binding LabelText, ElementName=root}"/>
-        <ComboBox Grid.Column="1"
-                  Style="{StaticResource FormComboBoxStyle}"
-                  ItemsSource="{Binding ItemsSource, ElementName=root, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                  SelectedIndex="{Binding SelectedIndex, ElementName=root, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                  SelectedItem="{Binding SelectedItem, ElementName=root, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <xctk:DateTimePicker Grid.Column="1" x:Name="datetimePicker"
+               Style="{StaticResource FormDateTimePickerStyle}"
+               Value="{Binding DateTimePick, ElementName=root}"/>
     </Grid>
 </UserControl>

@@ -9,103 +9,112 @@ namespace CanteenAIS_ViewModel.EntityViewModels.SupplierHead
     public class SupplierHeadEditVM : BasicEditVM<Entities.SupplierHeadEntity, Entities.SupplierHead>
     {
         public SupplierHeadEditVM(DataRow row, TableModel<Entities.SupplierHeadEntity> tableModel)
-            : base(row, tableModel) { }
+            : base(row, tableModel)
+        {
+            _id = (int)Fields.Id;
+            _lastName = Fields.LastName;
+            _firstName = Fields.FirstName;
+            _patronim = Fields.Patronim;
+            _phone = Fields.Phone;
+        }
 
         protected override void Clear()
         {
-            IdText = Fields.Id.ToString();
-            LastNameText = Fields.LastName;
-            FirstNameText = Fields.FirstName;
-            PatronimText = Fields.Patronim;
-            PhoneText = Fields.Phone;
+            Id = (int)Fields.Id;
+            LastName = Fields.LastName;
+            FirstName = Fields.FirstName;
+            Patronim = Fields.Patronim;
+            Phone = Fields.Phone;
         }
 
-        private string idText;
-        public string IdText
+        private int _id;
+        public int Id
         {
-            get => idText;
+            get => _id;
             set
             {
-                if (idText == null)
-                    idText = value;
-                if (!ValueChecker.CheckValueUint(value, out uint _, true))
-                    value = Fields.Id.ToString();
-                Set(ref idText, value);
+                if (!ValueChecker.CheckValueUint(value.ToString(), out uint _, true))
+                    value = (int)Fields.Id;
+                Set(ref _id, value);
             }
         }
 
-        private string lastNameText;
-        public string LastNameText
+        private string _lastName;
+        public string LastName
         {
-            get => lastNameText;
+            get => _lastName;
             set
             {
-                if (lastNameText == null)
-                    lastNameText = value;
+                if (_lastName == null)
+                    _lastName = value;
                 if (!ValueChecker.CheckValueString(value, out value, 50, false))
                     value = Fields.LastName;
-                Set(ref lastNameText, value);
+                Set(ref _lastName, value);
             }
         }
 
-        private string firstNameText;
-        public string FirstNameText
+        private string _firstName;
+        public string FirstName
         {
-            get => firstNameText;
+            get => _firstName;
             set
             {
-                if (firstNameText == null)
-                    firstNameText = value;
+                if (_firstName == null)
+                    _firstName = value;
                 if (!ValueChecker.CheckValueString(value, out value, 50, false))
                     value = Fields.FirstName;
-                Set(ref firstNameText, value);
+                Set(ref _firstName, value);
             }
         }
 
-        private string patronimText;
-        public string PatronimText
+        private string _patronim;
+        public string Patronim
         {
-            get => patronimText;
+            get => _patronim;
             set
             {
-                if (patronimText == null)
-                    patronimText = value;
+                if (_patronim == null)
+                    _patronim = value;
                 if (!ValueChecker.CheckValueString(value, out value, 50, false))
                     value = Fields.Patronim;
-                Set(ref patronimText, value);
+                Set(ref _patronim, value);
             }
         }
 
-        private string phoneText;
-        public string PhoneText
+        private string _phone;
+        public string Phone
         {
-            get => phoneText;
+            get => _phone;
             set
             {
-                if (phoneText == null)
-                    phoneText = value;
+                if (_phone == null)
+                    _phone = value;
                 if (!ValueChecker.CheckValueString(value, out value, 13, false))
                     value = Fields.Phone;
-                Set(ref phoneText, value);
+                Set(ref _phone, value);
             }
         }
 
         public override void ParseFields()
         {
-            if (!ValueChecker.CheckValueUint(IdText, out uint id, true))
-                throw new ArgumentException("Параметр не может быть 0!", nameof(IdText));
-            if (!ValueChecker.CheckValueString(LastNameText, out string lastName, 50, false))
-                throw new ArgumentNullException("Строка не может быть пустой!", nameof(LastNameText));
-            if (!ValueChecker.CheckValueString(FirstNameText, out string firstName, 50, false))
-                throw new ArgumentNullException("Строка не может быть пустой!", nameof(FirstNameText));
-            if (!ValueChecker.CheckValueString(PatronimText, out string patronim, 50, false))
-                throw new ArgumentNullException("Строка не может быть пустой!", nameof(PatronimText));
-            if (!ValueChecker.CheckValueString(PhoneText, out string phone, 13, false))
-                throw new ArgumentNullException("Строка не может быть пустой!", nameof(PhoneText));
+            if (!ValueChecker.CheckValueUint(Id.ToString(), out uint id, true))
+                throw new ArgumentException("Параметр не может быть 0!", nameof(Id));
             Fields.Id = id;
-            Fields.LastName = lastName;
-            Fields.FirstName = firstName;
+
+            if (!ValueChecker.CheckValueString(LastName, out string lastname, 50))
+                throw new ArgumentNullException("Строка не может быть пустой!", nameof(LastName));
+            Fields.LastName = lastname;
+
+            if (!ValueChecker.CheckValueString(FirstName, out string firstname, 50))
+                throw new ArgumentNullException("Строка не может быть пустой!", nameof(FirstName));
+            Fields.FirstName = firstname;
+
+            if (!ValueChecker.CheckValueString(Patronim, out string patronim, 50))
+                throw new ArgumentNullException("Строка не может быть пустой!", nameof(Patronim));
             Fields.Patronim = patronim;
+
+            if (!ValueChecker.CheckValueString(Phone, out string phone, 13))
+                throw new ArgumentNullException("Строка не может быть пустой!", nameof(Phone));
             Fields.Phone = phone;
         }
     }

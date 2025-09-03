@@ -1,6 +1,8 @@
 ﻿using CanteenAIS_Models;
 using CanteenAIS_ViewModel.BasicViewModels;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Entities = CanteenAIS_DB.Database.Entities;
 
 namespace CanteenAIS_ViewModel.EntityViewModels.SupplierHead
@@ -8,159 +10,181 @@ namespace CanteenAIS_ViewModel.EntityViewModels.SupplierHead
     public class SupplierHeadFilterVM : BasicFilterVM<Entities.SupplierHeadEntity, Entities.SupplierHead>
     {
         public SupplierHeadFilterVM(TableModel<Entities.SupplierHeadEntity> tableModel)
-            : base(tableModel) { }
+            : base(tableModel)
+        {
+            _id = 0;
+            _idCheck = false;
+            _lastName = string.Empty;
+            _lastNameCheck = false;
+            _firstName = string.Empty;
+            _firstNameCheck = false;
+            _patronim = string.Empty;
+            _patronimCheck = false;
+            _phone = string.Empty;
+            _phoneCheck = false;
+        }
 
         protected override void Clear()
         {
-            IdText = "0";
-            idCheck = false;
-            LastNameText = string.Empty;
-            lastNameCheck = false;
-            FirstNameText = string.Empty;
-            firstNameCheck = false;
-            PatronimText = string.Empty;
-            patronimCheck = false;
-            PhoneText = string.Empty;
-            phoneCheck = false;
+            Id = 0;
+            IdCheck = false;
+            LastName = string.Empty;
+            LastNameCheck = false;
+            FirstName = string.Empty;
+            FirstNameCheck = false;
+            Patronim = string.Empty;
+            PatronimCheck = false;
+            Phone = string.Empty;
+            PhoneCheck = false;
         }
 
-        private string idText;
-        public string IdText
+        private int _id;
+        public int Id
         {
-            get => idText;
+            get => _id;
             set
             {
-                if (idText == null)
-                    idText = value;
-                if (!ValueChecker.CheckValueUint(value, out uint _, true))
-                    value = "1";
-                Set(ref idText, value);
+                if (!ValueChecker.CheckValueUint(value.ToString(), out uint _, true))
+                    value = 0;
+                Set(ref _id, value);
             }
         }
 
-        private string lastNameText;
-        public string LastNameText
+        private string _lastName;
+        public string LastName
         {
-            get => lastNameText;
+            get => _lastName;
             set
             {
-                if (lastNameText == null)
-                    lastNameText = value;
+                if (_lastName == null)
+                    _lastName = value;
                 if (!ValueChecker.CheckValueString(value, out value, 50, false))
                     value = "";
-                Set(ref lastNameText, value);
+                Set(ref _lastName, value);
             }
         }
 
-        private string firstNameText;
-        public string FirstNameText
+        private string _firstName;
+        public string FirstName
         {
-            get => firstNameText;
+            get => _firstName;
             set
             {
-                if (firstNameText == null)
-                    firstNameText = value;
+                if (_firstName == null)
+                    _firstName = value;
                 if (!ValueChecker.CheckValueString(value, out value, 50, false))
                     value = "";
-                Set(ref firstNameText, value);
+                Set(ref _firstName, value);
             }
         }
 
-        private string patronimText;
-        public string PatronimText
+        private string _patronim;
+        public string Patronim
         {
-            get => patronimText;
+            get => _patronim;
             set
             {
-                if (patronimText == null)
-                    patronimText = value;
+                if (_patronim == null)
+                    _patronim = value;
                 if (!ValueChecker.CheckValueString(value, out value, 50, false))
                     value = "";
-                Set(ref patronimText, value);
+                Set(ref _patronim, value);
             }
         }
 
-        private string phoneText;
-        public string PhoneText
+        private string _phone;
+        public string Phone
         {
-            get => phoneText;
+            get => _phone;
             set
             {
-                if (phoneText == null)
-                    phoneText = value;
+                if (_phone == null)
+                    _phone = value;
                 if (!ValueChecker.CheckValueString(value, out value, 13, false))
                     value = "";
-                Set(ref phoneText, value);
+                Set(ref _phone, value);
             }
         }
 
-        private bool idCheck;
+        private bool _idCheck;
         public bool IdCheck
         {
-            get => idCheck;
-            set => Set(ref idCheck, value);
+            get => _idCheck;
+            set => Set(ref _idCheck, value);
         }
 
-        private bool lastNameCheck;
+        private bool _lastNameCheck;
         public bool LastNameCheck
         {
-            get => lastNameCheck;
-            set => Set(ref lastNameCheck, value);
+            get => _lastNameCheck;
+            set => Set(ref _lastNameCheck, value);
         }
 
-        private bool firstNameCheck;
+        private bool _firstNameCheck;
         public bool FirstNameCheck
         {
-            get => firstNameCheck;
-            set => Set(ref firstNameCheck, value);
+            get => _firstNameCheck;
+            set => Set(ref _firstNameCheck, value);
         }
 
-        private bool patronimCheck;
+        private bool _patronimCheck;
         public bool PatronimCheck
         {
-            get => patronimCheck;
-            set => Set(ref patronimCheck, value);
+            get => _patronimCheck;
+            set => Set(ref _patronimCheck, value);
         }
 
-        private bool phoneCheck;
+        private bool _phoneCheck;
         public bool PhoneCheck
         {
-            get => phoneCheck;
-            set => Set(ref phoneCheck, value);
+            get => _phoneCheck;
+            set => Set(ref _phoneCheck, value);
         }
 
         public override void ParseFields()
         {
-            if (idCheck)
+            if (_idCheck)
             {
-                if (!ValueChecker.CheckValueUint(IdText, out uint id, true))
-                    throw new ArgumentException("Параметр не может быть 0!", nameof(IdText));
+                if (!ValueChecker.CheckValueUint(Id.ToString(), out uint id, true))
+                    throw new ArgumentException("Параметр не может быть 0!", nameof(Id));
                 Fields.Id = id;
             }
-            if (lastNameCheck)
+            if (_lastNameCheck)
             {
-                if (!ValueChecker.CheckValueString(LastNameText, out string lastName, 50, false))
-                    throw new ArgumentNullException("Строка не может быть пустой!", nameof(LastNameText));
-                Fields.LastName = lastName;
+                if (!ValueChecker.CheckValueString(LastName, out string name, 50))
+                    throw new ArgumentNullException("Строка не может быть пустой!", nameof(LastName));
+                Fields.LastName = name;
             }
-            if (firstNameCheck)
+            if (_firstNameCheck)
             {
-                if (!ValueChecker.CheckValueString(FirstNameText, out string firstName, 50, false))
-                    throw new ArgumentNullException("Строка не может быть пустой!", nameof(FirstNameText));
-                Fields.FirstName = firstName;
+                if (!ValueChecker.CheckValueString(FirstName, out string name, 50))
+                    throw new ArgumentNullException("Строка не может быть пустой!", nameof(FirstName));
+                Fields.FirstName = name;
             }
-            if (patronimCheck)
+            if (_patronimCheck)
             {
-                if (!ValueChecker.CheckValueString(PatronimText, out string patronim, 50, false))
-                    throw new ArgumentNullException("Строка не может быть пустой!", nameof(PatronimText));
-                Fields.Patronim = patronim;
+                if (!ValueChecker.CheckValueString(Patronim, out string name, 50))
+                    throw new ArgumentNullException("Строка не может быть пустой!", nameof(Patronim));
+                Fields.Patronim = name;
             }
-            if (phoneCheck)
+            if (_phoneCheck)
             {
-                if (!ValueChecker.CheckValueString(PhoneText, out string phone, 13, false))
-                    throw new ArgumentNullException("Строка не может быть пустой!", nameof(PhoneText));
-                Fields.Phone = phone;
+                if (!ValueChecker.CheckValueString(Phone, out string name, 13))
+                    throw new ArgumentNullException("Строка не может быть пустой!", nameof(Phone));
+                Fields.Phone = name;
             }
+        }
+
+        public override void Filter()
+        {
+            ParseFields();
+            Model.FetchAndFilter<Entities.SupplierHead>((item) =>
+                !(IdCheck && item.Id != Fields.Id) &&
+                !(LastNameCheck && !item.LastName.Contains(Fields.LastName)) &&
+                !(FirstNameCheck && !item.FirstName.Contains(Fields.FirstName)) &&
+                !(PatronimCheck && !item.Patronim.Contains(Fields.Patronim)) &&
+                !(PhoneCheck && !item.Phone.Contains(Fields.Phone))
+            );
         }
     }
 }

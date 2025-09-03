@@ -8,71 +8,74 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Bank
     public class BankFilterVM : BasicFilterVM<Entities.BankEntity, Entities.Bank>
     {
         public BankFilterVM(TableModel<Entities.BankEntity> tableModel)
-            : base(tableModel) { }
+            : base(tableModel)
+        {
+            _id = 0;
+            _idCheck = false;
+            _name = string.Empty;
+            _nameCheck = false;
+        }
 
         protected override void Clear()
         {
-            IdText = "0";
+            Id = 0;
             IdCheck = false;
-            NameText = string.Empty;
+            Name = string.Empty;
             NameCheck = false;
         }
 
-        private string idText;
-        public string IdText
+        private int _id;
+        public int Id
         {
-            get => idText;
+            get => _id;
             set
             {
-                if (idText == null)
-                    idText = value;
-                if (!ValueChecker.CheckValueUint(value, out uint _, true))
-                    value = "0";
-                Set(ref idText, value);
+                if (!ValueChecker.CheckValueUint(value.ToString(), out uint _, true))
+                    value = 0;
+                Set(ref _id, value);
             }
         }
 
-        private string nameText;
-        public string NameText
+        private string _name;
+        public string Name
         {
-            get => nameText;
+            get => _name;
             set
             {
-                if (nameText == null)
-                    nameText = value;
+                if (_name == null)
+                    _name = value;
                 if (!ValueChecker.CheckValueString(value, out value, 100, true))
                     value = "";
-                Set(ref nameText, value);
+                Set(ref _name, value);
             }
         }
 
-        private bool idCheck = false;
+        private bool _idCheck = false;
         public bool IdCheck
         {
-            get => idCheck;
-            set => Set(ref idCheck, value);
+            get => _idCheck;
+            set => Set(ref _idCheck, value);
         }
 
-        private bool nameCheck = false;
+        private bool _nameCheck = false;
         public bool NameCheck
         {
-            get => nameCheck;
-            set => Set(ref nameCheck, value);
+            get => _nameCheck;
+            set => Set(ref _nameCheck, value);
         }
-
 
         public override void ParseFields()
         {
             if (IdCheck)
             {
-                if (!ValueChecker.CheckValueUint(IdText, out uint id, true))
-                    throw new ArgumentException("Параметр не может быть 0!", nameof(IdText));
+                if (!ValueChecker.CheckValueUint(Id.ToString(), out uint id, true))
+                    throw new ArgumentException("Параметр не может быть 0!", nameof(Id));
                 Fields.Id = id;
             }
             if (NameCheck)
             {
-                if (!ValueChecker.CheckValueString(NameText, out string name, 100, true))
-                    throw new ArgumentNullException("Строка не может быть пустой!", nameof(NameText));
+                if (!ValueChecker.CheckValueString(Name, out string name, 100, true))
+                    throw new ArgumentNullException("Строка не может быть пустой!", nameof(Name));
                 Fields.Name = name;
             }
         }

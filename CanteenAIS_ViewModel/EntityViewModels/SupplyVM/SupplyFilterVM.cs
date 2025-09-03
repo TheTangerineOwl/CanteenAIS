@@ -1,6 +1,8 @@
 ﻿using CanteenAIS_Models;
 using CanteenAIS_ViewModel.BasicViewModels;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Entities = CanteenAIS_DB.Database.Entities;
 
 namespace CanteenAIS_ViewModel.EntityViewModels.Supply
@@ -8,82 +10,107 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Supply
     public class SupplyFilterVM : BasicFilterVM<Entities.SupplyEntity, Entities.Supply>
     {
         public SupplyFilterVM(TableModel<Entities.SupplyEntity> tableModel)
-            : base(tableModel) { }
+            : base(tableModel)
+        {
+            _suppliers = MainServices.GetInstance().Suppliers.FetchValues<Entities.Supplier>().ToList();
+            _supplier = Suppliers.FirstOrDefault();
+            _supplierCheck = false;
+            _id = 0;
+            _idCheck = false;
+            _time = DateTime.Now;
+            _timeCheck = false;
+        }
 
         protected override void Clear()
         {
-            IdText = "0";
-            Supplier = 0;
+            Id = 0;
+            IdCheck = false;
+            Supplier = Suppliers.FirstOrDefault();
+            SupplierCheck = false;
             Time = DateTime.Now;
+            TimeCheck = false;
         }
 
-        private string idText;
-        public string IdText
+        private IList<Entities.Supplier> _suppliers;
+        public IList<Entities.Supplier> Suppliers
         {
-            get => idText;
+            get => _suppliers;
+            set => Set(ref _suppliers, value);
+        }
+
+        private int _id;
+        public int Id
+        {
+            get => _id;
             set
             {
-                if (idText == null)
-                    idText = value;
-                if (!ValueChecker.CheckValueUint(value, out uint _, true))
-                    value = "1";
-                Set(ref idText, value);
+                if (!ValueChecker.CheckValueUint(value.ToString(), out uint _, true))
+                    value = 0;
+                Set(ref _id, value);
             }
         }
 
-        private int supplier;
-        public int Supplier
+        private Entities.Supplier _supplier;
+        public Entities.Supplier Supplier
         {
-            get => supplier;
-            set => Set(ref supplier, value);
+            get => _supplier;
+            set => Set(ref _supplier, value);
         }
 
-        private DateTime time;
+        private DateTime _time;
         public DateTime Time
         {
-            get => time;
+            get => _time;
             set
             {
-                if (time == DateTime.MinValue)
-                    time = value;
                 if (!ValueChecker.CheckValueDateTime(value.ToString(), out DateTime _))
                     value = DateTime.Now;
-                Set(ref time, value);
+                Set(ref _time, value);
             }
         }
 
-        private bool idCheck;
+        private bool _idCheck;
         public bool IdCheck
         {
-            get => idCheck;
-            set => Set(ref idCheck, value);
+            get => _idCheck;
+            set => Set(ref _idCheck, value);
         }
 
-        private bool supplierCheck;
+        private bool _supplierCheck;
         public bool SupplierCheck
         {
-            get => supplierCheck;
-            set => Set(ref supplierCheck, value);
+            get => _supplierCheck;
+            set => Set(ref _supplierCheck, value);
         }
 
-        private bool timeCheck;
+        private bool _timeCheck;
         public bool TimeCheck
         {
-            get => timeCheck;
-            set => Set(ref timeCheck, value);
+            get => _timeCheck;
+            set => Set(ref _timeCheck, value);
         }
 
         public override void ParseFields()
         {
-            if (!ValueChecker.CheckValueUint(IdText, out uint id, true))
-                throw new ArgumentException("Параметр не может быть 0!", nameof(IdText));
-            if (!ValueChecker.CheckValueUint(Supplier.ToString(), out uint supplier))
-                throw new ArgumentException("Некорректный параметр!", nameof(Supplier));
+            if (!ValueChecker.CheckValueUint(Id.ToString(), out uint id, true))
+                throw new ArgumentException("Параметр не может быть 0!", nameof(Id));
+            if (!ValueChecker.CheckValueUint(Supplier.Id.ToString(), out uint supplier))
+                throw new ArgumentException("Некорректный параметр!", nameof(Supplier.Id));
             if (!ValueChecker.CheckValueDateTime(Time.ToString(), out DateTime time))
                 throw new ArgumentException("Некорректный параметр!", nameof(Time));
             Fields.Id = id;
             Fields.SupplierId = supplier;
             Fields.DateTime = time;
+        }
+
+        public override void Filter()
+        {
+            ParseFields();
+            Model.FetchAndFilter<Entities.Supply>((item) =>
+                !(IdCheck && item.Id != Fields.Id) &&
+                !(SupplierCheck && item.SupplierId != Fields.SupplierId) &&
+                !(TimeCheck && item.DateTime != Fields.DateTime)
+            );
         }
     }
 }

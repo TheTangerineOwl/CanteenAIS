@@ -43,8 +43,38 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
+    <Reference Include="Xceed.Wpf.AvalonDock, Version=4.7.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\CanteenAIS\packages\Extended.Wpf.Toolkit.4.7.25104.5739\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=4.7.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\CanteenAIS\packages\Extended.Wpf.Toolkit.4.7.25104.5739\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=4.7.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\CanteenAIS\packages\Extended.Wpf.Toolkit.4.7.25104.5739\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=4.7.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\CanteenAIS\packages\Extended.Wpf.Toolkit.4.7.25104.5739\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit, Version=4.7.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\CanteenAIS\packages\Extended.Wpf.Toolkit.4.7.25104.5739\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseTemplates\ComboFormFieldChecked.xaml.cs">
+      <DependentUpon>ComboFormFieldChecked.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BaseTemplates\IntFormFieldChecked.xaml.cs">
+      <DependentUpon>IntFormFieldChecked.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BaseTemplates\IntFormField.xaml.cs">
+      <DependentUpon>IntFormField.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BaseTemplates\DateTimeFormField.xaml.cs">
+      <DependentUpon>DateTimeFormField.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BaseTemplates\DateTimeFormFieldChecked.xaml.cs">
+      <DependentUpon>DateTimeFormFieldChecked.xaml</DependentUpon>
+    </Compile>
     <Compile Include="BaseTemplates\DialogButtons.xaml.cs">
       <DependentUpon>DialogButtons.xaml</DependentUpon>
     </Compile>
@@ -117,6 +147,26 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="BaseTemplates\ComboFormFieldChecked.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="BaseTemplates\IntFormFieldChecked.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="BaseTemplates\IntFormField.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="BaseTemplates\DateTimeFormField.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BaseTemplates\DateTimeFormFieldChecked.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="BaseTemplates\DialogButtons.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -196,6 +246,13 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Management\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

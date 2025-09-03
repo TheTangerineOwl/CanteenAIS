@@ -82,8 +82,8 @@ namespace CanteenAIS_ViewModel.BasicViewModels
         where TEntityBase : Entity
         where TEntity : TEntityBase, new()
     {
-        public override string WindowTitle => $"Добавление в таблицу: {TableTitle}";
-        public override string ButtonContent => "Добавить";
+        public override string WindowTitle => $"Изменение таблицы: {TableTitle}";
+        public override string ButtonContent => "Изменить";
 
         protected DataRow Row;
         protected BasicEditVM(DataRow row, TableModel<TEntityBase> tableModel) : base(tableModel)

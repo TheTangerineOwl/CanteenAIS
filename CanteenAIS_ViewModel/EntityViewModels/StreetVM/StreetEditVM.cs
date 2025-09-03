@@ -1,7 +1,9 @@
 ﻿using CanteenAIS_Models;
 using CanteenAIS_ViewModel.BasicViewModels;
 using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using Entities = CanteenAIS_DB.Database.Entities;
 
 namespace CanteenAIS_ViewModel.EntityViewModels.Street
@@ -9,60 +11,73 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Street
     public class StreetEditVM : BasicEditVM<Entities.StreetEntity, Entities.Street>
     {
         public StreetEditVM(DataRow row, TableModel<Entities.StreetEntity> tableModel)
-            : base(row, tableModel) { }
+            : base(row, tableModel)
+        {
+            _cities = MainServices.GetInstance().Cities.FetchValues<Entities.City>().ToList();
+            _city = Cities.Where(item => item.Id == Fields.CityId).FirstOrDefault();
+            _id = (int)Fields.Id;
+            _name = Fields.Name;
+        }
 
         protected override void Clear()
         {
-            IdText = Fields.Id.ToString();
-            City = (int)Fields.CityId;
-            NameText = Fields.Name;
+            City = Cities.Where(item => item.Id == Fields.CityId).FirstOrDefault();
+            Id = (int)Fields.Id;
+            Name = Fields.Name;
         }
 
-        private string idText;
-        public string IdText
+        private int _id;
+        public int Id
         {
-            get => idText;
+            get => _id;
             set
             {
-                if (idText == null)
-                    idText = value;
-                if (!ValueChecker.CheckValueUint(value, out uint _, true))
-                    value = "1";
-                Set(ref idText, value);
+                if (!ValueChecker.CheckValueUint(value.ToString(), out uint _, true))
+                    value = 0;
+                Set(ref _id, value);
             }
         }
 
-        private int city;
-        public int City
+        private IList<Entities.City> _cities;
+        public IList<Entities.City> Cities
         {
-            get => city;
-            set => Set(ref city, value);
+            get => _cities;
+            set => Set(ref _cities, value);
         }
 
-        private string nameText;
-        public string NameText
+        private Entities.City _city;
+        public Entities.City City
         {
-            get => nameText;
+            get => _city;
+            set => Set(ref _city, value);
+        }
+
+        private string _name;
+        public string Name
+        {
+            get => _name;
             set
             {
-                if (nameText == null)
-                    nameText = value;
-                if (!ValueChecker.CheckValueString(value, out value, 100, false))
+                if (_name == null)
+                    _name = value;
+                if (!ValueChecker.CheckValueString(value, out value, 50, false))
                     value = "";
-                Set(ref nameText, value);
+                Set(ref _name, value);
             }
         }
 
         public override void ParseFields()
         {
-            if (!ValueChecker.CheckValueUint(IdText, out uint id, true))
-                throw new ArgumentException("Параметр не может быть 0!", nameof(IdText));
-            if (!ValueChecker.CheckValueUint(City.ToString(), out uint city))
-                throw new ArgumentException("Некорректный параметр!");
-            if (!ValueChecker.CheckValueString(NameText, out string name, 100, false))
-                throw new ArgumentNullException("Строка не может быть пустой!", nameof(NameText));
+            if (!ValueChecker.CheckValueUint(Id.ToString(), out uint id, true))
+                throw new ArgumentException("Параметр не может быть 0!", nameof(Id));
             Fields.Id = id;
+
+            if (!ValueChecker.CheckValueUint(City.Id.ToString(), out uint city))
+                throw new ArgumentException("Некорректный параметр!");
             Fields.CityId = city;
+
+            if (!ValueChecker.CheckValueString(Name, out string name, 50, false))
+                throw new ArgumentNullException("Строка не может быть пустой!", nameof(Name));
             Fields.Name = name;
         }
     }

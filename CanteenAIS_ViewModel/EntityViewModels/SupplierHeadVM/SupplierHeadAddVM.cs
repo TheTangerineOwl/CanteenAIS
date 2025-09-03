@@ -8,103 +8,94 @@ namespace CanteenAIS_ViewModel.EntityViewModels.SupplierHead
     public class SupplierHeadAddVM : BasicAddVM<Entities.SupplierHeadEntity, Entities.SupplierHead>
     {
         public SupplierHeadAddVM(TableModel<Entities.SupplierHeadEntity> tableModel)
-            : base(tableModel) { }
+            : base(tableModel)
+        {
+            _lastName = string.Empty;
+            _firstName = string.Empty;
+            _patronim = string.Empty;
+            _phone = string.Empty;
+        }
 
         protected override void Clear()
         {
-            IdText = "0";
-            LastNameText = string.Empty;
-            FirstNameText = string.Empty;
-            PatronimText = string.Empty;
-            PhoneText = string.Empty;
+            LastName = string.Empty;
+            FirstName = string.Empty;
+            Patronim = string.Empty;
+            Phone = string.Empty;
         }
 
-        private string idText;
-        public string IdText
+        private string _lastName;
+        public string LastName
         {
-            get => idText;
+            get => _lastName;
             set
             {
-                if (idText == null)
-                    idText = value;
-                if (!ValueChecker.CheckValueUint(value, out uint _, true))
-                    value = "1";
-                Set(ref idText, value);
-            }
-        }
-
-        private string lastNameText;
-        public string LastNameText
-        {
-            get => lastNameText;
-            set
-            {
-                if (lastNameText == null)
-                    lastNameText = value;
+                if (_lastName == null)
+                    _lastName = value;
                 if (!ValueChecker.CheckValueString(value, out value, 50, false))
-                    value = "";
-                Set(ref lastNameText, value);
+                    value = string.Empty;
+                Set(ref _lastName, value);
             }
         }
 
-        private string firstNameText;
-        public string FirstNameText
+        private string _firstName;
+        public string FirstName
         {
-            get => firstNameText;
+            get => _firstName;
             set
             {
-                if (firstNameText == null)
-                    firstNameText = value;
+                if (_firstName == null)
+                    _firstName = value;
                 if (!ValueChecker.CheckValueString(value, out value, 50, false))
-                    value = "";
-                Set(ref firstNameText, value);
+                    value = string.Empty;
+                Set(ref _firstName, value);
             }
         }
 
-        private string patronimText;
-        public string PatronimText
+        private string _patronim;
+        public string Patronim
         {
-            get => patronimText;
+            get => _patronim;
             set
             {
-                if (patronimText == null)
-                    patronimText = value;
+                if (_patronim == null)
+                    _patronim = value;
                 if (!ValueChecker.CheckValueString(value, out value, 50, false))
-                    value = "";
-                Set(ref patronimText, value);
+                    value = string.Empty;
+                Set(ref _patronim, value);
             }
         }
 
-        private string phoneText;
-        public string PhoneText
+        private string _phone;
+        public string Phone
         {
-            get => phoneText;
+            get => _phone;
             set
             {
-                if (phoneText == null)
-                    phoneText = value;
+                if (_phone == null)
+                    _phone = value;
                 if (!ValueChecker.CheckValueString(value, out value, 13, false))
-                    value = "";
-                Set(ref phoneText, value);
+                    value = string.Empty;
+                Set(ref _phone, value);
             }
         }
 
         public override void ParseFields()
         {
-            if (!ValueChecker.CheckValueUint(IdText, out uint id, true))
-                throw new ArgumentException("Параметр не может быть 0!", nameof(IdText));
-            if (!ValueChecker.CheckValueString(LastNameText, out string lastName, 50, false))
-                throw new ArgumentNullException("Строка не может быть пустой!", nameof(LastNameText));
-            if (!ValueChecker.CheckValueString(FirstNameText, out string firstName, 50, false))
-                throw new ArgumentNullException("Строка не может быть пустой!", nameof(FirstNameText));
-            if (!ValueChecker.CheckValueString(PatronimText, out string patronim, 50, false))
-                throw new ArgumentNullException("Строка не может быть пустой!", nameof(PatronimText));
-            if (!ValueChecker.CheckValueString(PhoneText, out string phone, 13, false))
-                throw new ArgumentNullException("Строка не может быть пустой!", nameof(PhoneText));
-            Fields.Id = id;
-            Fields.LastName = lastName;
-            Fields.FirstName = firstName;
+            if (!ValueChecker.CheckValueString(LastName, out string lastname, 50))
+                throw new ArgumentNullException("Строка не может быть пустой!", nameof(LastName));
+            Fields.LastName = lastname;
+
+            if (!ValueChecker.CheckValueString(FirstName, out string firstname, 50))
+                throw new ArgumentNullException("Строка не может быть пустой!", nameof(FirstName));
+            Fields.FirstName = firstname;
+
+            if (!ValueChecker.CheckValueString(Patronim, out string patronim, 50))
+                throw new ArgumentNullException("Строка не может быть пустой!", nameof(Patronim));
             Fields.Patronim = patronim;
+
+            if (!ValueChecker.CheckValueString(Phone, out string phone, 13))
+                throw new ArgumentNullException("Строка не может быть пустой!", nameof(Phone));
             Fields.Phone = phone;
         }
     }

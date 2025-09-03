@@ -1,7 +1,9 @@
 ﻿using CanteenAIS_Models;
 using CanteenAIS_ViewModel.BasicViewModels;
 using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using Entities = CanteenAIS_DB.Database.Entities;
 
 namespace CanteenAIS_ViewModel.EntityViewModels.Supplier
@@ -9,137 +11,177 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Supplier
     public class SupplierEditVM : BasicEditVM<Entities.SupplierEntity, Entities.Supplier>
     {
         public SupplierEditVM(DataRow row, TableModel<Entities.SupplierEntity> tableModel)
-            : base(row, tableModel) { }
+            : base(row, tableModel)
+        {
+            _streets = MainServices.GetInstance().Streets.FetchValues<Entities.Street>().ToList();
+            _street = Streets.Where(item => item.Id == Fields.StreetId).FirstOrDefault();
+            _heads = MainServices.GetInstance().SupplierHeads.FetchValues<Entities.SupplierHead>().ToList();
+            _head = Heads.Where(item => item.Id == Fields.HeadId).FirstOrDefault();
+            _banks = MainServices.GetInstance().Banks.FetchValues<Entities.Bank>().ToList();
+            _bank = Banks.Where(item => item.Id == Fields.BankId).FirstOrDefault();
+            _id = (int)Fields.Id;
+            _name = Fields.Name;
+            _building = Fields.Building;
+            _account = Fields.Account;
+            _inn = Fields.INN;
+        }
 
         protected override void Clear()
         {
-            IdText = Fields.Id.ToString();
-            NameText = Fields.Name;
-            Street = (int)Fields.StreetId;
-            BuildingText = Fields.Building;
-            Head = (int)Fields.HeadId;
-            Bank = (int)Fields.BankId;
-            AccountText = Fields.Account;
-            INNText = Fields.INN;
+            Street = Streets.Where(item => item.Id == Fields.StreetId).FirstOrDefault();
+            Head = Heads.Where(item => item.Id == Fields.HeadId).FirstOrDefault();
+            Bank = Banks.Where(item => item.Id == Fields.BankId).FirstOrDefault();
+            Id = (int)Fields.Id;
+            Name = Fields.Name;
+            Building = Fields.Building;
+            Account = Fields.Account;
+            INN = Fields.INN;
         }
 
-        private string idText;
-        public string IdText
+        private IList<Entities.Street> _streets;
+        public IList<Entities.Street> Streets
         {
-            get => idText;
+            get => _streets;
+            set => Set(ref _streets, value);
+        }
+
+        private IList<Entities.SupplierHead> _heads;
+        public IList<Entities.SupplierHead> Heads
+        {
+            get => _heads;
+            set => Set(ref _heads, value);
+        }
+
+        private IList<Entities.Bank> _banks;
+        public IList<Entities.Bank> Banks
+        {
+            get => _banks;
+            set => Set(ref _banks, value);
+        }
+
+        private int _id;
+        public int Id
+        {
+            get => _id;
             set
             {
-                if (idText == null)
-                    idText = value;
-                if (!ValueChecker.CheckValueUint(value, out uint _, true))
-                    value = Fields.Id.ToString();
-                Set(ref idText, value);
+                if (!ValueChecker.CheckValueUint(value.ToString(), out uint _, true))
+                    value = (int)Fields.Id;
+                Set(ref _id, value);
             }
         }
 
-        private string nameText;
-        public string NameText
+        private string _name;
+        public string Name
         {
-            get => nameText;
+            get => _name;
             set
             {
-                if (nameText == null)
-                    nameText = value;
-                if (!ValueChecker.CheckValueString(value, out value, 100, false))
+                if (_name == null)
+                    _name = value;
+                if (!ValueChecker.CheckValueString(value, out value, 50, false))
                     value = Fields.Name;
-                Set(ref nameText, value);
+                Set(ref _name, value);
             }
         }
 
-        private int street;
-        public int Street
+        private Entities.Street _street;
+        public Entities.Street Street
         {
-            get => street;
-            set => Set(ref street, value);
+            get => _street;
+            set => Set(ref _street, value);
         }
 
-        private string buildingText;
-        public string BuildingText
+        private Entities.SupplierHead _head;
+        public Entities.SupplierHead Head
         {
-            get => buildingText;
+            get => _head;
+            set => Set(ref _head, value);
+        }
+
+        private Entities.Bank _bank;
+        public Entities.Bank Bank
+        {
+            get => _bank;
+            set => Set(ref _bank, value);
+        }
+
+        private string _building;
+        public string Building
+        {
+            get => _building;
             set
             {
-                if (buildingText == null)
-                    buildingText = value;
-                if (!ValueChecker.CheckValueString(value, out value, 20, false))
+                if (_building == null)
+                    _building = value;
+                if (!ValueChecker.CheckValueString(value, out string _, 15))
                     value = Fields.Building;
-                Set(ref buildingText, value);
+                Set(ref _building, value);
             }
         }
 
-        private int head;
-        public int Head
+        private string _account;
+        public string Account
         {
-            get => head;
-            set => Set(ref head, value);
-        }
-
-        private int bank;
-        public int Bank
-        {
-            get => bank;
-            set => Set(ref bank, value);
-        }
-
-        private string accountText;
-        public string AccountText
-        {
-            get => accountText;
+            get => _account;
             set
             {
-                if (accountText == null)
-                    accountText = value;
-                if (!ValueChecker.CheckValueString(value, out value, 20))
+                if (_account == null)
+                    _account = value;
+                if (!ValueChecker.CheckValueString(value, out string _, 20))
                     value = Fields.Account;
-                Set(ref accountText, value);
+                Set(ref _account, value);
             }
         }
 
-        private string innText;
-        public string INNText
+        private string _inn;
+        public string INN
         {
-            get => innText;
+            get => _inn;
             set
             {
-                if (innText == null)
-                    innText = value;
-                if (!ValueChecker.CheckValueString(value, out value, 10))
+                if (_inn == null)
+                    _inn = value;
+                if (!ValueChecker.CheckValueString(value, out string _, 10))
                     value = Fields.INN;
-                Set(ref innText, value);
+                Set(ref _inn, value);
             }
         }
 
         public override void ParseFields()
         {
-            if (!ValueChecker.CheckValueUint(IdText, out uint id, true))
-                throw new ArgumentException("Параметр не может быть 0!", nameof(IdText));
-            if (!ValueChecker.CheckValueString(NameText, out string name, 100, false))
-                throw new ArgumentNullException("Строка не может быть пустой!", nameof(NameText));
-            if (!ValueChecker.CheckValueUint(Street.ToString(), out uint street))
-                throw new ArgumentException("Некорректный параметр!", nameof(Street));
-            if (!ValueChecker.CheckValueString(BuildingText, out string building, 20, false))
-                throw new ArgumentNullException("Строка не может быть пустой!", nameof(BuildingText));
-            if (!ValueChecker.CheckValueUint(Head.ToString(), out uint head))
-                throw new ArgumentException("Некорректный параметр!", nameof(Head));
-            if (!ValueChecker.CheckValueUint(Bank.ToString(), out uint bank))
-                throw new ArgumentException("Некорректный параметр!", nameof(Bank));
-            if (!ValueChecker.CheckValueString(AccountText, out string account, 20, false))
-                throw new ArgumentNullException("Строка не может быть пустой!", nameof(AccountText));
-            if (!ValueChecker.CheckValueString(INNText, out string inn, 10, false))
-                throw new ArgumentNullException("Строка не может быть пустой!", nameof(INNText));
-            Fields.Id = id;
-            Fields.Name = name;
-            Fields.StreetId = street;
-            Fields.Building = building;
-            Fields.HeadId = head;
-            Fields.BankId = bank;
-            Fields.Account = account;
-            Fields.INN = inn;
+
+                if (!ValueChecker.CheckValueUint(Id.ToString(), out uint id, true))
+                    throw new ArgumentException("Параметр не может быть 0!", nameof(Id));
+                Fields.Id = id;
+
+                if (!ValueChecker.CheckValueString(Name, out string name, 50))
+                    throw new ArgumentNullException("Строка не может быть пустой!", nameof(Name));
+                Fields.Name = name;
+
+                if (!ValueChecker.CheckValueUint(Street.Id.ToString(), out uint streetId, true))
+                    throw new ArgumentException("Параметр не может быть 0!", nameof(Street.Id));
+                Fields.StreetId = streetId;
+
+                if (!ValueChecker.CheckValueUint(Head.Id.ToString(), out uint headId, true))
+                    throw new ArgumentException("Параметр не может быть 0!", nameof(Head.Id));
+                Fields.HeadId = headId;
+
+                if (!ValueChecker.CheckValueUint(Bank.Id.ToString(), out uint bankId, true))
+                    throw new ArgumentException("Параметр не может быть 0!", nameof(Bank.Id));
+                Fields.BankId = bankId;
+
+                if (!ValueChecker.CheckValueString(Building, out string building, 16))
+                    throw new ArgumentNullException("Строка не может быть пустой!", nameof(Building));
+                Fields.Building = building;
+
+                if (!ValueChecker.CheckValueString(Account, out string account, 20))
+                    throw new ArgumentNullException("Строка не может быть пустой!", nameof(Account));
+                Fields.Account = account;
+
+                if (!ValueChecker.CheckValueString(INN, out string inn, 10))
+                    throw new ArgumentNullException("Строка не может быть пустой!", nameof(INN));
+                Fields.INN = inn;
         }
     }
 }

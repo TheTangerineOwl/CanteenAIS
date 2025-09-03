@@ -25,15 +25,17 @@
             </GroupBox.HeaderTemplate>
 
             <StackPanel Margin="10" Grid.IsSharedSizeScope="True">
-                <template:TextFormField x:Name="idRow" LabelText="Id"
-                    Text="{Binding IdText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    MaxLength="10"/>
+                <template:IntFormField x:Name="idRow" LabelText="Id"
+                    IntPick="{Binding Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Minimum="1" Default="1" Maximum="1000000000"/>
 
                 <template:ComboFormField LabelText="Подразделение"
                     ItemsSource="{Binding Branches, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                     SelectedItem="{Binding Branch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 />
-                <DatePicker SelectedDate="{Binding DateTimeFill, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <template:DateTimeFormField LabelText="Время"
+                    DateTimePick="{Binding DateTimeFill, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                />
             </StackPanel>
         </GroupBox>
     </DockPanel>

@@ -1,6 +1,9 @@
 ﻿using CanteenAIS_Models;
 using CanteenAIS_ViewModel.BasicViewModels;
 using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 using Entities = CanteenAIS_DB.Database.Entities;
 
 namespace CanteenAIS_ViewModel.EntityViewModels.Dish
@@ -8,143 +11,148 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Dish
     public class DishAddVM : BasicAddVM<Entities.DishEntity, Entities.Dish>
     {
         public DishAddVM(TableModel<Entities.DishEntity> tableModel)
-            : base(tableModel) { }
+            : base(tableModel)
+        {
+            _units = MainServices.GetInstance().MeasureUnits.FetchValues<Entities.MeasureUnit>().ToList();
+            _unit = Units.FirstOrDefault();
+            _groups = MainServices.GetInstance().AssortmentGroups.FetchValues<Entities.AssortmentGroup>().ToList();
+            _group = Groups.FirstOrDefault();
+            _name = string.Empty;
+            _price = 0;
+            _serving = 0;
+            _recipe = string.Empty;
+            _picture = string.Empty;
+        }
 
         protected override void Clear()
         {
-            IdText = "0";
-            NameText = string.Empty;
-            GroupId = 0;
-            PriceText = "0";
-            ServingText = "0";
-            UnitId = 0;
-            RecipeText = string.Empty;
-            PictureText = string.Empty;
+            Unit = Units.FirstOrDefault();
+            Group = Groups.FirstOrDefault();
+            Name = string.Empty;
+            Price = 0;
+            Serving = 0;
+            Recipe = string.Empty;
+            Picture = string.Empty;
         }
 
-        private string idText;
-        public string IdText
+        private IList<Entities.MeasureUnit> _units;
+        public IList<Entities.MeasureUnit> Units
         {
-            get => idText;
-            set
-            {
-                if (idText == null)
-                    idText = value;
-                if (!ValueChecker.CheckValueUint(value, out uint _, true))
-                    value = "1";
-                Set(ref idText, value);
-            }
+            get => _units;
+            set => Set(ref _units, value);
         }
 
-        private string nameText;
-        public string NameText
+        private IList<Entities.AssortmentGroup> _groups;
+        public IList<Entities.AssortmentGroup> Groups
         {
-            get => nameText;
+            get => _groups;
+            set => Set(ref _groups, value);
+        }
+
+        private string _name;
+        public string Name
+        {
+            get => _name;
             set
             {
-                if (nameText == null)
-                    nameText = value;
+                if (_name == null)
+                    _name = value;
                 if (!ValueChecker.CheckValueString(value, out value, 100, false))
                     value = "";
-                Set(ref nameText, value);
+                Set(ref _name, value);
             }
         }
 
-        private uint groupId;
-        public uint GroupId
+        private Entities.AssortmentGroup _group;
+        public Entities.AssortmentGroup Group
         {
-            get => groupId;
-            set => Set(ref groupId, value);
+            get => _group;
+            set => Set(ref _group, value);
         }
 
-        private string priceText;
-        public string PriceText
+        private decimal _price;
+        public decimal Price
         {
-            get => priceText;
+            get => _price;
             set
             {
-                if (priceText == null)
-                    priceText = value;
-                if (!ValueChecker.CheckValueDecimal(value, out decimal _))
-                    value = "";
-                Set(ref priceText, value);
+                if (!ValueChecker.CheckValueDecimal(value.ToString(), out decimal _))
+                    value = 0;
+                Set(ref _price, value);
             }
         }
 
-        private string servingText;
-        public string ServingText
+        private double _serving;
+        public double Serving
         {
-            get => servingText;
+            get => _serving;
             set
             {
-                if (servingText == null)
-                    servingText = value;
-                if (!ValueChecker.CheckValueDouble(value, out double _))
-                    value = "";
-                Set(ref servingText, value);
+                if (!ValueChecker.CheckValueDouble(value.ToString(), out double _))
+                    value = 0;
+                Set(ref _serving, value);
             }
         }
 
-        private uint unitId;
-        public uint UnitId
+        private Entities.MeasureUnit _unit;
+        public Entities.MeasureUnit Unit
         {
-            get => unitId;
-            set => Set(ref unitId, value);
+            get => _unit;
+            set => Set(ref _unit, value);
         }
 
-        private string recipeText;
-        public string RecipeText
+        private string _recipe;
+        public string Recipe
         {
-            get => recipeText;
+            get => _recipe;
             set
             {
-                if (recipeText == null)
-                    recipeText = value;
+                if (_recipe == null)
+                    _recipe = value;
                 if (!ValueChecker.CheckValueString(value, out value, 2500, true))
                     value = "";
-                Set(ref recipeText, value);
+                Set(ref _recipe, value);
             }
         }
 
-        private string pictureText;
-        public string PictureText
+        private string _picture;
+        public string Picture
         {
-            get => pictureText;
+            get => _picture;
             set
             {
-                if (pictureText == null)
-                    pictureText = value;
+                if (_picture == null)
+                    _picture = value;
                 if (!ValueChecker.CheckValueString(value, out value, 200, true))
                     value = "";
-                Set(ref pictureText, value);
+                Set(ref _picture, value);
             }
         }
 
         public override void ParseFields()
         {
-            if (!ValueChecker.CheckValueUint(IdText, out uint id, true))
-                throw new ArgumentException("Параметр не может быть 0!", nameof(IdText));
-            if (!ValueChecker.CheckValueString(NameText, out string name, 100))
-                throw new ArgumentNullException("Строка не может быть пустой!", nameof(NameText));
-            if (!ValueChecker.CheckValueUint(GroupId.ToString(), out uint group))
-                throw new ArgumentException("Параметр не может быть 0!", nameof(GroupId));
-            if (!ValueChecker.CheckValueDecimal(PriceText, out decimal price))
-                throw new ArgumentException("Некорректное значение параметра!", nameof(PriceText));
-            if (!ValueChecker.CheckValueDouble(ServingText, out double serving))
-                throw new ArgumentException("Некорректное значение параметра!", nameof(ServingText));
-            if (!ValueChecker.CheckValueUint(UnitId.ToString(), out uint unit))
-                throw new ArgumentException("Параметр не может быть 0!", nameof(UnitId));
-            if (!ValueChecker.CheckValueString(RecipeText, out string recipe, 2500))
-                throw new ArgumentNullException("Строка не может быть пустой!", nameof(RecipeText));
-            if (!ValueChecker.CheckValueString(PictureText, out string picture, 200))
-                throw new ArgumentNullException("Строка не может быть пустой!", nameof(PictureText));
-            Fields.Id = id;
+            if (!ValueChecker.CheckValueString(Name, out string name, 100))
+                throw new ArgumentNullException("Строка не может быть пустой!", nameof(Name));
             Fields.Name = name;
+            if (!ValueChecker.CheckValueUint(Group.Id.ToString(), out uint group))
+                throw new ArgumentException("Параметр не может быть 0!", nameof(Group.Id));
             Fields.GroupId = group;
+            if (!ValueChecker.CheckValueDecimal(Price.ToString(), out decimal price))
+                throw new ArgumentException("Некорректное значение параметра!", nameof(Price));
             Fields.Price = price;
+            if (!ValueChecker.CheckValueDouble(Serving.ToString(), out double serving))
+                throw new ArgumentException("Некорректное значение параметра!", nameof(Serving));
             Fields.Serving = serving;
+            if (!ValueChecker.CheckValueUint(Unit.Id.ToString(), out uint unit))
+                throw new ArgumentException("Параметр не может быть 0!", nameof(Unit.Id));
             Fields.UnitId = unit;
+
+            if (!ValueChecker.CheckValueString(Recipe, out string recipe, 2500))
+                throw new ArgumentNullException("Строка не может быть пустой!", nameof(Recipe));
             Fields.Recipe = recipe;
+
+            if (!ValueChecker.CheckValueString(Picture, out string picture, 200))
+                throw new ArgumentNullException("Строка не может быть пустой!", nameof(Picture));
             Fields.Picture = picture;
         }
     }

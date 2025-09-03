@@ -1,6 +1,8 @@
 ﻿using CanteenAIS_Models;
 using CanteenAIS_ViewModel.BasicViewModels;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Entities = CanteenAIS_DB.Database.Entities;
 
 namespace CanteenAIS_ViewModel.EntityViewModels.Street
@@ -8,90 +10,113 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Street
     public class StreetFilterVM : BasicFilterVM<Entities.StreetEntity, Entities.Street>
     {
         public StreetFilterVM(TableModel<Entities.StreetEntity> tableModel)
-            : base(tableModel) { }
+            : base(tableModel)
+        {
+            _cities = MainServices.GetInstance().Cities.FetchValues<Entities.City>().ToList();
+            _city = Cities.FirstOrDefault();
+            _cityCheck = false;
+            _id = 0;
+            _name = string.Empty;
+        }
 
         protected override void Clear()
         {
-            IdText = "0";
-            NameText = string.Empty;
+            City = Cities.FirstOrDefault();
+            Id = 0;
+            Name = string.Empty;
         }
 
-        private string idText;
-        public string IdText
+        private int _id;
+        public int Id
         {
-            get => idText;
+            get => _id;
             set
             {
-                if (idText == null)
-                    idText = value;
-                if (!ValueChecker.CheckValueUint(value, out uint _, true))
-                    value = "1";
-                Set(ref idText, value);
+                if (!ValueChecker.CheckValueUint(value.ToString(), out uint _, true))
+                    value = 0;
+                Set(ref _id, value);
             }
         }
 
-        private int city;
-        public int City
+        private IList<Entities.City> _cities;
+        public IList<Entities.City> Cities
         {
-            get => city;
-            set => Set(ref city, value);
+            get => _cities;
+            set => Set(ref _cities, value);
         }
 
-        private string nameText;
-        public string NameText
+        private Entities.City _city;
+        public Entities.City City
         {
-            get => nameText;
+            get => _city;
+            set => Set(ref _city, value);
+        }
+
+        private string _name;
+        public string Name
+        {
+            get => _name;
             set
             {
-                if (nameText == null)
-                    nameText = value;
-                if (!ValueChecker.CheckValueString(value, out value, 100, false))
+                if (_name == null)
+                    _name = value;
+                if (!ValueChecker.CheckValueString(value, out value, 50, false))
                     value = "";
-                Set(ref nameText, value);
+                Set(ref _name, value);
             }
         }
 
-        private bool idCheck;
+        private bool _idCheck;
         public bool IdCheck
         {
-            get => idCheck;
-            set => Set(ref idCheck, value);
+            get => _idCheck;
+            set => Set(ref _idCheck, value);
         }
 
-        private bool cityCheck;
+        private bool _cityCheck;
         public bool CityCheck
         {
-            get => cityCheck;
-            set => Set(ref cityCheck, value);
+            get => _cityCheck;
+            set => Set(ref _cityCheck, value);
         }
 
-        private bool nameCheck;
+        private bool _nameCheck;
         public bool NameCheck
         {
-            get => nameCheck;
-            set => Set(ref nameCheck, value);
+            get => _nameCheck;
+            set => Set(ref _nameCheck, value);
         }
 
         public override void ParseFields()
         {
-            if (idCheck)
+            if (_idCheck)
             {
-                if (!ValueChecker.CheckValueUint(IdText, out uint id, true))
-                    throw new ArgumentException("Параметр не может быть 0!", nameof(IdText));
+                if (!ValueChecker.CheckValueUint(Id.ToString(), out uint id, true))
+                    throw new ArgumentException("Параметр не может быть 0!", nameof(Id));
                 Fields.Id = id;
             }
-            if (cityCheck)
+            if (_cityCheck)
             {
-                if (!ValueChecker.CheckValueUint(City.ToString(), out uint city))
+                if (!ValueChecker.CheckValueUint(City.Id.ToString(), out uint city))
                     throw new ArgumentException("Некорректный параметр!");
                 Fields.CityId = city;
             }
-            if (nameCheck)
+            if (_nameCheck)
             {
-                if (!ValueChecker.CheckValueString(NameText, out string name, 100, false))
-                    throw new ArgumentNullException("Строка не может быть пустой!", nameof(NameText));
+                if (!ValueChecker.CheckValueString(Name, out string name, 50, false))
+                    throw new ArgumentNullException("Строка не может быть пустой!", nameof(Name));
                 Fields.Name = name;
             }
+        }
+
+        public override void Filter()
+        {
+            ParseFields();
+            Model.FetchAndFilter<Entities.Street>((item) =>
+                !(IdCheck && item.Id != Fields.Id) &&
+                !(NameCheck && !item.Name.Contains(Fields.Name)) &&
+                !(CityCheck && item.CityId != Fields.CityId)
+            );
         }
     }
 }
