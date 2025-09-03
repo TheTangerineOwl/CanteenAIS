@@ -25,12 +25,12 @@
             </GroupBox.HeaderTemplate>
 
             <StackPanel Margin="10" Grid.IsSharedSizeScope="True">
-                <template:TextFormField x:Name="idRow" LabelText="Id"
-                    Text="{Binding IdText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    MaxLength="10"/>
+                <template:UIntFormField x:Name="idRow" LabelText="Id"
+                    ValuePick="{Binding Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Minimum="1" Default="1" Maximum="1000000000"/>
 
                 <template:TextFormField LabelText="Имя"
-                    Text="{Binding NameText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     MaxLength="100"/>
             </StackPanel>
         </GroupBox>

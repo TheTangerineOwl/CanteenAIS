@@ -116,6 +116,33 @@
     <Compile Include="BaseTemplates\TableControlPanel.xaml.cs">
       <DependentUpon>TableControlPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Tables\Dishes\DishAddEditWindow.xaml.cs">
+      <DependentUpon>DishAddEditWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tables\Dishes\DishFilterWindow.xaml.cs">
+      <DependentUpon>DishFilterWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tables\Dishes\DishWindow.xaml.cs">
+      <DependentUpon>DishWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tables\Cities\CityAddEditWindow.xaml.cs">
+      <DependentUpon>CityAddEditWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tables\Cities\CityFilterWindow.xaml.cs">
+      <DependentUpon>CityFilterWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tables\Cities\CityWindow.xaml.cs">
+      <DependentUpon>CityWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tables\Branches\BranchAddEditWindow.xaml.cs">
+      <DependentUpon>BranchAddEditWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tables\Branches\BranchFilterWindow.xaml.cs">
+      <DependentUpon>BranchFilterWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tables\Branches\BranchWindow.xaml.cs">
+      <DependentUpon>BranchWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Tables\BranchOrders\BranchOrderAddEditWindow.xaml.cs">
       <DependentUpon>BranchOrderAddEditWindow.xaml</DependentUpon>
     </Compile>
@@ -232,6 +259,42 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="BaseTemplates\TableControlPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tables\Dishes\DishAddEditWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tables\Dishes\DishFilterWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tables\Dishes\DishWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tables\Cities\CityAddEditWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tables\Cities\CityFilterWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tables\Cities\CityWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tables\Branches\BranchAddEditWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tables\Branches\BranchFilterWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tables\Branches\BranchWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

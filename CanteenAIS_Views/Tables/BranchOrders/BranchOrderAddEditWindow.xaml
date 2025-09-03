@@ -26,7 +26,7 @@
 
             <StackPanel Margin="10" Grid.IsSharedSizeScope="True">
                 <template:UIntFormField x:Name="idRow" LabelText="Id"
-                    UIntPick="{Binding Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    ValuePick="{Binding Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     Minimum="1" Default="1" Maximum="1000000000"/>
 
                 <template:ComboFormField LabelText="Подразделение"
@@ -34,7 +34,7 @@
                     SelectedItem="{Binding Branch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 />
                 <template:DateTimeFormField LabelText="Время"
-                    DateTimePick="{Binding DateTimeFill, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    ValuePick="{Binding DateTimePick, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 />
             </StackPanel>
         </GroupBox>

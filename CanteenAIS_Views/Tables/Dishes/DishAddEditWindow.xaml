@@ -1,4 +1,4 @@
-﻿<Window x:Class="CanteenAIS_Views.Tables.BranchOrders.BranchOrderFilterWindow"
+﻿<Window x:Class="CanteenAIS_Views.Tables.Dishes.DishAddEditWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -25,20 +25,13 @@
             </GroupBox.HeaderTemplate>
 
             <StackPanel Margin="10" Grid.IsSharedSizeScope="True">
-                <template:UIntFormFieldChecked x:Name="idRow" LabelText="Id"
-                    IsChecked="{Binding IdCheck, Mode=TwoWay}"
+                <template:UIntFormField x:Name="idRow" LabelText="Id"
                     ValuePick="{Binding Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     Minimum="1" Default="1" Maximum="1000000000"/>
 
-                <template:ComboFormFieldChecked LabelText="Подразделение"
-                    IsChecked="{Binding BranchCheck, Mode=TwoWay}"
-                    ItemsSource="{Binding Branches, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                    SelectedItem="{Binding Branch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                />
-                <template:DateTimeFormFieldChecked LabelText="Время"
-                    IsChecked="{Binding DateTimeCheck, Mode=TwoWay}"
-                    ValuePick="{Binding DateTimePick, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                />
+                <template:TextFormField LabelText="Имя"
+                    Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    MaxLength="100"/>
             </StackPanel>
         </GroupBox>
     </DockPanel>
