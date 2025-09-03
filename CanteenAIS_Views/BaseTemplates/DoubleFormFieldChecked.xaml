@@ -22,6 +22,7 @@
                   Style="{StaticResource FormCheckBoxStyle}"
                   IsChecked="{Binding IsChecked, ElementName=root}"/>
         <xctk:DoubleUpDown Grid.Column="2" x:Name="valuePicker"
+               IsEnabled="{Binding IsChecked, ElementName=root}"
                Style="{StaticResource FormDoublePickerStyle}"
                Value="{Binding ValuePick, ElementName=root}"
                Minimum="{Binding Minimum, ElementName=root}"
