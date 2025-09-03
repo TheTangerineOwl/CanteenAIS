@@ -19,6 +19,6 @@
                Content="{Binding LabelText, ElementName=root}"/>
         <xctk:DateTimePicker Grid.Column="1" x:Name="datetimePicker"
                Style="{StaticResource FormDateTimePickerStyle}"
-               Value="{Binding DateTimePick, ElementName=root}"/>
+               Value="{Binding ValuePick, ElementName=root}"/>
     </Grid>
 </UserControl>

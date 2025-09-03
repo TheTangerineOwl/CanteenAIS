@@ -10,7 +10,7 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Bank
         public BankFilterVM(TableModel<Entities.BankEntity> tableModel)
             : base(tableModel)
         {
-            _id = 0;
+            _id = 1;
             _idCheck = false;
             _name = string.Empty;
             _nameCheck = false;
@@ -18,14 +18,14 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Bank
 
         protected override void Clear()
         {
-            Id = 0;
+            Id = 1;
             IdCheck = false;
             Name = string.Empty;
             NameCheck = false;
         }
 
-        private int _id;
-        public int Id
+        private uint _id;
+        public uint Id
         {
             get => _id;
             set

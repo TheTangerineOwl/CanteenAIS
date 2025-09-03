@@ -12,6 +12,8 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Realization
         public RealizationFilterVM(TableModel<Entities.RealizationEntity> tableModel)
             : base(tableModel)
         {
+            _id = 1;
+            _idCheck = false;
             _units = MainServices.GetInstance().MeasureUnits.FetchValues<Entities.MeasureUnit>().ToList();
             _unit = Units.FirstOrDefault();
             _unitCheck = false;
@@ -26,7 +28,7 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Realization
 
         protected override void Clear()
         {
-            Id = 0;
+            Id = 1;
             IdCheck = false;
             Unit = Units.FirstOrDefault();
             UnitCheck = false;
@@ -52,8 +54,8 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Realization
             set => Set(ref _dishes, value);
         }
 
-        private int _id;
-        public int Id
+        private uint _id;
+        public uint Id
         {
             get => _id;
             set

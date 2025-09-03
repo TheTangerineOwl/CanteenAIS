@@ -16,12 +16,12 @@ namespace CanteenAIS_ViewModel.EntityViewModels.BranchOrder
             _branches = MainServices.GetInstance().Branches.FetchValues<Entities.Branch>().ToList<Entities.BranchEntity>();
             _branch = Branches.Where(item => item.Id == Fields.BranchId).FirstOrDefault();
             _dateTimePick = Fields.DateTime;
-            _id = (int)Fields.Id;
+            _id = Fields.Id;
         }
 
         protected override void Clear()
         {
-            Id = (int)Fields.Id;
+            Id = Fields.Id;
             Branch = Branches?.Where(item => item.Id == Fields.BranchId).FirstOrDefault();
             DateTimePick = Fields.DateTime;
         }
@@ -36,14 +36,14 @@ namespace CanteenAIS_ViewModel.EntityViewModels.BranchOrder
             }
         }
 
-        private int _id;
-        public int Id
+        private uint _id;
+        public uint Id
         {
             get => _id;
             set
             {
                 if (!ValueChecker.CheckValueUint(value.ToString(), out uint _))
-                    value = (int)Fields.Id;
+                    value = Fields.Id;
                 Set(ref _id, value);
             }
         }

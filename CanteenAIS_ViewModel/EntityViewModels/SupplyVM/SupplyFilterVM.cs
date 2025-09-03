@@ -15,7 +15,7 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Supply
             _suppliers = MainServices.GetInstance().Suppliers.FetchValues<Entities.Supplier>().ToList();
             _supplier = Suppliers.FirstOrDefault();
             _supplierCheck = false;
-            _id = 0;
+            _id = 1;
             _idCheck = false;
             _time = DateTime.Now;
             _timeCheck = false;
@@ -23,7 +23,7 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Supply
 
         protected override void Clear()
         {
-            Id = 0;
+            Id = 1;
             IdCheck = false;
             Supplier = Suppliers.FirstOrDefault();
             SupplierCheck = false;
@@ -38,8 +38,8 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Supply
             set => Set(ref _suppliers, value);
         }
 
-        private int _id;
-        public int Id
+        private uint _id;
+        public uint Id
         {
             get => _id;
             set

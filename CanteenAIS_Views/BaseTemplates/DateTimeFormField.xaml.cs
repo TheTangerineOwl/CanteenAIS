@@ -12,8 +12,8 @@ namespace CanteenAIS_Views.BaseTemplates
         public static readonly DependencyProperty LabelTextProperty =
             DependencyProperty.Register("LabelText", typeof(string), typeof(DateTimeFormField));
 
-        public static readonly DependencyProperty DateTimePickProperty =
-            DependencyProperty.Register("DateTimePick", typeof(DateTime), typeof(DateTimeFormField));
+        public static readonly DependencyProperty ValuePickProperty =
+            DependencyProperty.Register("ValuePick", typeof(DateTime), typeof(DateTimeFormField));
 
         public static readonly DependencyProperty MinimumPropepty =
             DependencyProperty.Register("Minimum", typeof(DateTime), typeof(DateTimeFormField));
@@ -27,10 +27,10 @@ namespace CanteenAIS_Views.BaseTemplates
             set => SetValue(LabelTextProperty, value);
         }
 
-        public DateTime DateTimePick
+        public DateTime ValuePick
         {
-            get => (DateTime)GetValue(DateTimePickProperty);
-            set => SetValue(DateTimePickProperty, value);
+            get => (DateTime)GetValue(ValuePickProperty);
+            set => SetValue(ValuePickProperty, value);
         }
 
         public DateTime Minimum

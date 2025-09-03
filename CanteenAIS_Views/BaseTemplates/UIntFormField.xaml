@@ -19,7 +19,7 @@
                Content="{Binding LabelText, ElementName=root}"/>
         <xctk:UIntegerUpDown Grid.Column="1" x:Name="intPicker"
                Style="{StaticResource FormUIntPickerStyle}"
-               Value="{Binding UIntPick, ElementName=root}"
+               Value="{Binding ValuePick, ElementName=root}"
                Minimum="{Binding Minimum, ElementName=root}"
                Maximum="{Binding Maximum, ElementName=root}"
                DefaultValue="{Binding Default, ElementName=root}"/>

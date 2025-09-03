@@ -12,7 +12,7 @@ namespace CanteenAIS_ViewModel.EntityViewModels.SupplierHead
         public SupplierHeadFilterVM(TableModel<Entities.SupplierHeadEntity> tableModel)
             : base(tableModel)
         {
-            _id = 0;
+            _id = 1;
             _idCheck = false;
             _lastName = string.Empty;
             _lastNameCheck = false;
@@ -26,7 +26,7 @@ namespace CanteenAIS_ViewModel.EntityViewModels.SupplierHead
 
         protected override void Clear()
         {
-            Id = 0;
+            Id = 1;
             IdCheck = false;
             LastName = string.Empty;
             LastNameCheck = false;
@@ -38,8 +38,8 @@ namespace CanteenAIS_ViewModel.EntityViewModels.SupplierHead
             PhoneCheck = false;
         }
 
-        private int _id;
-        public int Id
+        private uint _id;
+        public uint Id
         {
             get => _id;
             set

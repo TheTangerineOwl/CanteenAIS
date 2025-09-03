@@ -11,8 +11,8 @@ namespace CanteenAIS_Views.BaseTemplates
         public static readonly DependencyProperty LabelTextProperty =
             DependencyProperty.Register("LabelText", typeof(string), typeof(UIntFormField));
 
-        public static readonly DependencyProperty UIntPickProperty =
-            DependencyProperty.Register("IntPick", typeof(uint), typeof(UIntFormField));
+        public static readonly DependencyProperty ValuePickProperty =
+            DependencyProperty.Register("ValuePick", typeof(uint), typeof(UIntFormField));
 
         public static readonly DependencyProperty MinimumPropepty =
             DependencyProperty.Register("Minimum", typeof(uint), typeof(UIntFormField));
@@ -29,10 +29,10 @@ namespace CanteenAIS_Views.BaseTemplates
             set => SetValue(LabelTextProperty, value);
         }
 
-        public uint UIntPick
+        public uint ValuePick
         {
-            get => (uint)GetValue(UIntPickProperty);
-            set => SetValue(UIntPickProperty, value);
+            get => (uint)GetValue(ValuePickProperty);
+            set => SetValue(ValuePickProperty, value);
         }
 
         public uint Minimum

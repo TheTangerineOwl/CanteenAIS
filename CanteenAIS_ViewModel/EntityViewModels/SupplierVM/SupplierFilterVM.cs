@@ -24,7 +24,7 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Supplier
             _banks = MainServices.GetInstance().Banks.FetchValues<Entities.Bank>().ToList();
             _bank = Banks.FirstOrDefault();
             _bankCheck = false;
-            _id = 0;
+            _id = 1;
             _idCheck = false;
             _name = string.Empty;
             _nameCheck = false;
@@ -44,7 +44,7 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Supplier
             HeadCheck = false;
             Bank = Banks.FirstOrDefault();
             BankCheck = false;
-            Id = 0;
+            Id = 1;
             IdCheck = false;
             Name = string.Empty;
             NameCheck = false;
@@ -77,8 +77,8 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Supplier
             set => Set(ref _banks, value);
         }
 
-        private int _id;
-        public int Id
+        private uint _id;
+        public uint Id
         {
             get => _id;
             set

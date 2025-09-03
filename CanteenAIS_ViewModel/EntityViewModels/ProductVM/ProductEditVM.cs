@@ -17,7 +17,7 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Product
             _unit = Units.Where(item => item.Id == Fields.UnitId).FirstOrDefault();
             _suppliers = MainServices.GetInstance().Suppliers.FetchValues<Entities.Supplier>().ToList();
             _supplier = Suppliers.Where(item => item.Id == Fields.SupplierId).FirstOrDefault();
-            _id = (int)Fields.Id;
+            _id = Fields.Id;
             _name = Fields.Name;
             _markup = Fields.Markup;
             _stock = Fields.Stock;
@@ -25,7 +25,7 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Product
 
         protected override void Clear()
         {
-            Id = (int)Fields.Id;
+            Id = Fields.Id;
             Name = Fields.Name;
             Unit = Units.Where(item => item.Id == Fields.UnitId).FirstOrDefault();
             Markup = Fields.Markup;
@@ -47,14 +47,14 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Product
             set => Set(ref _suppliers, value);
         }
 
-        private int _id;
-        public int Id
+        private uint _id;
+        public uint Id
         {
             get => _id;
             set
             {
                 if (!ValueChecker.CheckValueUint(value.ToString(), out uint _, true))
-                    value = (int)Fields.Id;
+                    value = Fields.Id;
                 Set(ref _id, value);
             }
         }

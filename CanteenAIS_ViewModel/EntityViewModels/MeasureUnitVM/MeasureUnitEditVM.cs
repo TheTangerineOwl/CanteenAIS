@@ -11,24 +11,24 @@ namespace CanteenAIS_ViewModel.EntityViewModels.MeasureUnit
         public MeasureUnitEditVM(DataRow row, TableModel<Entities.MeasureUnitEntity> tableModel)
             : base(row, tableModel)
         {
-            _id = (int)Fields.Id;
+            _id = Fields.Id;
             _name = Fields.Name;
         }
 
         protected override void Clear()
         {
-            Id = (int)Fields.Id;
+            Id = Fields.Id;
             Name = Fields.Name;
         }
 
-        private int _id;
-        public int Id
+        private uint _id;
+        public uint Id
         {
             get => _id;
             set
             {
                 if (!ValueChecker.CheckValueUint(value.ToString(), out uint _, false))
-                    value = (int)Fields.Id;
+                    value = Fields.Id;
                 Set(ref _id, value);
             }
         }

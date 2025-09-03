@@ -4,27 +4,27 @@ using System.Windows.Controls;
 namespace CanteenAIS_Views.BaseTemplates
 {
     /// <summary>
-    /// Логика взаимодействия для IntFormFieldChecked.xaml
+    /// Логика взаимодействия для UIntFormFieldChecked.xaml
     /// </summary>
-    public partial class IntFormFieldChecked : UserControl
+    public partial class UIntFormFieldChecked : UserControl
     {
         public static readonly DependencyProperty LabelTextProperty =
-            DependencyProperty.Register("LabelText", typeof(string), typeof(IntFormFieldChecked));
+            DependencyProperty.Register("LabelText", typeof(string), typeof(UIntFormFieldChecked));
 
-        public static readonly DependencyProperty IntPickProperty =
-            DependencyProperty.Register("IntPick", typeof(int), typeof(IntFormFieldChecked));
+        public static readonly DependencyProperty ValuePickProperty =
+            DependencyProperty.Register("ValuePick", typeof(uint), typeof(UIntFormFieldChecked));
 
         public static readonly DependencyProperty MinimumPropepty =
-            DependencyProperty.Register("Minimum", typeof(int), typeof(IntFormFieldChecked));
+            DependencyProperty.Register("Minimum", typeof(uint), typeof(UIntFormFieldChecked));
 
         public static readonly DependencyProperty MaximumProperty =
-            DependencyProperty.Register("Maximum", typeof(int), typeof(IntFormFieldChecked));
+            DependencyProperty.Register("Maximum", typeof(uint), typeof(UIntFormFieldChecked));
 
         public static readonly DependencyProperty DefaultProperty =
-            DependencyProperty.Register("Default", typeof(int), typeof(IntFormFieldChecked));
+            DependencyProperty.Register("Default", typeof(uint), typeof(UIntFormFieldChecked));
 
         public static readonly DependencyProperty IsCheckedProperty =
-            DependencyProperty.Register("IsChecked", typeof(bool), typeof(IntFormFieldChecked));
+            DependencyProperty.Register("IsChecked", typeof(bool), typeof(UIntFormFieldChecked));
 
         public string LabelText
         {
@@ -32,27 +32,27 @@ namespace CanteenAIS_Views.BaseTemplates
             set => SetValue(LabelTextProperty, value);
         }
 
-        public int IntPick
+        public uint ValuePick
         {
-            get => (int)GetValue(IntPickProperty);
-            set => SetValue(IntPickProperty, value);
+            get => (uint)GetValue(ValuePickProperty);
+            set => SetValue(ValuePickProperty, value);
         }
 
-        public int Minimum
+        public uint Minimum
         {
-            get => (int)GetValue(MinimumPropepty);
+            get => (uint)GetValue(MinimumPropepty);
             set => SetValue(MinimumPropepty, value);
         }
 
-        public int Maximum
+        public uint Maximum
         {
-            get => (int)GetValue(MaximumProperty);
+            get => (uint)GetValue(MaximumProperty);
             set => SetValue(MaximumProperty, value);
         }
 
-        public int Default
+        public uint Default
         {
-            get => (int)GetValue(DefaultProperty);
+            get => (uint)GetValue(DefaultProperty);
             set => SetValue(DefaultProperty, value);
         }
 
@@ -62,7 +62,7 @@ namespace CanteenAIS_Views.BaseTemplates
             set => SetValue(IsCheckedProperty, value);
         }
 
-        public IntFormFieldChecked()
+        public UIntFormFieldChecked()
         {
             InitializeComponent();
         }

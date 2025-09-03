@@ -10,26 +10,29 @@ namespace CanteenAIS_ViewModel.EntityViewModels.AssortmentGroup
         public AssortmentGroupFilterVM(TableModel<Entities.AssortmentGroupEntity> tableModel)
             : base(tableModel)
         {
-            _id = 0;
+            _id = 1;
             _idCheck = false;
-            _name = "";
+            _name = string.Empty;
             _nameCheck = false;
+            Clear();
         }
 
         protected override void Clear()
         {
-            Id = 0;
+            Id = 1;
             IdCheck = false;
             Name = string.Empty;
             NameCheck = false;
         }
 
-        private int _id;
-        public int Id
+        private uint _id;
+        public uint Id
         {
             get => _id;
             set
             {
+                if (value == _id)
+                    return;
                 if (!ValueChecker.CheckValueUint(value.ToString(), out uint _, true))
                     value = 0;
                 Set(ref _id, value);
@@ -42,6 +45,8 @@ namespace CanteenAIS_ViewModel.EntityViewModels.AssortmentGroup
             get => _name;
             set
             {
+                if (value == _name)
+                    return;
                 if (_name == null)
                     _name = value;
                 if (!ValueChecker.CheckValueString(value, out value, 50, true))
@@ -63,7 +68,6 @@ namespace CanteenAIS_ViewModel.EntityViewModels.AssortmentGroup
             get => _nameCheck;
             set => Set(ref _nameCheck, value);
         }
-
 
         public override void ParseFields()
         {

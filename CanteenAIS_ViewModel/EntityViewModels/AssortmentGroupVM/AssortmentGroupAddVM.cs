@@ -10,6 +10,7 @@ namespace CanteenAIS_ViewModel.EntityViewModels.AssortmentGroup
         public AssortmentGroupAddVM(TableModel<Entities.AssortmentGroupEntity> tableModel) : base(tableModel)
         {
             _name = string.Empty;
+            Clear();
         }
 
         protected override void Clear()
@@ -23,6 +24,8 @@ namespace CanteenAIS_ViewModel.EntityViewModels.AssortmentGroup
             get => _name;
             set
             {
+                if (value == _name)
+                    return;
                 if (_name == null)
                     _name = value;
                 if (!ValueChecker.CheckValueString(value, out value, 50, false))

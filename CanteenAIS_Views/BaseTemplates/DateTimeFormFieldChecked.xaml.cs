@@ -23,8 +23,8 @@ namespace CanteenAIS_Views.BaseTemplates
         public static readonly DependencyProperty LabelTextProperty =
             DependencyProperty.Register("LabelText", typeof(string), typeof(DateTimeFormFieldChecked));
 
-        public static readonly DependencyProperty DateTimePickProperty =
-            DependencyProperty.Register("DateTimePick", typeof(DateTime), typeof(DateTimeFormFieldChecked));
+        public static readonly DependencyProperty ValuePickProperty =
+            DependencyProperty.Register("ValuePick", typeof(DateTime), typeof(DateTimeFormFieldChecked));
 
         public static readonly DependencyProperty IsCheckedProperty =
             DependencyProperty.Register("IsChecked", typeof(bool), typeof(DateTimeFormFieldChecked));
@@ -41,10 +41,10 @@ namespace CanteenAIS_Views.BaseTemplates
             set => SetValue(IsCheckedProperty, value);
         }
 
-        public string DateTimePick
+        public DateTime ValuePick
         {
-            get => (string)GetValue(DateTimePickProperty);
-            set => SetValue(DateTimePickProperty, value);
+            get => (DateTime)GetValue(ValuePickProperty);
+            set => SetValue(ValuePickProperty, value);
         }
 
         public DateTimeFormFieldChecked()

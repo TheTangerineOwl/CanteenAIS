@@ -11,24 +11,27 @@ namespace CanteenAIS_ViewModel.EntityViewModels.AssortmentGroup
         public AssortmentGroupEditVM(DataRow row, TableModel<Entities.AssortmentGroupEntity> tableModel)
             : base(row, tableModel)
         {
-            _id = (int)Fields.Id;
+            _id = Fields.Id;
             _name = Fields.Name;
+            Clear();
         }
 
         protected override void Clear()
         {
-            Id = (int)Fields.Id;
+            Id = Fields.Id;
             Name = Fields.Name;
         }
 
-        private int _id;
-        public int Id
+        private uint _id;
+        public uint Id
         {
             get => _id;
             set
             {
+                if (value == _id)
+                    return;
                 if (!ValueChecker.CheckValueUint(value.ToString(), out uint _, false))
-                    value = (int)Fields.Id;
+                    value = Fields.Id;
                 Set(ref _id, value);
             }
         }
@@ -39,6 +42,8 @@ namespace CanteenAIS_ViewModel.EntityViewModels.AssortmentGroup
             get => _name;
             set
             {
+                if (value == _name)
+                    return;
                 if (_name == null)
                     _name = value;
                 if (!ValueChecker.CheckValueString(value, out value, 50, false))

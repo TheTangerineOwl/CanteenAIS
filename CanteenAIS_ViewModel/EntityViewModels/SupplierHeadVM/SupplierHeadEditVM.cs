@@ -11,7 +11,7 @@ namespace CanteenAIS_ViewModel.EntityViewModels.SupplierHead
         public SupplierHeadEditVM(DataRow row, TableModel<Entities.SupplierHeadEntity> tableModel)
             : base(row, tableModel)
         {
-            _id = (int)Fields.Id;
+            _id = Fields.Id;
             _lastName = Fields.LastName;
             _firstName = Fields.FirstName;
             _patronim = Fields.Patronim;
@@ -20,21 +20,21 @@ namespace CanteenAIS_ViewModel.EntityViewModels.SupplierHead
 
         protected override void Clear()
         {
-            Id = (int)Fields.Id;
+            Id = Fields.Id;
             LastName = Fields.LastName;
             FirstName = Fields.FirstName;
             Patronim = Fields.Patronim;
             Phone = Fields.Phone;
         }
 
-        private int _id;
-        public int Id
+        private uint _id;
+        public uint Id
         {
             get => _id;
             set
             {
                 if (!ValueChecker.CheckValueUint(value.ToString(), out uint _, true))
-                    value = (int)Fields.Id;
+                    value = Fields.Id;
                 Set(ref _id, value);
             }
         }

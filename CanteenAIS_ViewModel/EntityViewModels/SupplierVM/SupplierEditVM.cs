@@ -19,7 +19,7 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Supplier
             _head = Heads.Where(item => item.Id == Fields.HeadId).FirstOrDefault();
             _banks = MainServices.GetInstance().Banks.FetchValues<Entities.Bank>().ToList();
             _bank = Banks.Where(item => item.Id == Fields.BankId).FirstOrDefault();
-            _id = (int)Fields.Id;
+            _id = Fields.Id;
             _name = Fields.Name;
             _building = Fields.Building;
             _account = Fields.Account;
@@ -31,7 +31,7 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Supplier
             Street = Streets.Where(item => item.Id == Fields.StreetId).FirstOrDefault();
             Head = Heads.Where(item => item.Id == Fields.HeadId).FirstOrDefault();
             Bank = Banks.Where(item => item.Id == Fields.BankId).FirstOrDefault();
-            Id = (int)Fields.Id;
+            Id = Fields.Id;
             Name = Fields.Name;
             Building = Fields.Building;
             Account = Fields.Account;
@@ -59,14 +59,14 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Supplier
             set => Set(ref _banks, value);
         }
 
-        private int _id;
-        public int Id
+        private uint _id;
+        public uint Id
         {
             get => _id;
             set
             {
                 if (!ValueChecker.CheckValueUint(value.ToString(), out uint _, true))
-                    value = (int)Fields.Id;
+                    value = Fields.Id;
                 Set(ref _id, value);
             }
         }

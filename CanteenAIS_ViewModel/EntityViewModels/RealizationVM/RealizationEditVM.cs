@@ -13,7 +13,7 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Realization
         public RealizationEditVM(DataRow row, TableModel<Entities.RealizationEntity> tableModel)
             : base(row, tableModel)
         {
-            _id = (int)Fields.Id;
+            _id = Fields.Id;
             _units = MainServices.GetInstance().MeasureUnits.FetchValues<Entities.MeasureUnit>().ToList();
             _unit = Units.Where(item => item.Id == Fields.UnitId).FirstOrDefault();
             _dishes = MainServices.GetInstance().Dishes.FetchValues<Entities.Dish>().ToList();
@@ -24,7 +24,7 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Realization
 
         protected override void Clear()
         {
-            Id = (int)Fields.Id;
+            Id = Fields.Id;
             Unit = Units.Where(item => item.Id == Fields.UnitId).FirstOrDefault();
             Dish = Dishes.Where(item => item.Id == Fields.DishId).FirstOrDefault();
             Amount = Fields.Amount;
@@ -45,14 +45,14 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Realization
             set => Set(ref _dishes, value);
         }
 
-        private int _id;
-        public int Id
+        private uint _id;
+        public uint Id
         {
             get => _id;
             set
             {
                 if (!ValueChecker.CheckValueUint(value.ToString(), out uint _, true))
-                    value = (int)Fields.Id;
+                    value = Fields.Id;
                 Set(ref _id, value);
             }
         }

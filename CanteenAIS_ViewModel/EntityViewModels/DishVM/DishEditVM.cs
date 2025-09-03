@@ -17,7 +17,7 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Dish
             _unit = Units.Where(item => item.Id == Fields.UnitId).FirstOrDefault();
             _groups = MainServices.GetInstance().AssortmentGroups.FetchValues<Entities.AssortmentGroup>().ToList();
             _group = Groups.Where(item => item.Id == Fields.GroupId).FirstOrDefault();
-            _id = (int)Fields.Id;
+            _id = Fields.Id;
             _name = Fields.Name;
             _price = Fields.Price;
             _serving = Fields.Serving;
@@ -29,7 +29,7 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Dish
         {
             Unit = Units.Where(item => item.Id == Fields.UnitId).FirstOrDefault();
             Group = Groups.Where(item => item.Id == Fields.GroupId).FirstOrDefault();
-            Id = (int)Fields.Id;
+            Id = Fields.Id;
             Name = Fields.Name;
             Price = Fields.Price;
             Serving = Fields.Serving;
@@ -51,14 +51,14 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Dish
             set => Set(ref _groups, value);
         }
 
-        private int _id;
-        public int Id
+        private uint _id;
+        public uint Id
         {
             get => _id;
             set
             {
                 if (!ValueChecker.CheckValueUint(value.ToString(), out uint _, true))
-                    value = (int)Fields.Id;
+                    value = Fields.Id;
                 Set(ref _id, value);
             }
         }

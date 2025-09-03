@@ -22,7 +22,7 @@ namespace CanteenAIS_Views.BaseTemplates
             DependencyProperty.Register("ItemsSource", typeof(object), typeof(ComboFormFieldChecked));
 
         public static readonly DependencyProperty IsCheckedProperty =
-            DependencyProperty.Register("IsChecked", typeof(bool), typeof(TextFormFieldChecked));
+            DependencyProperty.Register("IsChecked", typeof(bool), typeof(ComboFormFieldChecked));
 
         public string LabelText
         {

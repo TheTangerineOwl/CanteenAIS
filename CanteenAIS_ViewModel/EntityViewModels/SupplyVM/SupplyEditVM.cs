@@ -15,13 +15,13 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Supply
         {
             _suppliers = MainServices.GetInstance().Suppliers.FetchValues<Entities.Supplier>().ToList();
             _supplier = Suppliers.Where(item => item.Id == Fields.SupplierId).FirstOrDefault();
-            _id = (int)Fields.Id;
+            _id = Fields.Id;
             _time = Fields.DateTime;
         }
 
         protected override void Clear()
         {
-            Id = (int)Fields.Id;
+            Id = Fields.Id;
             Supplier = Suppliers.Where(item => item.Id == Fields.SupplierId).FirstOrDefault();
             Time = Fields.DateTime;
         }
@@ -33,14 +33,14 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Supply
             set => Set(ref _suppliers, value);
         }
 
-        private int _id;
-        public int Id
+        private uint _id;
+        public uint Id
         {
             get => _id;
             set
             {
                 if (!ValueChecker.CheckValueUint(value.ToString(), out uint _, true))
-                    value = (int)Fields.Id;
+                    value = Fields.Id;
                 Set(ref _id, value);
             }
         }

@@ -15,19 +15,24 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Street
             _cities = MainServices.GetInstance().Cities.FetchValues<Entities.City>().ToList();
             _city = Cities.FirstOrDefault();
             _cityCheck = false;
-            _id = 0;
+            _id = 1;
+            _idCheck = false;
             _name = string.Empty;
+            _nameCheck = false;
         }
 
         protected override void Clear()
         {
             City = Cities.FirstOrDefault();
-            Id = 0;
+            CityCheck = false;
+            Id = 1;
+            IdCheck = false;
             Name = string.Empty;
+            NameCheck = false;
         }
 
-        private int _id;
-        public int Id
+        private uint _id;
+        public uint Id
         {
             get => _id;
             set

@@ -13,21 +13,21 @@ namespace CanteenAIS_ViewModel.EntityViewModels.BranchOrder
             : base(tableModel)
         {
             _branches = MainServices.GetInstance().Branches.FetchValues<Entities.Branch>().ToList<Entities.BranchEntity>();
-            _branch = Branches.Where(item => item.Id == Fields.BranchId).FirstOrDefault();
+            _branch = Branches.FirstOrDefault();
             _branchCheck = false;
-            _dateTimePick = Fields.DateTime;
+            _dateTimePick = DateTime.Now;
             _dateTimeCheck = false;
-            _id = (int)Fields.Id;
+            _id = 1;
             _idCheck = false;
         }
 
         protected override void Clear()
         {
-            Id = (int)Fields.Id;
+            Id = 1;
             IdCheck = false;
-            Branch = Branches?.Where(item => item.Id == Fields.BranchId).FirstOrDefault();
+            Branch = Branches?.FirstOrDefault();
             BranchCheck = false;
-            DateTimePick = Fields.DateTime;
+            DateTimePick = DateTime.Now;
             DateTimeCheck = false;
         }
 
@@ -41,14 +41,14 @@ namespace CanteenAIS_ViewModel.EntityViewModels.BranchOrder
             }
         }
 
-        private int _id;
-        public int Id
+        private uint _id;
+        public uint Id
         {
             get => _id;
             set
             {
                 if (!ValueChecker.CheckValueUint(value.ToString(), out uint _, true))
-                    value = 0;
+                    value = 1;
                 Set(ref _id, value);
             }
         }
@@ -67,7 +67,7 @@ namespace CanteenAIS_ViewModel.EntityViewModels.BranchOrder
             set
             {
                 if (!ValueChecker.CheckValueDateTime(value.ToString(), out DateTime _))
-                    value = DateTime.MinValue;
+                    value = DateTime.Now;
                 Set(ref _dateTimePick, value);
             }
         }

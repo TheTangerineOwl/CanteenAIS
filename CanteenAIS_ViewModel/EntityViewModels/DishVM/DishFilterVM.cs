@@ -18,7 +18,7 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Dish
             _groups = MainServices.GetInstance().AssortmentGroups.FetchValues<Entities.AssortmentGroup>().ToList();
             _group = Groups.FirstOrDefault();
             _groupCheck = false;
-            _id = 0;
+            _id = 1;
             _idCheck = false;
             _name = string.Empty;
             _nameCheck = false;
@@ -66,8 +66,8 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Dish
             set => Set(ref _groups, value);
         }
 
-        private int _id;
-        public int Id
+        private uint _id;
+        public uint Id
         {
             get => _id;
             set
