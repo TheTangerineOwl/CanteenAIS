@@ -105,6 +105,15 @@
     <Compile Include="MainMenu.xaml.cs">
       <DependentUpon>MainMenu.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Management\UserPerms\UserPermAddEditWindow.xaml.cs">
+      <DependentUpon>UserPermAddEditWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Management\UserPerms\UserPermFilterWindow.xaml.cs">
+      <DependentUpon>UserPermFilterWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Management\UserPerms\UserPermWindow.xaml.cs">
+      <DependentUpon>UserPermWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MenuConstructor.cs" />
     <Compile Include="Other\ContentWindow.xaml.cs">
       <DependentUpon>ContentWindow.xaml</DependentUpon>
@@ -115,6 +124,69 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BaseTemplates\TableControlPanel.xaml.cs">
       <DependentUpon>TableControlPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tables\Supplies\SupplyAddEditWindow.xaml.cs">
+      <DependentUpon>SupplyAddEditWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tables\Supplies\SupplyFilterWindow.xaml.cs">
+      <DependentUpon>SupplyFilterWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tables\Supplies\SupplyWindow.xaml.cs">
+      <DependentUpon>SupplyWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tables\Suppliers\SupplierAddEditWindow.xaml.cs">
+      <DependentUpon>SupplierAddEditWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tables\Suppliers\SupplierFilterWindow.xaml.cs">
+      <DependentUpon>SupplierFilterWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tables\Suppliers\SupplierWindow.xaml.cs">
+      <DependentUpon>SupplierWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tables\SupplierHead\SupplierHeadAddEditWindow.xaml.cs">
+      <DependentUpon>SupplierHeadAddEditWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tables\SupplierHead\SupplierHeadFilterWindow.xaml.cs">
+      <DependentUpon>SupplierHeadFilterWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tables\SupplierHead\SupplierHeadWindow.xaml.cs">
+      <DependentUpon>SupplierHeadWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tables\Streets\StreetAddEditWindow.xaml.cs">
+      <DependentUpon>StreetAddEditWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tables\Streets\StreetFilterWindow.xaml.cs">
+      <DependentUpon>StreetFilterWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tables\Streets\StreetWindow.xaml.cs">
+      <DependentUpon>StreetWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tables\Realizations\RealizationAddEditWindow.xaml.cs">
+      <DependentUpon>RealizationAddEditWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tables\Realizations\RealizationFilterWindow.xaml.cs">
+      <DependentUpon>RealizationFilterWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tables\Realizations\RealizationWindow.xaml.cs">
+      <DependentUpon>RealizationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tables\Products\ProductAddEditWindow.xaml.cs">
+      <DependentUpon>ProductAddEditWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tables\Products\ProductFilterWindow.xaml.cs">
+      <DependentUpon>ProductFilterWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tables\Products\ProductWindow.xaml.cs">
+      <DependentUpon>ProductWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tables\MeasureUnits\MeasureUnitAddEditWindow.xaml.cs">
+      <DependentUpon>MeasureUnitAddEditWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tables\MeasureUnits\MeasureUnitFilterWindow.xaml.cs">
+      <DependentUpon>MeasureUnitFilterWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tables\MeasureUnits\MeasureUnitWindow.xaml.cs">
+      <DependentUpon>MeasureUnitWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Tables\Dishes\DishAddEditWindow.xaml.cs">
       <DependentUpon>DishAddEditWindow.xaml</DependentUpon>
@@ -246,6 +318,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Management\UserPerms\UserPermAddEditWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Management\UserPerms\UserPermFilterWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Management\UserPerms\UserPermWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Other\ContentWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -259,6 +343,90 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="BaseTemplates\TableControlPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tables\Supplies\SupplyAddEditWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tables\Supplies\SupplyFilterWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tables\Supplies\SupplyWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tables\Suppliers\SupplierAddEditWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tables\Suppliers\SupplierFilterWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tables\Suppliers\SupplierWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tables\SupplierHead\SupplierHeadAddEditWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tables\SupplierHead\SupplierHeadFilterWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tables\SupplierHead\SupplierHeadWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tables\Streets\StreetAddEditWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tables\Streets\StreetFilterWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tables\Streets\StreetWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tables\Realizations\RealizationAddEditWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tables\Realizations\RealizationFilterWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tables\Realizations\RealizationWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tables\Products\ProductAddEditWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tables\Products\ProductFilterWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tables\Products\ProductWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tables\MeasureUnits\MeasureUnitAddEditWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tables\MeasureUnits\MeasureUnitFilterWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tables\MeasureUnits\MeasureUnitWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -335,9 +503,7 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Management\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />

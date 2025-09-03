@@ -1,0 +1,19 @@
+﻿<Window x:Class="CanteenAIS_Views.Tables.Supplies.SupplyWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:template="clr-namespace:CanteenAIS_Views.BaseTemplates"
+        Title="{Binding Title}"
+        Style="{StaticResource WindowStyle}">
+
+    <Grid>
+        <DockPanel LastChildFill="True">
+            <template:TableControlPanel Margin="10,5,10,5" DockPanel.Dock="Bottom"/>
+
+            <DataGrid x:Name="dtGrid" Style="{StaticResource TableDataGridStyle}"
+                     SelectedIndex="{Binding SelectedIndex, UpdateSourceTrigger=PropertyChanged}"
+                     ItemsSource="{Binding Table, UpdateSourceTrigger=PropertyChanged}"
+                     SelectionChanged="DataGrid_SelectionChanged" 
+                     AutoGeneratingColumn="DataGrid_AutoGeneratingColumn"/>
+        </DockPanel>
+    </Grid>
+</Window>

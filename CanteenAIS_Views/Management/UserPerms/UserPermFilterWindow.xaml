@@ -1,0 +1,45 @@
+﻿<Window x:Class="CanteenAIS_Views.Management.UserPerms.UserPermFilterWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:template="clr-namespace:CanteenAIS_Views.BaseTemplates"
+        mc:Ignorable="d"
+        Title="{Binding WindowTitle}"
+        Style="{StaticResource SmallWindowStyle}">
+
+    <DockPanel>
+        <template:DialogButtons DockPanel.Dock="Bottom"
+                     ButtonContent="{Binding ButtonContent}"
+                     ApplyCommand="{Binding ClickApply}"
+                     CancelCommand="{Binding ClickCancel}"/>
+
+        <GroupBox Style="{StaticResource DialogGroupBoxStyle}"
+                 Header="{Binding TableTitle}">
+            <GroupBox.HeaderTemplate>
+                <DataTemplate>
+                    <Border Style="{StaticResource GroupBoxHeaderStyle}" CornerRadius="3,3,3,3">
+                        <Label Content="{Binding}"/>
+                    </Border>
+                </DataTemplate>
+            </GroupBox.HeaderTemplate>
+
+            <StackPanel Margin="10" Grid.IsSharedSizeScope="True">
+                <template:UIntFormFieldChecked x:Name="idRow" LabelText="Id"
+                    IsChecked="{Binding IdCheck, Mode=TwoWay}"
+                    ValuePick="{Binding Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Minimum="1" Default="1" Maximum="1000000000"/>
+
+                <template:ComboFormFieldChecked LabelText="Подразделение"
+                    IsChecked="{Binding BranchCheck, Mode=TwoWay}"
+                    ItemsSource="{Binding Branches, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedItem="{Binding Branch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                />
+                <template:DateTimeFormFieldChecked LabelText="Время"
+                    IsChecked="{Binding DateTimeCheck, Mode=TwoWay}"
+                    ValuePick="{Binding DateTimePick, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                />
+            </StackPanel>
+        </GroupBox>
+    </DockPanel>
+</Window>
