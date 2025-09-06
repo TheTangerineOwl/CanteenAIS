@@ -8,11 +8,12 @@ namespace CanteenAIS_ViewModel.ManagementViewModels.User
 {
     public class RegistrationVM : PropChanged
     {
-        private UserService service;
-        private string name;
-        private string password;
-        private string repeatedPassword;
+        private readonly UserService service;
+        private string name = string.Empty;
+        private string password = string.Empty;
+        private string repeatedPassword = string.Empty;
 
+        public Action OnRegistrate;
         public Action OnSuccessRegistration;
         public Action OnCancel;
 
@@ -37,9 +38,14 @@ namespace CanteenAIS_ViewModel.ManagementViewModels.User
         public RegistrationVM()
         {
             service = new UserService(new Encryptor());
-            name = string.Empty;
-            password = string.Empty;
-            repeatedPassword = string.Empty;
+            ClearFields();
+        }
+
+        public void ClearFields()
+        {
+            Name = string.Empty;
+            Password = string.Empty;
+            RepeatedPassword = string.Empty;
         }
 
         public ICommand ClickCancel
@@ -49,31 +55,33 @@ namespace CanteenAIS_ViewModel.ManagementViewModels.User
                 return new Command((obj) =>
                 {
                     OnCancel?.Invoke();
-                    Name = string.Empty;
-                    Password = string.Empty;
-                    RepeatedPassword = string.Empty;
+                    ClearFields();
                 });
             }
         }
 
         public ICommand ClickRegistrate
         {
-            get
-            {
-                return new Command((obj) =>
+            get => new Command((obj) =>
                 {
-                    if (Password == null || Password == string.Empty)
-                        throw new ArgumentException("Поле \"Пароль\" не заполнено");
-                    else if (RepeatedPassword == null || RepeatedPassword == string.Empty)
-                        throw new ArgumentException("Поле \"Повторите пароль\" не заполнено");
-                    else if (Password != RepeatedPassword)
-                        throw new ArgumentException("Поля \"Пароль\" и \"Повторите пароль\" не совпадают");
-                    if (service.Registration<Entities.User>(Name, Password))
-                        OnSuccessRegistration?.Invoke();
-                    else
-                        throw new ArgumentException("Пользователь с таким именем уже зарегистрирован");
+                    OnRegistrate?.Invoke();
                 });
-            }
         }
+
+        public void Registrate()
+        {
+            if (Password == null || Password == string.Empty)
+                throw new ArgumentException("Поле \"Пароль\" не заполнено");
+            else if (RepeatedPassword == null || RepeatedPassword == string.Empty)
+                throw new ArgumentException("Поле \"Повторите пароль\" не заполнено");
+            else if (Password != RepeatedPassword)
+                throw new ArgumentException("Поля \"Пароль\" и \"Повторите пароль\" не совпадают");
+            if (service.Registration<Entities.User>(Name, Password))
+                OnSuccessRegistration?.Invoke();
+            else
+                throw new ArgumentException("Пользователь с таким именем уже зарегистрирован");
+            ClearFields();
+        }
+
     }
 }

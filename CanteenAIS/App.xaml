@@ -5,7 +5,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/CanteenAIS_Views;component/Styles/GenericWindowStyle.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/CanteenAIS_Views;component/Styles/GenericWindowStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

@@ -11,15 +11,19 @@ namespace CanteenAIS_DB.AppAuth.Entities
         [DisplayName("Имя")]
         [ColumnOrder(1)]
         public virtual string Name { get; set; }
-        [DisplayName("Dll")]
+        [DisplayName("Библиотека")]
         [ColumnOrder(2)]
         public virtual string DllName { get; set; }
         [DisplayName("Функция")]
         [ColumnOrder(3)]
         public virtual string FuncName { get; set; }
-        [DisplayName("Order")]
+        [DisplayName("Порядок")]
         [ColumnOrder(4)]
         public virtual uint Order { get; set; }
+
+        [DisplayName("Доступно по умолчанию")]
+        [ColumnOrder(5)]
+        public virtual bool IsAllowedByDefault { get; set; }
 
         public MenuElementEntity() { }
 
@@ -32,6 +36,7 @@ namespace CanteenAIS_DB.AppAuth.Entities
             DllName = info.DllName;
             FuncName = info.FuncName;
             Order = info.Order;
+            IsAllowedByDefault = info.IsAllowedByDefault;
         }
 
         public override string ToString()

@@ -16,7 +16,8 @@ namespace CanteenAIS_Models
             byte[] messageBytes = Encoding.UTF8.GetBytes(value);
             SHA256 sha256 = SHA256.Create();
             byte[] hash = sha256.ComputeHash(messageBytes);
-            return Convert.ToString(hash);
+            string encoded = Encoding.UTF8.GetString(hash);
+            return encoded;
         }
     }
 }

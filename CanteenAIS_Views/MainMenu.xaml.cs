@@ -19,6 +19,8 @@ using CanteenAIS_Views.Tables.Streets;
 using CanteenAIS_Views.Tables.SupplierHeads;
 using CanteenAIS_Views.Tables.Suppliers;
 using CanteenAIS_Views.Tables.Supplies;
+using CanteenAIS_Views.Tables;
+using CanteenAIS_Views.Management;
 
 namespace CanteenAIS_Views
 {
@@ -42,6 +44,9 @@ namespace CanteenAIS_Views
 
             vm.OnAboutProgram += ShowAbout;
             vm.OnContent += ShowContents;
+            vm.OnSQLquery += ShowSQLquery;
+            vm.OnRegistration += ShowRegistration;
+            vm.OnChangePassword += ShowChangePassword;
             vm.OnExit += CloseWindow;
 
             vm.OnUserPerms += ShowUserPerms;
@@ -59,6 +64,26 @@ namespace CanteenAIS_Views
             vm.OnSupplierHeads += ShowSupplierHeads;
             vm.OnSuppliers += ShowSuppliers;
             vm.OnSupplies += ShowSupplies;
+        }
+
+        private void ShowChangePassword()
+        {
+            ChangePasswordWindow change = new ChangePasswordWindow(parent);
+            change.Show();
+            CloseWindow();
+        }
+
+        private void ShowRegistration()
+        {
+            RegistrationWindow reg = new RegistrationWindow(parent);
+            reg.Show();
+            CloseWindow();
+        }
+
+        private void ShowSQLquery(uint elementId)
+        {
+            SQLQueryWindow sqlq = new SQLQueryWindow(elementId);
+            sqlq.Show();
         }
 
         private void ShowUserPerms(DoubleModel<UserPermEntity> model, uint elementId)

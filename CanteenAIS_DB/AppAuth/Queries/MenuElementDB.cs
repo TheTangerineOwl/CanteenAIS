@@ -3,6 +3,7 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 namespace CanteenAIS_DB.AppAuth.Queries
 {
@@ -11,9 +12,9 @@ namespace CanteenAIS_DB.AppAuth.Queries
         protected override string TableName => "menuelements";
 
         protected override string QueryCreate => "INSERT INTO menuelements (" +
-                    "`ParentId`, `Name`, `DllName`, `FuncName`, `Order`" +
+                    "`ParentId`, `Name`, `DllName`, `FuncName`, `Order`, `IsAllowedByDefault`" +
                     ") VALUES (" +
-                    "@entityParentId, @entityName, @entityDllName, @entityFuncName, @entityOrder);";
+                    "@entityParentId, @entityName, @entityDllName, @entityFuncName, @entityOrder, @entityIsDefault);";
 
         protected override string QueryRead => "SELECT " +
                     "me.`Id` AS `Id`, " +
@@ -22,7 +23,8 @@ namespace CanteenAIS_DB.AppAuth.Queries
                     "me.`Name` AS `Name`, " +
                     "me.`DllName` AS `DllName`, " +
                     "me.`FuncName` AS `FuncName`, " +
-                    "me.`Order` AS `Order` " +
+                    "me.`Order` AS `Order`, " +
+                    "me.`IsAllowedByDefault` AS `IsAllowedByDefault`" +
                     "FROM menuelements AS me " +
                     "LEFT JOIN menuelements AS mep ON me.`ParentId`=mep.`Id`;";
 
@@ -32,7 +34,8 @@ namespace CanteenAIS_DB.AppAuth.Queries
                     "`Name`=@entityName, " +
                     "`DllName`=@entityDllName, " +
                     "`FuncName`=@entityFuncName, " +
-                    "`Order`=@entityOrder " +
+                    "`Order`=@entityOrder," +
+                    "`IsAllowedByDefault`=@entityIsDefault " +
                     "WHERE `Id`=@entityId;";
 
         protected override MySqlParameterCollection FillParameters(MenuElementEntity entity, MySqlCommand command, bool withId = true)
@@ -45,6 +48,7 @@ namespace CanteenAIS_DB.AppAuth.Queries
             command.Parameters.AddWithValue("@entityDllName", entity.DllName);
             command.Parameters.AddWithValue("@entityFuncName", entity.FuncName);
             command.Parameters.AddWithValue("@entityOrder", entity.Order);
+            command.Parameters.AddWithValue("@entityIsDefault", entity.IsAllowedByDefault);
             return command.Parameters;
         }
 
@@ -60,6 +64,7 @@ namespace CanteenAIS_DB.AppAuth.Queries
 
         public override TElement ParseEntity<TElement>(DataRow row)
         {
+            string[] trueValues = { "1", "true", "True" };
             TElement entity = new TElement
             {
                 Id = uint.Parse(row["Id"].ToString()),
@@ -68,7 +73,8 @@ namespace CanteenAIS_DB.AppAuth.Queries
                 ParentId = DataRowExtensions.Field<uint?>(row, "ParentId"),
                 ParentName = DataRowExtensions.Field<string>(row, "ParentName"),
                 DllName = DataRowExtensions.Field<string>(row, "DllName"),
-                FuncName = DataRowExtensions.Field<string>(row, "FuncName")
+                FuncName = DataRowExtensions.Field<string>(row, "FuncName"),
+                IsAllowedByDefault = trueValues.Contains(row["IsAllowedByDefault"].ToString()),
             };
             return entity;
         }

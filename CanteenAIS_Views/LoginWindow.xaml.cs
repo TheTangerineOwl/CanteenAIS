@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CanteenAIS_ViewModel.ManagementViewModels.User;
+using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace CanteenAIS_Views
 {
@@ -23,18 +13,55 @@ namespace CanteenAIS_Views
         public LoginWindow()
         {
             InitializeComponent();
+            if (DataContext is LoginVM vm)
+            {
+                vm.OnLogin += Login;
+                vm.OnLoginSuccess += LoginSuccess;
+                vm.OnCancel += Clear;
+            }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        public void Login()
         {
+            try
+            {
+                if (DataContext is LoginVM vm)
+                    vm.Login();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        public void LoginSuccess()
+        {
+            Clear();
             MainMenu menu = new MainMenu(this);
             menu.Show();
             this.Hide();
         }
 
+        public void Clear()
+        {
+            if (DataContext is LoginVM vm)
+            {
+                vm.ClearLoginInfo();
+                passBox.Password = string.Empty;
+            }
+        }
+
         private void Window_Closed(object sender, EventArgs e)
         {
             Application.Current.Shutdown();
+        }
+
+        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is LoginVM vm)
+            {
+                vm.Password = ((PasswordBox)sender).Password;
+            }
         }
     }
 }

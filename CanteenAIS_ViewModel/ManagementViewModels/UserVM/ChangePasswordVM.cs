@@ -8,11 +8,13 @@ namespace CanteenAIS_ViewModel.ManagementViewModels.User
 {
     public class ChangePasswordVM : PropChanged
     {
-        private string oldPassword;
-        private string newPassword;
-        private string repeatedPassword;
+        private string oldPassword = string.Empty;
+        private string newPassword = string.Empty;
+        private string repeatedPassword = string.Empty;
 
+        public Action OnChange;
         public Action OnSuccessChangePassword;
+        public Action OnCancel;
         public string OldPassword
         {
             get { return oldPassword; }
@@ -31,17 +33,19 @@ namespace CanteenAIS_ViewModel.ManagementViewModels.User
             set { Set<string>(ref repeatedPassword, value); }
         }
 
+        public void ClearFormInfo()
+        {
+            OldPassword = string.Empty;
+            NewPassword = string.Empty;
+            RepeatedPassword = string.Empty;
+        }
+
         public ICommand ClickCancellation
         {
-            get
-            {
-                return new Command((obj) =>
+            get => new Command((obj) =>
                 {
-                    OldPassword = string.Empty;
-                    NewPassword = string.Empty;
-                    RepeatedPassword = string.Empty;
+                    OnCancel?.Invoke();
                 });
-            }
         }
 
         public ICommand ClickChange
@@ -50,21 +54,26 @@ namespace CanteenAIS_ViewModel.ManagementViewModels.User
             {
                 return new Command((obj) =>
                 {
-
-                    if (OldPassword == null || OldPassword == string.Empty)
-                        throw new ArgumentException("Поле \"Прежний пароль\" не заполнено");
-                    else if (NewPassword == null || NewPassword == string.Empty)
-                        throw new ArgumentException("Поле \"Новый пароль\" не заполнено");
-                    else if (NewPassword != RepeatedPassword)
-                        throw new ArgumentException("Поля \"Прежний пароль\" и \"Новый пароль\"" +
-                            " не совпадают");
-
-                    UserService changePassword = new UserService(new Encryptor());
-
-                    changePassword.ChangePassword(OldPassword, NewPassword);
-                    OnSuccessChangePassword?.Invoke();
+                    OnChange?.Invoke();
                 });
             }
+        }
+
+        public void ChangePassword()
+        {
+            if (OldPassword == null || OldPassword == string.Empty)
+                throw new ArgumentException("Поле \"Прежний пароль\" не заполнено");
+            else if (NewPassword == null || NewPassword == string.Empty)
+                throw new ArgumentException("Поле \"Новый пароль\" не заполнено");
+            else if (NewPassword != RepeatedPassword)
+                throw new ArgumentException("Поля \"Прежний пароль\" и \"Новый пароль\"" +
+                    " не совпадают");
+
+            UserService changePassword = new UserService(new Encryptor());
+
+            changePassword.ChangePassword(OldPassword, NewPassword);
+            OnSuccessChangePassword?.Invoke();
+            ClearFormInfo();
         }
     }
 }

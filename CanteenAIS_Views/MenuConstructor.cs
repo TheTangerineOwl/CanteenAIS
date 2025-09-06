@@ -36,8 +36,8 @@ namespace CanteenAIS_Views
                 Tag = element
             };
 
-            UserPermEntity perm = perms.First(el => el.ElementId == element.Id);
-            menuItem.Visibility = perm.CanRead ? Visibility.Visible : Visibility.Hidden;
+            UserPermEntity perm = perms.FirstOrDefault(el => el.ElementId == element.Id);
+            menuItem.Visibility = element.IsAllowedByDefault || (perm != null && perm.CanRead) ? Visibility.Visible : Visibility.Collapsed;
 
             if (!string.IsNullOrEmpty(element.FuncName))
             {

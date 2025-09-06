@@ -1,9 +1,8 @@
 ﻿using CanteenAIS_DB;
 using CanteenAIS_DB.AppAuth.Entities;
 using CanteenAIS_Models;
-using System.Collections.Generic;
+using System;
 using System.Data;
-using System.Linq;
 using System.Windows.Input;
 
 namespace CanteenAIS_ViewModel
@@ -46,10 +45,21 @@ namespace CanteenAIS_ViewModel
             return true;
         }
 
-        public enum QueryResult { GOOD, INVALPERM, EXCEPTION }
-        public QueryResult Result { get; private set; }
+        //public enum QueryResult { GOOD, INVALPERM, EXCEPTION }
+        //public QueryResult Result { get; private set; }
         private string exception;
         public string Exception { get => exception; }
+
+        public ICommand ClickClear
+        {
+            get => new Command((obj) =>
+                {
+                    OnClear?.Invoke();
+                });
+        }
+
+        public Action OnExecuteQuery;
+        public Action OnClear;
 
         public ICommand ClickExecuteQuery
         {
@@ -57,36 +67,46 @@ namespace CanteenAIS_ViewModel
             {
                 return new Command((obj) =>
                 {
-                    if (Query == null || Query == string.Empty)
-                    {
-                        Result = QueryResult.GOOD;
-                        exception = "Запрос пуст";
-                    }
-                    else if (!ValidPermsForQuery())
-                    {
-                        Result = QueryResult.INVALPERM;
-                        exception = "Запрос недопустим при данных правах пользователя!";
-                    }
-                    else
-                    {
-                        exception = string.Empty;
-                        DataTable table = DbConnection.GetInstance().ExecQuery(
-                            Query, ref exception
-                        );
-
-                        if (exception != string.Empty)
-                        {
-                            DataBaseTable.Clear();
-                            Result = QueryResult.EXCEPTION;
-                        }
-                        else
-                        {
-                            DataBaseTable = table;
-                            Result = QueryResult.GOOD;
-                        }
-                    }
+                    OnExecuteQuery?.Invoke();
                 });
             }
+        }
+
+        public void Execute()
+        {
+            if (Query == null || Query == string.Empty)
+            {
+                //Result = QueryResult.GOOD;
+                exception = "Запрос пуст";
+            }
+            else if (!ValidPermsForQuery())
+            {
+                //Result = QueryResult.INVALPERM;
+                exception = "Запрос недопустим при данных правах пользователя!";
+            }
+            else
+            {
+                exception = string.Empty;
+                DataTable table = DbConnection.GetInstance().ExecQuery(
+                    Query, ref exception
+                );
+
+                if (exception != string.Empty)
+                {
+                    DataBaseTable.Clear();
+                    //Result = QueryResult.EXCEPTION;
+                }
+                else
+                {
+                    DataBaseTable = table;
+                    //Result = QueryResult.GOOD;
+                }
+            }
+        }
+
+        public void Clear()
+        {
+            Query = string.Empty;
         }
     }
 

@@ -8,9 +8,11 @@ namespace CanteenAIS_ViewModel.ManagementViewModels.User
 {
     public class LoginVM : PropChanged
     {
-        private string name;
-        private string password;
+        private string name = string.Empty;
+        private string password = string.Empty;
 
+        public Action OnCancel;
+        public Action OnLogin;
         public Action OnLoginSuccess;
         public string Name
         {
@@ -26,34 +28,37 @@ namespace CanteenAIS_ViewModel.ManagementViewModels.User
 
         public ICommand ClickCancellation
         {
-            get
-            {
-                return new Command((obj) =>
+            get => new Command((obj) =>
                 {
-                    Name = string.Empty;
-                    Password = string.Empty;
+                    OnCancel?.Invoke();
                 });
-            }
         }
 
         public ICommand ClickLogin
         {
-            get
-            {
-                return new Command((obj) =>
+            get => new Command((obj) =>
                 {
-                    UserService login = new UserService(new Encryptor());
-
-                    if (login.Login<Entities.User>(Name, Password))
-                    {
-                        OnLoginSuccess?.Invoke();
-                        Name = string.Empty;
-                        Password = string.Empty;
-                    }
-                    else
-                        throw new ArgumentException("Ошибка входа: неверный логин или пароль");
+                    OnLogin?.Invoke();
                 });
+        }
+
+        public void Login()
+        {
+            UserService login = new UserService(new Encryptor());
+
+            if (login.Login<Entities.User>(Name, Password))
+            {
+                OnLoginSuccess?.Invoke();
+                ClearLoginInfo();
             }
+            else
+                throw new ArgumentException("Ошибка входа: неверный логин или пароль");
+        }
+
+        public void ClearLoginInfo()
+        {
+            Name = string.Empty;
+            Password = string.Empty;
         }
     }
 }

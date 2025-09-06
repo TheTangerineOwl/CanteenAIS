@@ -32,20 +32,6 @@ namespace CanteenAIS_Models
         public BasicSimpleCRUD<SupplyEntity> Supplies { get; set; } = new SupplyDB();
         public BasicDoubleCRUD<SupplyProductEntity> SupplyProducts { get; set; } = new SupplyProductDB();
 
-        private DBContext()
-        {
-            // УБРАТЬ
-            //UserService service = new UserService(new Encryptor());
-            //service.Registration<User>("admin", "admin");
-            CurrentUser = Users.Read<User>()[0];
-            //UserPermEntity testperm = new UserPerm
-            //{
-            //    UserId = CurrentUser.Id,
-            //    UserLogin = CurrentUser.Login
-            //};
-
-        }
-
         public IList<TUserPerm> GetCurrentUserPerms<TUserPerm>()
             where TUserPerm : UserPermEntity, new()
         {
