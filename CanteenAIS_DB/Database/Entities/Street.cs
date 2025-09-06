@@ -5,11 +5,9 @@ namespace CanteenAIS_DB.Database.Entities
     public abstract class StreetEntity : SimpleEntity
     {
         public virtual uint CityId { get; set; }
-        [DisplayName("Город")]
-        [ColumnOrder(1)]
+        [ColumnDisplay("Город", true, 1)]
         public virtual string CityName { get; set; }
-        [DisplayName("Название")]
-        [ColumnOrder(2)]
+        [ColumnDisplay("Название", true, 2)]
         public virtual string Name { get; set; }
 
         public StreetEntity() { }

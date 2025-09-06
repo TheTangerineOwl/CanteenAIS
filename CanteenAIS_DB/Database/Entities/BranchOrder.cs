@@ -6,11 +6,9 @@ namespace CanteenAIS_DB.Database.Entities
     public abstract class BranchOrderEntity : SimpleEntity
     {
         public virtual uint BranchId { get; set; }
-        [DisplayName("Подразделение")]
-        [ColumnOrder(1)]
+        [ColumnDisplay("Подразделение", true, 1)]
         public virtual string BranchName { get; set; }
-        [DisplayName("Дата")]
-        [ColumnOrder(2)]
+        [ColumnDisplay("Дата", true, 2)]
         public virtual DateTime DateTime { get; set; }
 
         public BranchOrderEntity() { }
@@ -25,7 +23,7 @@ namespace CanteenAIS_DB.Database.Entities
 
         public override string ToString()
         {
-            return $"{BranchName}_{DateTime}";
+            return $"{DateTime}_{BranchName}";
         }
     }
 

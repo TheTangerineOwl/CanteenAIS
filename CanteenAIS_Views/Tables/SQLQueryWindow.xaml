@@ -35,6 +35,9 @@
                 <Button Style="{StaticResource CrudButtonStyle}"
                         Content="Очистить"
                         Command="{Binding ClickClear}"/>
+                <Button Style="{StaticResource CrudButtonStyle}"
+                        Content="Экспорт в .csv"
+                        Command="{Binding ClickExport}"/>
             </StackPanel>
             <GridSplitter Width="3" Grid.RowSpan="3" Grid.Column="1" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"/>
             <DockPanel Grid.Column="2" Grid.RowSpan="3" LastChildFill="True">

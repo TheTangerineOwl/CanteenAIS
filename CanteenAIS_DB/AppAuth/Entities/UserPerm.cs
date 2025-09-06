@@ -8,24 +8,18 @@ namespace CanteenAIS_DB.AppAuth.Entities
         public override uint SecondId { get => ElementId; set => ElementId = value; }
 
         public virtual uint UserId { get; set; }
-        [DisplayName("Логин")]
-        [ColumnOrder(0)]
+        [ColumnDisplay("Логин", true, 0)]
         public virtual string UserLogin { get; set; }
         public virtual uint ElementId { get; set; }
-        [DisplayName("Элемент меню")]
-        [ColumnOrder(1)]
+        [ColumnDisplay("Элемент меню", true, 1)]
         public virtual string ElementName { get; set; }
-        [DisplayName("Чтение")]
-        [ColumnOrder(2)]
+        [ColumnDisplay("Чтение", true, 2)]
         public virtual bool CanRead { get; set; }
-        [DisplayName("Добавление")]
-        [ColumnOrder(3)]
+        [ColumnDisplay("Добавление", true, 3)]
         public virtual bool CanWrite { get; set; }
-        [DisplayName("Редактирование")]
-        [ColumnOrder(4)]
+        [ColumnDisplay("Редактирование", true, 4)]
         public virtual bool CanEdit { get; set; }
-        [DisplayName("Удаление")]
-        [ColumnOrder(5)]
+        [ColumnDisplay("Удаление", true, 5)]
         public virtual bool CanDelete { get; set; }
 
         public UserPermEntity() { }

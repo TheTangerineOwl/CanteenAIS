@@ -108,6 +108,19 @@ namespace CanteenAIS_ViewModel
         {
             Query = string.Empty;
         }
+
+        public Action OnExport;
+        public virtual ICommand ClickExport
+        {
+            get => new Command((obj) =>
+                OnExport?.Invoke()
+            );
+        }
+
+        public virtual void ExportCsv(string filename)
+        {
+            ExportTable.ExportCsv(DataBaseTable, filename);
+        }
     }
 
 }

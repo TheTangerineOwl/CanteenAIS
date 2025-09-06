@@ -4,21 +4,16 @@ namespace CanteenAIS_DB.Database.Entities
 {
     public abstract class ProductEntity : SimpleEntity
     {
-        [DisplayName("Имя")]
-        [ColumnOrder(1)]
+        [ColumnDisplay("Имя", true, 1)]
         public virtual string Name { get; set; }
-        [DisplayName("Единица измерения")]
-        [ColumnOrder(2)]
+        [ColumnDisplay("Единица измерения", true, 2)]
         public virtual string UnitName { get; set; }
         public virtual uint UnitId { get; set; }
-        [DisplayName("Надбавка (%)")]
-        [ColumnOrder(4)]
+        [ColumnDisplay("Надбавка (%)", true, 4)]
         public virtual decimal Markup { get; set; }
-        [DisplayName("Остаток на складе")]
-        [ColumnOrder(3)]
+        [ColumnDisplay("Остаток на складе", true, 3)]
         public virtual double Stock { get; set; }
-        [DisplayName("Поставщик")]
-        [ColumnOrder(5)]
+        [ColumnDisplay("Поставщик", true, 5)]
         public virtual string SupplierName { get; set; }
         public virtual uint SupplierId { get; set; }
 

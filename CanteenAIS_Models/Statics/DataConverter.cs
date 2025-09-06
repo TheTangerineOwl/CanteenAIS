@@ -15,13 +15,14 @@ namespace CanteenAIS_Models.Statics
             DataTable table = new DataTable();
 
             var orderedProps = props.Cast<PropertyDescriptor>()
-                                    .Select(prop => new
-                                    {
-                                        Property = prop,
-                                        OrderAttribute = prop.Attributes.OfType<ColumnOrderAttribute>().FirstOrDefault()
-                                    })
-                                    .OrderBy(item => item.OrderAttribute?.Order ?? int.MaxValue)
-                                    .Select(item => item.Property).ToList();
+                        .Select(prop => new
+                        {
+                            Property = prop,
+                            paramAttribute = prop.Attributes.OfType<ColumnDisplayAttribute>().FirstOrDefault()
+                        })
+                        .Where(item => item.paramAttribute?.Visible ?? false)
+                        .OrderBy(item => item.paramAttribute?.Order ?? int.MaxValue)
+                        .Select(item => item.Property).ToList();
 
             foreach (PropertyDescriptor prop in orderedProps)
             {
@@ -36,7 +37,7 @@ namespace CanteenAIS_Models.Statics
             foreach (T item in list)
             {
                 DataRow row = table.NewRow();
-                foreach (PropertyDescriptor prop in props)
+                foreach (PropertyDescriptor prop in orderedProps)
                 {
                     row[prop.Name] = prop.GetValue(item) ?? DBNull.Value;
                 }

@@ -15,6 +15,9 @@
     </UserControl.Resources>
 
     <DockPanel LastChildFill="True">
+        <Button Content="Экспорт (.csv)"
+                Command="{Binding ClickExport}"
+                Style="{StaticResource CrudButtonStyle}"/>
         <Button Content="Фильтр" 
                 Command="{Binding ClickFilter}"
                 Style="{StaticResource CrudButtonStyle}"/>

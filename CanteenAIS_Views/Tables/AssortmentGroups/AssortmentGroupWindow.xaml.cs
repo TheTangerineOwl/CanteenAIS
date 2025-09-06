@@ -1,6 +1,9 @@
 ﻿using CanteenAIS_DB.Database.Entities;
 using CanteenAIS_Models;
+using CanteenAIS_ViewModel;
 using CanteenAIS_ViewModel.EntityViewModels.AssortmentGroup;
+using Microsoft.Win32;
+using System;
 using System.Data;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,6 +23,7 @@ namespace CanteenAIS_Views.Tables.AssortmentGroups
             vm.OnEdit += Edit;
             vm.OnFilter += Filter;
             vm.OnDelete += Delete;
+            vm.OnExport += ExportCsv;
             DataContext = vm;
         }
 
@@ -74,6 +78,31 @@ namespace CanteenAIS_Views.Tables.AssortmentGroups
 
                 if (dataColumn != null)
                     e.Column.Header = dataColumn.Caption;
+            }
+        }
+
+        public void ExportCsv()
+        {
+            try
+            {
+                SaveFileDialog dialog = new SaveFileDialog
+                {
+                    AddExtension = true,
+                    CheckPathExists = true,
+                    CreatePrompt = true,
+                    OverwritePrompt = true,
+                    DefaultExt = "*.csv",
+                    Filter = "CSV files (*.csv)|*.csv|All files (*.*)|*.*"
+                };
+                if (dialog.ShowDialog() == true)
+                {
+                    string file = dialog.FileName;
+                    vm.ExportCsv(file);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

@@ -4,17 +4,13 @@ namespace CanteenAIS_DB.Database.Entities
 {
     public abstract class SupplierHeadEntity : SimpleEntity
     {
-        [DisplayName("Фамилия")]
-        [ColumnOrder(1)]
+        [ColumnDisplay("Фамилия", true, 1)]
         public virtual string LastName { get; set; }
-        [DisplayName("Имя")]
-        [ColumnOrder(2)]
+        [ColumnDisplay("Имя", true, 2)]
         public virtual string FirstName { get; set; }
-        [DisplayName("Отчество")]
-        [ColumnOrder(3)]
+        [ColumnDisplay("Отчество", true, 3)]
         public virtual string Patronim { get; set; }
-        [DisplayName("Телефон")]
-        [ColumnOrder(4)]
+        [ColumnDisplay("Телефон", true, 4)]
         public virtual string Phone { get; set; }
 
         public SupplierHeadEntity() { }

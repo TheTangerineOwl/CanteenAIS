@@ -4,25 +4,19 @@ namespace CanteenAIS_DB.AppAuth.Entities
 {
     public abstract class MenuElementEntity : SimpleEntity
     {
-        [DisplayName("Родитель")]
-        [ColumnOrder(0)]
+        [ColumnDisplay("Родитель", true, 0)]
         public virtual string ParentName { get; set; }
         public virtual uint? ParentId { get; set; }
-        [DisplayName("Имя")]
-        [ColumnOrder(1)]
+        [ColumnDisplay("Имя", true, 1)]
         public virtual string Name { get; set; }
-        [DisplayName("Библиотека")]
-        [ColumnOrder(2)]
+        [ColumnDisplay("Библиотека", true, 2)]
         public virtual string DllName { get; set; }
-        [DisplayName("Функция")]
-        [ColumnOrder(3)]
+        [ColumnDisplay("Функция", true, 3)]
         public virtual string FuncName { get; set; }
-        [DisplayName("Порядок")]
-        [ColumnOrder(4)]
+        [ColumnDisplay("Порядок", true, 4)]
         public virtual uint Order { get; set; }
 
-        [DisplayName("Доступно по умолчанию")]
-        [ColumnOrder(5)]
+        [ColumnDisplay("Доступно по умолчанию", true, 5)]
         public virtual bool IsAllowedByDefault { get; set; }
 
         public MenuElementEntity() { }

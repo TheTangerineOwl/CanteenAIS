@@ -6,11 +6,9 @@ namespace CanteenAIS_DB.Database.Entities
     public abstract class SupplyEntity : SimpleEntity
     {
         public virtual uint SupplierId { get; set; }
-        [DisplayName("Поставщик")]
-        [ColumnOrder(1)]
+        [ColumnDisplay("Поставщик", true, 1)]
         public virtual string SupplierName { get; set; }
-        [DisplayName("Время")]
-        [ColumnOrder(2)]
+        [ColumnDisplay("Время", true, 2)]
         public virtual DateTime DateTime { get; set; }
 
         public SupplyEntity() { }
@@ -25,7 +23,7 @@ namespace CanteenAIS_DB.Database.Entities
 
         public override string ToString()
         {
-            return $"{SupplierName}_{DateTime}";
+            return $"{DateTime}_{SupplierName}";
         }
     }
 

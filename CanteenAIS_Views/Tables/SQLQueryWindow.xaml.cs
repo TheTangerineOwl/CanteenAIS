@@ -1,6 +1,7 @@
 ﻿using CanteenAIS_ViewModel;
 using System.Windows;
 using System;
+using Microsoft.Win32;
 
 namespace CanteenAIS_Views.Tables
 {
@@ -17,6 +18,7 @@ namespace CanteenAIS_Views.Tables
             vm = new SQLqueryVM(elementId);
             vm.OnExecuteQuery += Execute;
             vm.OnClear += Clear;
+            vm.OnExport += ExportCsv;
             DataContext = vm;
         }
 
@@ -37,6 +39,34 @@ namespace CanteenAIS_Views.Tables
         public void Clear()
         {
             vm.Clear();
+        }
+
+        public void ExportCsv()
+        {
+            try
+            {
+                SaveFileDialog dialog = new SaveFileDialog
+                {
+                    AddExtension = true,
+                    CheckPathExists = true,
+                    CreatePrompt = true,
+                    OverwritePrompt = true,
+                    DefaultExt = "*.csv",
+                    Filter = "CSV files (*.csv)|*.csv|All files (*.*)|*.*"
+                };
+                if (dialog.ShowDialog() == true)
+                {
+                    string file = dialog.FileName;
+                    if (DataContext is SQLqueryVM vm)
+                    {
+                        vm.ExportCsv(file);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

@@ -7,20 +7,17 @@ namespace CanteenAIS_DB.Database.Entities
         public override uint FirstId { get => SupplyId; set => SupplyId = value; }
         public override uint SecondId { get => ProductId; set => ProductId = value; }
 
+        [ColumnDisplay("SupplyId", true, 0)]
         public virtual uint SupplyId { get; set; }
         public virtual uint ProductId { get; set; }
-        [DisplayName("Продукт")]
-        [ColumnOrder(1)]
+        [ColumnDisplay("Продукт", true, 1)]
         public virtual string ProductName { get; set; }
         public virtual uint UnitId { get; set; }
-        [DisplayName("Единица измерения")]
-        [ColumnOrder(2)]
+        [ColumnDisplay("Единица измерения", true, 2)]
         public virtual string UnitName { get; set; }
-        [DisplayName("Закупочная цена")]
-        [ColumnOrder(3)]
+        [ColumnDisplay("Закупочная цена", true, 3)]
         public virtual decimal Price { get; set; }
-        [DisplayName("Количество")]
-        [ColumnOrder(4)]
+        [ColumnDisplay("Количество", true, 4)]
         public virtual double Amount { get; set; }
 
         public SupplyProductEntity() { }

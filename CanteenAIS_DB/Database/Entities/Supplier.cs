@@ -4,36 +4,27 @@ namespace CanteenAIS_DB.Database.Entities
 {
     public abstract class SupplierEntity : SimpleEntity
     {
-        [DisplayName("Название")]
-        [ColumnOrder(1)]
+        [ColumnDisplay("Название", true, 1)]
         public virtual string Name { get; set; }
 
-        [DisplayName("Город")]
-        [ColumnOrder(2)]
+        [ColumnDisplay("Город", true, 2)]
         public virtual string CityName { get; set; }
         public virtual uint StreetId { get; set; }
-        [DisplayName("Улица")]
-        [ColumnOrder(3)]
+        [ColumnDisplay("Улица", true, 3)]
         public virtual string StreetName { get; set; }
-        [DisplayName("Строение")]
-        [ColumnOrder(4)]
+        [ColumnDisplay("Строение", true, 4)]
         public virtual string Building { get; set; }
         public virtual uint HeadId { get; set; }
-        [DisplayName("Руководитель")]
-        [ColumnOrder(5)]
+        [ColumnDisplay("Руководитель", true, 5)]
         public virtual string HeadName { get; set; }
-        [DisplayName("Телефон")]
-        [ColumnOrder(6)]
+        [ColumnDisplay("Телефон", true, 6)]
         public virtual string HeadPhone { get; set; }
         public virtual uint BankId { get; set; }
-        [DisplayName("Банк")]
-        [ColumnOrder(7)]
+        [ColumnDisplay("Банк", true, 7)]
         public virtual string BankName { get; set; }
-        [DisplayName("Расчетный счет")]
-        [ColumnOrder(8)]
+        [ColumnDisplay("Расчетный счет", true, 8)]
         public virtual string Account { get; set; }
-        [DisplayName("ИНН")]
-        [ColumnOrder(9)]
+        [ColumnDisplay("ИНН", true, 9)]
         public virtual string INN { get; set; }
 
         public SupplierEntity() { }

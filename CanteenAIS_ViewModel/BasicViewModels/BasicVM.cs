@@ -129,6 +129,19 @@ namespace CanteenAIS_ViewModel.BasicViewModels
                 });
         }
 
+        public Action OnExport;
+        public virtual ICommand ClickExport
+        {
+            get => new Command((obj) =>
+                OnExport?.Invoke()
+            );
+        }
+
+        public virtual void ExportCsv(string filename)
+        {
+            ExportTable.ExportCsv(Table, filename);
+        }
+
         public virtual void DataTableMouseDown()
         {
             EditVisibility = Perm.CanEdit;

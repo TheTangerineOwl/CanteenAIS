@@ -100,7 +100,7 @@
     <Compile Include="AppAuth\Queries\UserDB.cs" />
     <Compile Include="AppAuth\Queries\UserPermDB.cs" />
     <Compile Include="BasicEntityCRUD.cs" />
-    <Compile Include="ColumnOrderAttribute.cs" />
+    <Compile Include="ColumnDisplayAttribute.cs" />
     <Compile Include="DbConnection.cs" />
     <Compile Include="Database\Entities\AssortmentGroup.cs" />
     <Compile Include="Database\Entities\Bank.cs" />
