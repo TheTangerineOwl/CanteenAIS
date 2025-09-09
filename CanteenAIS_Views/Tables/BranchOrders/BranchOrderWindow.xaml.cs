@@ -30,6 +30,7 @@ namespace CanteenAIS_Views.Tables.BranchOrders
         {
             if (model is SimpleModel<BranchOrderEntity> model1)
             {
+                vm.SelectedIndex = -1;
                 BranchOrderAddEditWindow addGroup = new BranchOrderAddEditWindow(this, model1, false);
                 addGroup.ShowDialog();
             }
@@ -103,6 +104,11 @@ namespace CanteenAIS_Views.Tables.BranchOrders
             {
                 MessageBox.Show(ex.Message, "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            ColumnMasker.HideInvisible<BranchOrder>(dtGrid);
         }
     }
 }

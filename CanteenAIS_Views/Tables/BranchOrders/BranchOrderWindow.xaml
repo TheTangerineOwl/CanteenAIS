@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:template="clr-namespace:CanteenAIS_Views.BaseTemplates"
         Title="{Binding Title}"
-        Style="{StaticResource WindowStyle}">
+        Style="{StaticResource WindowStyle}" Loaded="Window_Loaded">
 
     <Grid>
         <DockPanel LastChildFill="True">

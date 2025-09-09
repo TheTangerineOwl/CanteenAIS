@@ -6,7 +6,7 @@
         xmlns:template="clr-namespace:CanteenAIS_Views.BaseTemplates"
         mc:Ignorable="d"
         Title="{Binding WindowTitle}"
-        Style="{StaticResource SmallWindowStyle}">
+        Style="{StaticResource SmallWindowStyle}" x:Name="window" Loaded="window_Loaded">
 
     <DockPanel>
         <template:DialogButtons DockPanel.Dock="Bottom"
@@ -37,5 +37,16 @@
                 />
             </StackPanel>
         </GroupBox>
+        <template:Subtable x:Name="Subtable" DataContext="{Binding Subvm, ElementName=window}"
+                           CanAddSubtable="True"
+                           CanEditSubtable="{Binding Path=HasSelectedRow, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                           SelectedIndex="{Binding Path=SelectedIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                           Table="{Binding Path=Table, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                           Title="{Binding Path=Title, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                           AddCommand="{Binding Path=ClickAdd}"
+                           EditCommand="{Binding Path=ClickEdit}"
+                           DeleteCommand="{Binding Path=ClickDelete}"
+                           ExportCommand="{Binding Path=ClickExport}"
+                           GridSelectionChanged="Subtable_GridSelectionChanged"/>
     </DockPanel>
 </Window>

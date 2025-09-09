@@ -75,16 +75,19 @@ namespace CanteenAIS_DB.Database.Queries
 
         public override TSupplyProduct ParseEntity<TSupplyProduct>(DataRow row)
         {
-            return new TSupplyProduct
-            {
-                SupplyId = uint.Parse(row["SupplyId"].ToString()),
-                ProductId = uint.Parse(row["ProductId"].ToString()),
-                ProductName = DataRowExtensions.Field<string>(row, "ProductName"),
-                UnitId = DataRowExtensions.Field<uint>(row, "UnitId"),
-                UnitName = DataRowExtensions.Field<string>(row, "UnitName"),
-                Amount = DataRowExtensions.Field<double>(row, "Amount"),
-                Price = DataRowExtensions.Field<decimal>(row, "Price")
-            };
+            TSupplyProduct sp = new TSupplyProduct();
+            //{
+            sp.SupplyId = uint.TryParse(row["SupplyId"].ToString(), out uint did) ? did : 0;
+            sp.ProductId = uint.TryParse(row["ProductId"].ToString(), out uint pid) ? pid : 0;
+            sp.ProductName = DataRowExtensions.Field<string>(row, "ProductName");
+            sp.UnitId = DataRowExtensions.Field<uint>(row, "UnitId");
+            sp.UnitName = DataRowExtensions.Field<string>(row, "UnitName");
+            sp.Amount = DataRowExtensions.Field<double>(row, "Amount");
+            //sp.Price = DataRowExtensions.Field<decimal>(row, "Price");
+            sp.Price = decimal.TryParse(row["Price"].ToString(), out decimal price) ? price : 0;
+            //};
+
+            return sp;
         }
     }
 }

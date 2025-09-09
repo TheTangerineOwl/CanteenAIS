@@ -1,19 +1,23 @@
 ﻿using CanteenAIS_DB.Database.Entities;
 using CanteenAIS_Models;
-using CanteenAIS_ViewModel.EntityViewModels.BranchOrder;
-using System.Windows;
-using System;
 using CanteenAIS_ViewModel.BasicViewModels;
+using CanteenAIS_ViewModel.EntityViewModels.BranchOrder;
+using CanteenAIS_ViewModel.EntityViewModels.OrderProduct;
+using Microsoft.Win32;
+using System;
 using System.Data;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace CanteenAIS_Views.Tables.BranchOrders
 {
     /// <summary>
-    /// Логика взаимодействия для BranchOrderAddEditWindow.xaml
+    /// Логика взаимодействия для OrderAddEditWindow.xaml
     /// </summary>
     public partial class BranchOrderAddEditWindow : Window
     {
         private readonly BasicActionVM<BranchOrderEntity, BranchOrder> vm;
+        public OrderProductVM Subvm = new OrderProductVM();
 
         public BranchOrderAddEditWindow(BranchOrderWindow parent, SimpleModel<BranchOrderEntity> model, bool editMode, DataRow row = null)
         {
@@ -23,19 +27,69 @@ namespace CanteenAIS_Views.Tables.BranchOrders
             {
                 vm = new BranchOrderAddVM(model);
                 vm.OnApply += Add;
-                //idRow.Visibility = Visibility.Collapsed;
             }
             else
             {
                 if (row == null)
                     this.Close();
                 vm = new BranchOrderEditVM(row, model);
+                Subvm.OrderId = vm.Fields.Id;
+                Subvm.LoadForOrder(Subvm.OrderId);
                 vm.OnApply += Edit;
                 idRow.IsEnabled = false;
             }
-
+            Subvm.OnAdd += AddOrderProduct;
+            Subvm.OnEdit += EditOrderProduct;
+            Subvm.OnDelete += DeleteOrderProduct;
+            Subvm.OnExport += SubvmExportCsv;
             vm.OnCancel += Cancel;
             DataContext = vm;
+            Subtable.DataContext = Subvm;
+        }
+
+        private void AddOrderProduct()
+        {
+            Subvm.SelectedIndex = -1;
+            OrderProductAddEditWindow addGroup = new OrderProductAddEditWindow(this, Subvm, false);
+            addGroup.ShowDialog();
+        }
+
+        private void EditOrderProduct(DataRow row)
+        {
+            OrderProductAddEditWindow editGroup = new OrderProductAddEditWindow(this, Subvm, true, row);
+            editGroup.ShowDialog();
+        }
+
+        private void DeleteOrderProduct(DataRow row)
+        {
+            MessageBoxResult dr = MessageBox.Show("Удалить запись?", "Удаление данных", MessageBoxButton.YesNo);
+            if (dr == MessageBoxResult.Yes)
+                Subvm.DeleteRow(row);
+        }
+
+        public void SubvmExportCsv()
+        {
+            try
+            {
+                SaveFileDialog dialog = new SaveFileDialog
+                {
+                    AddExtension = true,
+                    CheckPathExists = true,
+                    CreatePrompt = true,
+                    OverwritePrompt = true,
+                    DefaultExt = "*.csv",
+                    Filter = "CSV files (*.csv)|*.csv|All files (*.*)|*.*"
+                };
+                if (dialog.ShowDialog() == true)
+                {
+                    string file = dialog.FileName;
+                    Subvm.ExportCsv(file);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void Add()
@@ -45,6 +99,7 @@ namespace CanteenAIS_Views.Tables.BranchOrders
                 try
                 {
                     vmAdd.Add();
+                    Subvm.AddTableToDB(vm.Fields.Id);
                     this.Close();
                 }
                 catch (Exception ex)
@@ -62,6 +117,7 @@ namespace CanteenAIS_Views.Tables.BranchOrders
                 try
                 {
                     vmEdit.Edit();
+                    Subvm.EditTableInDB(vm.Fields.Id);
                     this.Close();
                 }
                 catch (Exception ex)
@@ -76,6 +132,16 @@ namespace CanteenAIS_Views.Tables.BranchOrders
         {
             vm.Cancel();
             this.Close();
+        }
+
+        private void Subtable_GridSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Subvm.HasSelectedRow = Subtable.SelectedIndex != -1;
+        }
+
+        private void window_Loaded(object sender, RoutedEventArgs e)
+        {
+            Subtable.HideInvisible<OrderProduct>();
         }
     }
 }

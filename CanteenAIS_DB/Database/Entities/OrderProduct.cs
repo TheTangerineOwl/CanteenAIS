@@ -4,7 +4,9 @@ namespace CanteenAIS_DB.Database.Entities
 {
     public abstract class OrderProductEntity : DoubleEntity
     {
+        [ColumnDisplay("OrderId", true, 0)]
         public override uint FirstId { get => OrderId; set => OrderId = value; }
+        [ColumnDisplay("ProductId", true, 0)]
         public override uint SecondId { get => ProductId; set => ProductId = value; }
 
         [ColumnDisplay("Заказ", true, 0)]

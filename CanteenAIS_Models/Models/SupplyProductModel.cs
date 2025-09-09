@@ -37,7 +37,7 @@ namespace CanteenAIS_Models.Models
                 UnitName = info.UnitName,
                 Price = info.Price
             };
-            (result.SupplyId, result.ProductId) = GetPK(row);
+            //(result.SupplyId, result.ProductId) = GetPK(row);
             TableContext.Update(result);
         }
 

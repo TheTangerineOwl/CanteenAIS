@@ -6,27 +6,25 @@ using System.Data;
 using System.Linq;
 using Entities = CanteenAIS_DB.Database.Entities;
 
-namespace CanteenAIS_ViewModel.EntityViewModels.Ingredient
+namespace CanteenAIS_ViewModel.EntityViewModels.OrderProduct
 {
-    public class IngredientEditVM : BasicEditVM<Entities.IngredientEntity, Entities.Ingredient>
+    public class OrderProductEditVM : BasicEditVM<Entities.OrderProductEntity, Entities.OrderProduct>
     {
-        public IngredientEditVM(DataRow ingredientRow, TableModel<Entities.IngredientEntity> tableModel)
-            : base(ingredientRow, tableModel)
+        public OrderProductEditVM(DataRow orderproductRow, TableModel<Entities.OrderProductEntity> tableModel)
+            : base(orderproductRow, tableModel)
         {
             _units = MainServices.GetInstance().MeasureUnits.FetchValues<Entities.MeasureUnit>().ToList();
             _unit = Units.Where(item => item.Id == Fields.UnitId).FirstOrDefault();
             _products = MainServices.GetInstance().Products.FetchValues<Entities.Product>().ToList();
             _product = Products.Where(item => item.Id == Fields.ProductId).FirstOrDefault();
-            _gross = Fields.Gross;
-            _net = Fields.Net;
+            _amount = Fields.Amount;
         }
 
         protected override void Clear()
         {
             _unit = Units.Where(item => item.Id == Fields.UnitId).FirstOrDefault();
             _product = Products.Where(item => item.Id == Fields.ProductId).FirstOrDefault();
-            _gross = Fields.Gross;
-            _net = Fields.Net;
+            _amount = Fields.Amount;
         }
 
         private IList<Entities.MeasureUnit> _units;
@@ -50,27 +48,15 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Ingredient
             set => Set(ref _product, value);
         }
 
-        private double _net;
-        public double Net
+        private double _amount;
+        public double Amount
         {
-            get => _net;
+            get => _amount;
             set
             {
                 if (!ValueChecker.CheckValueDouble(value.ToString(), out double _))
-                    value = Fields.Net;
-                Set(ref _net, value);
-            }
-        }
-
-        private double _gross;
-        public double Gross
-        {
-            get => _gross;
-            set
-            {
-                if (!ValueChecker.CheckValueDouble(value.ToString(), out double _))
-                    value = Fields.Gross;
-                Set(ref _gross, value);
+                    value = Fields.Amount;
+                Set(ref _amount, value);
             }
         }
 
@@ -89,12 +75,9 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Ingredient
             if (!ValueChecker.CheckValueUint(Product.Id.ToString(), out uint product))
                 throw new ArgumentException("Параметр не может быть 0!", nameof(Product.Id));
             Fields.ProductId = product;
-            if (!ValueChecker.CheckValueDouble(Gross.ToString(), out double gross))
-                throw new ArgumentException("Параметр не может быть 0!", nameof(Gross));
-            Fields.Gross = gross;
-            if (!ValueChecker.CheckValueDouble(Net.ToString(), out double net))
-                throw new ArgumentException("Параметр не может быть 0!", nameof(Net));
-            Fields.Net = net;
+            if (!ValueChecker.CheckValueDouble(Amount.ToString(), out double amount))
+                throw new ArgumentException("Параметр не может быть 0!", nameof(Amount));
+            Fields.Amount = amount;
         }
 
         public override void Edit()
@@ -102,8 +85,7 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Ingredient
             ParseFields();
             Row.SetField("ProductId", Fields.ProductId);
             Row.SetField("ProductName", Fields.ProductName);
-            Row.SetField("Gross", Fields.Gross);
-            Row.SetField("Amount", Fields.Net);
+            Row.SetField("Amount", Fields.Amount);
             Row.SetField("UnitId", Fields.UnitId);
             Row.SetField("UnitName", Fields.UnitName);
         }

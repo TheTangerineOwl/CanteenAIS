@@ -13,17 +13,5 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Dish
         public DishVM(SimpleModel<Entities.DishEntity> tableModel, uint menuElementId)
             : base(tableModel, menuElementId) { }
 
-        public IngredientVM subvm;
-
-        public override int SelectedIndex
-        {
-            get => selectedIndex;
-            set
-            {
-                if (selectedIndex > 0 && selectedIndex <= Table.Rows.Count)
-                    subvm.DishId = Table.Rows[selectedIndex].Field<uint>("Id");
-                Set(ref selectedIndex, value);
-            }
-        }
     }
 }

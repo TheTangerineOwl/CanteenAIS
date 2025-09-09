@@ -45,6 +45,9 @@
     <Compile Include="EntityViewModels\IngredientVM\IngredientAddVM.cs" />
     <Compile Include="EntityViewModels\IngredientVM\IngredientEditVM.cs" />
     <Compile Include="EntityViewModels\IngredientVM\IngredientVM.cs" />
+    <Compile Include="EntityViewModels\SupplyProductVM\SupplyProductEditVM.cs" />
+    <Compile Include="EntityViewModels\SupplyProductVM\SupplyProductAddVM.cs" />
+    <Compile Include="EntityViewModels\SupplyProductVM\SupplyProductVM.cs" />
     <Compile Include="EntityViewModels\SupplyVM\SupplyAddVM.cs" />
     <Compile Include="EntityViewModels\SupplyVM\SupplyEditVM.cs" />
     <Compile Include="EntityViewModels\SupplyVM\SupplyFilterVM.cs" />
@@ -106,6 +109,9 @@
     <Compile Include="ManagementViewModels\UserVM\ChangePasswordVM.cs" />
     <Compile Include="ManagementViewModels\UserVM\LoginVM.cs" />
     <Compile Include="ManagementViewModels\UserVM\RegistrationVM.cs" />
+    <Compile Include="EntityViewModels\OrderProductVM\OrderProductAddVM.cs" />
+    <Compile Include="EntityViewModels\OrderProductVM\OrderProductEditVM.cs" />
+    <Compile Include="EntityViewModels\OrderProductVM\OrderProductVM.cs" />
     <Compile Include="SQLQueryVM.cs" />
     <Compile Include="StaticViewModels\AboutProgramVM.cs" />
     <Compile Include="BasicViewModels\BasicVM.cs" />

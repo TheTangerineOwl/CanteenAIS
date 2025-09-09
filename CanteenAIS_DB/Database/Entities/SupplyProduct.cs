@@ -4,7 +4,9 @@ namespace CanteenAIS_DB.Database.Entities
 {
     public abstract class SupplyProductEntity : DoubleEntity
     {
+        [ColumnDisplay("SupplyId", false, 0)]
         public override uint FirstId { get => SupplyId; set => SupplyId = value; }
+        [ColumnDisplay("ProductId", false, 0)]
         public override uint SecondId { get => ProductId; set => ProductId = value; }
 
         [ColumnDisplay("SupplyId", true, 0)]

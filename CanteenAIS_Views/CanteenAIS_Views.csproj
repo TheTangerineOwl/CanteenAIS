@@ -144,6 +144,12 @@
     <Compile Include="BaseTemplates\TableControlPanel.xaml.cs">
       <DependentUpon>TableControlPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Tables\SupplyProducts\SupplyProductAddEditWindow.xaml.cs">
+      <DependentUpon>SupplyProductAddEditWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tables\OrderProducts\OrderProductAddEditWindow.xaml.cs">
+      <DependentUpon>OrderProductAddEditWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Tables\Ingredients\IngredientAddEditWindow.xaml.cs">
       <DependentUpon>IngredientAddEditWindow.xaml</DependentUpon>
     </Compile>
@@ -388,6 +394,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="BaseTemplates\TableControlPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tables\SupplyProducts\SupplyProductAddEditWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tables\OrderProducts\OrderProductAddEditWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

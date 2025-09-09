@@ -6,27 +6,27 @@ using System.Data;
 using System.Linq;
 using Entities = CanteenAIS_DB.Database.Entities;
 
-namespace CanteenAIS_ViewModel.EntityViewModels.Ingredient
+namespace CanteenAIS_ViewModel.EntityViewModels.SupplyProduct
 {
-    public class IngredientAddVM : BasicAddVM<Entities.IngredientEntity, Entities.Ingredient>
+    public class SupplyProductAddVM : BasicAddVM<Entities.SupplyProductEntity, Entities.SupplyProduct>
     {
-        public IngredientAddVM(TableModel<Entities.IngredientEntity> tableModel)
+        public SupplyProductAddVM(TableModel<Entities.SupplyProductEntity> tableModel)
             : base(tableModel)
         {
             _units = MainServices.GetInstance().MeasureUnits.FetchValues<Entities.MeasureUnit>().ToList();
             _unit = Units.FirstOrDefault();
             _products = MainServices.GetInstance().Products.FetchValues<Entities.Product>().ToList();
             _product = Products.FirstOrDefault();
-            _gross = 0;
-            _net = 0;
+            _amount = 0;
+            _price = 0;
         }
 
         protected override void Clear()
         {
             _unit = Units.FirstOrDefault();
             _product = Products.FirstOrDefault();
-            _gross = 0;
-            _net = 0;
+            _amount = 0;
+            _price = 0;
         }
 
         private IList<Entities.MeasureUnit> _units;
@@ -50,27 +50,27 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Ingredient
             set => Set(ref _product, value);
         }
 
-        private double _net;
-        public double Net
+        private double _amount;
+        public double Amount
         {
-            get => _net;
+            get => _amount;
             set
             {
                 if (!ValueChecker.CheckValueDouble(value.ToString(), out double _))
                     value = 0;
-                Set(ref _net, value);
+                Set(ref _amount, value);
             }
         }
 
-        private double _gross;
-        public double Gross
+        private decimal _price;
+        public decimal Price
         {
-            get => _gross;
+            get => _price;
             set
             {
-                if (!ValueChecker.CheckValueDouble(value.ToString(), out double _))
+                if (!ValueChecker.CheckValueDecimal(value.ToString(), out decimal _))
                     value = 0;
-                Set(ref _gross, value);
+                Set(ref _price, value);
             }
         }
 
@@ -91,12 +91,12 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Ingredient
                 throw new ArgumentException("Параметр не может быть 0!", nameof(Product.Id));
             Fields.ProductId = product;
             Fields.ProductName = Product.Name;
-            if (!ValueChecker.CheckValueDouble(Gross.ToString(), out double gross))
-                throw new ArgumentException("Параметр не может быть 0!", nameof(Gross));
-            Fields.Gross = gross;
-            if (!ValueChecker.CheckValueDouble(Net.ToString(), out double net))
-                throw new ArgumentException("Параметр не может быть 0!", nameof(Net));
-            Fields.Net = net;
+            if (!ValueChecker.CheckValueDouble(Amount.ToString(), out double amount))
+                throw new ArgumentException("Параметр не может быть 0!", nameof(Amount));
+            Fields.Amount = amount;
+            if (!ValueChecker.CheckValueDecimal(Price.ToString(), out decimal price))
+                throw new ArgumentException("Параметр не может быть 0!", nameof(Amount));
+            Fields.Price = price;
         }
 
         public override void Add()
@@ -105,8 +105,8 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Ingredient
             DataRow row = Model.Table.NewRow();
             row.SetField("ProductId", Fields.ProductId);
             row.SetField("ProductName", Fields.ProductName);
-            row.SetField("Gross", Fields.Gross);
-            row.SetField("Net", Fields.Net);
+            row.SetField("Amount", Fields.Amount);
+            row.SetField("Price", Fields.Amount);
             row.SetField("UnitId", Fields.UnitId);
             row.SetField("UnitName", Fields.UnitName);
             Model.Table.Rows.Add(row);

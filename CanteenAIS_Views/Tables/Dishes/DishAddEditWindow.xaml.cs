@@ -1,6 +1,5 @@
 ﻿using CanteenAIS_DB.Database.Entities;
 using CanteenAIS_Models;
-using CanteenAIS_Models.Models;
 using CanteenAIS_ViewModel.BasicViewModels;
 using CanteenAIS_ViewModel.EntityViewModels.Dish;
 using CanteenAIS_ViewModel.EntityViewModels.Ingredient;
@@ -19,8 +18,6 @@ namespace CanteenAIS_Views.Tables.Dishes
     {
         private readonly BasicActionVM<DishEntity, Dish> vm;
         public IngredientVM Subvm = new IngredientVM();
-
-        // public IngredientVM ingredientVM = new IngredientVM(dishId);
 
         public DishAddEditWindow(DishWindow parent, SimpleModel<DishEntity> model, bool editMode, DataRow row = null)
         {
@@ -104,7 +101,6 @@ namespace CanteenAIS_Views.Tables.Dishes
                 try
                 {
                     vmAdd.Add();
-                    //Subvm.DishId = vmAdd.Fields.Id;
                     Subvm.AddTableToDB(vm.Fields.Id);
                     this.Close();
                 }
@@ -123,7 +119,6 @@ namespace CanteenAIS_Views.Tables.Dishes
                 try
                 {
                     vmEdit.Edit();
-                    //Subvm.DishId = vmEdit.Fields.Id;
                     Subvm.EditTableInDB(vm.Fields.Id);
                     this.Close();
                 }

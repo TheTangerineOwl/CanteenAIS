@@ -30,6 +30,7 @@ namespace CanteenAIS_Views.Tables.Supplies
         {
             if (model is SimpleModel<SupplyEntity> model1)
             {
+                vm.SelectedIndex = -1;
                 SupplyAddEditWindow addGroup = new SupplyAddEditWindow(this, model1, false);
                 addGroup.ShowDialog();
             }
@@ -103,6 +104,11 @@ namespace CanteenAIS_Views.Tables.Supplies
             {
                 MessageBox.Show(ex.Message, "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            ColumnMasker.HideInvisible<Supply>(dtGrid);
         }
     }
 }

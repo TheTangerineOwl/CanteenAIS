@@ -1,35 +1,36 @@
 ﻿using CanteenAIS_DB.Database.Entities;
+using CanteenAIS_Models;
+using CanteenAIS_ViewModel.EntityViewModels.OrderProduct;
 using System.Windows;
 using System;
 using CanteenAIS_ViewModel.BasicViewModels;
 using System.Data;
-using CanteenAIS_ViewModel.EntityViewModels.Ingredient;
 
-namespace CanteenAIS_Views.Tables.Dishes
+namespace CanteenAIS_Views.Tables.BranchOrders
 {
     /// <summary>
-    /// Логика взаимодействия для IngredientAddEditWindow.xaml
+    /// Логика взаимодействия для OrderProductAddEditWindow.xaml
     /// </summary>
-    public partial class IngredientAddEditWindow : Window
+    public partial class OrderProductAddEditWindow : Window
     {
-        private readonly BasicActionVM<IngredientEntity, Ingredient> vm;
-        public IngredientVM Subvm;
+        private readonly BasicActionVM<OrderProductEntity, OrderProduct> vm;
+        public OrderProductVM Subvm;
 
-        public IngredientAddEditWindow(DishAddEditWindow parent, IngredientVM subvm, bool editMode, DataRow ingredientRow = null)
+        public OrderProductAddEditWindow(BranchOrderAddEditWindow parent, OrderProductVM subvm, bool editMode, DataRow orderproductRow = null)
         {
             Subvm = subvm;
             InitializeComponent();
             Owner = parent;
             if (!editMode)
             {
-                vm = new IngredientAddVM(Subvm.Model);
+                vm = new OrderProductAddVM(Subvm.Model);
                 vm.OnApply += Add;
             }
             else
             {
-                if (ingredientRow == null)
+                if (orderproductRow == null)
                     this.Close();
-                vm = new IngredientEditVM(ingredientRow, Subvm.Model);//, Subvm.DishId.Value);
+                vm = new OrderProductEditVM(orderproductRow, Subvm.Model);
                 vm.OnApply += Edit;
             }
             vm.OnCancel += Cancel;
@@ -38,7 +39,7 @@ namespace CanteenAIS_Views.Tables.Dishes
 
         private void Add()
         {
-            if (vm is IngredientAddVM vmAdd)
+            if (vm is OrderProductAddVM vmAdd)
             {
                 try
                 {
@@ -55,7 +56,7 @@ namespace CanteenAIS_Views.Tables.Dishes
 
         private void Edit()
         {
-            if (vm is IngredientEditVM vmEdit)
+            if (vm is OrderProductEditVM vmEdit)
             {
                 try
                 {

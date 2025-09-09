@@ -76,8 +76,8 @@ namespace CanteenAIS_DB.Database.Queries
         {
             return new TOrderProduct
             {
-                OrderId = uint.Parse(row["OrderId"].ToString()),
-                ProductId = uint.Parse(row["ProductId"].ToString()),
+                OrderId = uint.TryParse(row["OrderId"].ToString(), out uint did) ? did : 0,
+                ProductId = uint.TryParse(row["ProductId"].ToString(), out uint pid) ? pid : 0,
                 ProductName = DataRowExtensions.Field<string>(row, "ProductName"),
                 UnitId = DataRowExtensions.Field<uint>(row, "UnitId"),
                 UnitName = DataRowExtensions.Field<string>(row, "UnitName"),
