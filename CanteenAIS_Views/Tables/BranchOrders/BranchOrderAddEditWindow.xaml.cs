@@ -23,7 +23,7 @@ namespace CanteenAIS_Views.Tables.BranchOrders
             {
                 vm = new BranchOrderAddVM(model);
                 vm.OnApply += Add;
-                idRow.Visibility = Visibility.Collapsed;
+                //idRow.Visibility = Visibility.Collapsed;
             }
             else
             {
@@ -31,6 +31,7 @@ namespace CanteenAIS_Views.Tables.BranchOrders
                     this.Close();
                 vm = new BranchOrderEditVM(row, model);
                 vm.OnApply += Edit;
+                idRow.IsEnabled = false;
             }
 
             vm.OnCancel += Cancel;

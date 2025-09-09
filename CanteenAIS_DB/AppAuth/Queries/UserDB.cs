@@ -36,10 +36,9 @@ namespace CanteenAIS_DB.AppAuth.Queries
                     "`DateOfBirth`=@entityDateOfBirth " +
                     "WHERE `Id`=@entityId;";
 
-        protected override MySqlParameterCollection FillParameters(UserEntity entity, MySqlCommand command, bool withId = true)
+        protected override MySqlParameterCollection FillParameters(UserEntity entity, MySqlCommand command)
         {
-            if (withId)
-                command.Parameters.AddWithValue("@entityId", entity.Id);
+            command.Parameters.AddWithValue("@entityId", entity.Id);
             command.Parameters.AddWithValue("@entityLogin", entity.Login);
             command.Parameters.AddWithValue("@entityPassword", entity.Password);
             command.Parameters.AddWithValue("@entityLastName", entity.LastName);
@@ -47,6 +46,23 @@ namespace CanteenAIS_DB.AppAuth.Queries
             command.Parameters.AddWithValue("@entityPatronim", entity.Patronim);
             command.Parameters.AddWithValue("@entityDateOfBirth", entity.DateOfBirth);
             return command.Parameters;
+        }
+
+        protected void FillRegistration(UserEntity entity, MySqlCommand command)
+        {
+            command.Parameters.AddWithValue("@entityLogin", entity.Login);
+            command.Parameters.AddWithValue("@entityPassword", entity.Password);
+            command.Parameters.AddWithValue("@entityLastName", entity.LastName);
+            command.Parameters.AddWithValue("@entityFirstName", entity.FirstName);
+            command.Parameters.AddWithValue("@entityPatronim", entity.Patronim);
+            command.Parameters.AddWithValue("@entityDateOfBirth", entity.DateOfBirth);
+        }
+
+        public override void Create(UserEntity entity)
+        {
+            MySqlCommand command = new MySqlCommand(QueryCreate);
+            FillRegistration(entity, command);
+            DbConnection.GetInstance().ExecMySqlQuery(command, ref exception);
         }
 
         protected override IList<TUser> AddFromRows<TUser>(DataTable table)

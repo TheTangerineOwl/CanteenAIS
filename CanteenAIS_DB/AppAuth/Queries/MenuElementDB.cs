@@ -12,9 +12,9 @@ namespace CanteenAIS_DB.AppAuth.Queries
         protected override string TableName => "menuelements";
 
         protected override string QueryCreate => "INSERT INTO menuelements (" +
-                    "`ParentId`, `Name`, `DllName`, `FuncName`, `Order`, `IsAllowedByDefault`" +
+                    "`Id`, `ParentId`, `Name`, `DllName`, `FuncName`, `Order`, `IsAllowedByDefault`" +
                     ") VALUES (" +
-                    "@entityParentId, @entityName, @entityDllName, @entityFuncName, @entityOrder, @entityIsDefault);";
+                    "@entityId, @entityParentId, @entityName, @entityDllName, @entityFuncName, @entityOrder, @entityIsDefault);";
 
         protected override string QueryRead => "SELECT " +
                     "me.`Id` AS `Id`, " +
@@ -38,10 +38,9 @@ namespace CanteenAIS_DB.AppAuth.Queries
                     "`IsAllowedByDefault`=@entityIsDefault " +
                     "WHERE `Id`=@entityId;";
 
-        protected override MySqlParameterCollection FillParameters(MenuElementEntity entity, MySqlCommand command, bool withId = true)
+        protected override MySqlParameterCollection FillParameters(MenuElementEntity entity, MySqlCommand command)
         {
-            if (withId)
-                command.Parameters.AddWithValue("@entityId", entity.Id);
+            command.Parameters.AddWithValue("@entityId", entity.Id);
             command.Parameters.AddWithValue("@entityParentId", entity.ParentId);
             command.Parameters.AddWithValue("@entityParentName", entity.ParentName);
             command.Parameters.AddWithValue("@entityName", entity.Name);

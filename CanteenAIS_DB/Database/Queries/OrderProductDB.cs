@@ -42,7 +42,7 @@ namespace CanteenAIS_DB.Database.Queries
             $"DELETE FROM orderproducts " +
             $"WHERE `OrderId`=@entityOrderId AND `ProductId`=@entityProductId";
 
-        protected override MySqlParameterCollection FillParameters(OrderProductEntity entity, MySqlCommand command, bool withId = true)
+        protected override MySqlParameterCollection FillParameters(OrderProductEntity entity, MySqlCommand command)
         {
             command.Parameters.AddWithValue("@entityOrderId", entity.OrderId);
             command.Parameters.AddWithValue("@entityProductId", entity.ProductId);

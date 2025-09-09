@@ -24,7 +24,7 @@ namespace CanteenAIS_Views.Tables.AssortmentGroups
             {
                 vm = new AssortmentGroupAddVM(model);
                 vm.OnApply += Add;
-                idRow.Visibility = Visibility.Collapsed;
+                //idRow.Visibility = Visibility.Collapsed;
             }
             else
             {
@@ -32,6 +32,7 @@ namespace CanteenAIS_Views.Tables.AssortmentGroups
                     this.Close();
                 vm = new AssortmentGroupEditVM(row, model);
                 vm.OnApply += Edit;
+                idRow.IsEnabled = false;
             }
 
             vm.OnCancel += Cancel;

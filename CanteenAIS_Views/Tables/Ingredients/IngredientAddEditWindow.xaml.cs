@@ -1,46 +1,46 @@
 ﻿using CanteenAIS_DB.Database.Entities;
 using CanteenAIS_Models;
-using CanteenAIS_ViewModel.EntityViewModels.MeasureUnit;
+using CanteenAIS_ViewModel.EntityViewModels.Dish;
 using System.Windows;
 using System;
 using CanteenAIS_ViewModel.BasicViewModels;
 using System.Data;
+using CanteenAIS_ViewModel.EntityViewModels.Ingredient;
 
-namespace CanteenAIS_Views.Tables.MeasureUnits
+namespace CanteenAIS_Views.Tables.Dishes
 {
     /// <summary>
-    /// Логика взаимодействия для MeasureUnitAddEditWindow.xaml
+    /// Логика взаимодействия для IngredientAddEditWindow.xaml
     /// </summary>
-    public partial class MeasureUnitAddEditWindow : Window
+    public partial class IngredientAddEditWindow : Window
     {
-        private readonly BasicActionVM<MeasureUnitEntity, MeasureUnit> vm;
+        private readonly BasicActionVM<IngredientEntity, Ingredient> vm;
+        public IngredientVM Subvm;
 
-        public MeasureUnitAddEditWindow(MeasureUnitWindow parent, SimpleModel<MeasureUnitEntity> model, bool editMode, DataRow row = null)
+        public IngredientAddEditWindow(DishAddEditWindow parent, IngredientVM subvm, bool editMode, DataRow ingredientRow = null)
         {
+            Subvm = subvm;
             InitializeComponent();
             Owner = parent;
             if (!editMode)
             {
-                vm = new MeasureUnitAddVM(model);
+                vm = new IngredientAddVM(Subvm.Model);
                 vm.OnApply += Add;
-                //idRow.Visibility = Visibility.Collapsed;
             }
             else
             {
-                if (row == null)
+                if (ingredientRow == null)
                     this.Close();
-                vm = new MeasureUnitEditVM(row, model);
+                vm = new IngredientEditVM(ingredientRow, Subvm.Model);//, Subvm.DishId.Value);
                 vm.OnApply += Edit;
-                idRow.IsEnabled = false;
             }
-
             vm.OnCancel += Cancel;
             DataContext = vm;
         }
 
         private void Add()
         {
-            if (vm is MeasureUnitAddVM vmAdd)
+            if (vm is IngredientAddVM vmAdd)
             {
                 try
                 {
@@ -57,7 +57,7 @@ namespace CanteenAIS_Views.Tables.MeasureUnits
 
         private void Edit()
         {
-            if (vm is MeasureUnitEditVM vmEdit)
+            if (vm is IngredientEditVM vmEdit)
             {
                 try
                 {

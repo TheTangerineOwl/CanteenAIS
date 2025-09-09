@@ -23,7 +23,7 @@ namespace CanteenAIS_Views.Tables.SupplierHeads
             {
                 vm = new SupplierHeadAddVM(model);
                 vm.OnApply += Add;
-                idRow.Visibility = Visibility.Collapsed;
+                //idRow.Visibility = Visibility.Collapsed;
             }
             else
             {
@@ -31,6 +31,7 @@ namespace CanteenAIS_Views.Tables.SupplierHeads
                     this.Close();
                 vm = new SupplierHeadEditVM(row, model);
                 vm.OnApply += Edit;
+                idRow.IsEnabled = false;
             }
 
             vm.OnCancel += Cancel;

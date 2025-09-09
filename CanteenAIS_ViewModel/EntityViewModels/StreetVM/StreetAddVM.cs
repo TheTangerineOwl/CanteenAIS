@@ -13,6 +13,7 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Street
         public StreetAddVM(TableModel<Entities.StreetEntity> tableModel)
             : base(tableModel)
         {
+            _id = 1;
             _cities = MainServices.GetInstance().Cities.FetchValues<Entities.City>().ToList();
             _city = Cities.FirstOrDefault();
             _name = string.Empty;
@@ -20,8 +21,21 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Street
 
         protected override void Clear()
         {
+            Id = 1;
             City = Cities.FirstOrDefault();
             Name = string.Empty;
+        }
+
+        private uint _id;
+        public uint Id
+        {
+            get => _id;
+            set
+            {
+                if (!ValueChecker.CheckValueUint(value.ToString(), out _))
+                    value = 1;
+                Set(ref _id, value);
+            }
         }
 
         private IList<Entities.City> _cities;
@@ -54,6 +68,10 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Street
 
         public override void ParseFields()
         {
+            if (!ValueChecker.CheckValueUint(Id.ToString(), out uint id, false))
+                throw new ArgumentNullException("Некорректное значение!", nameof(Id));
+            Fields.Id = id;
+
             if (!ValueChecker.CheckValueUint(City.Id.ToString(), out uint city))
                 throw new ArgumentException("Некорректный параметр!");
             Fields.CityId = city;

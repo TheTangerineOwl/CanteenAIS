@@ -36,15 +36,15 @@
                     MaxLength="50"/>
                 <template:TextFormFieldChecked LabelText="Имя"
                     IsChecked="{Binding FirstNameCheck, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    Text="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Text="{Binding FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     MaxLength="50"/>
                 <template:TextFormFieldChecked LabelText="Отчество"
                     IsChecked="{Binding PatronimCheck, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    Text="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Text="{Binding Patronim, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     MaxLength="50"/>
                 <template:TextFormFieldChecked LabelText="Телефон"
                     IsChecked="{Binding PhoneCheck, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    Text="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Text="{Binding Phone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     MaxLength="13"/>
             </StackPanel>
         </GroupBox>

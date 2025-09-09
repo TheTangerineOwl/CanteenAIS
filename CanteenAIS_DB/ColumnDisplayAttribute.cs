@@ -12,7 +12,7 @@ namespace CanteenAIS_DB
 
         public int Order { get; private set; }
 
-        public ColumnDisplayAttribute(string name = null, bool visible = true, int order = -1) : base(name)
+        public ColumnDisplayAttribute(string name = null, bool visible = false, int order = -1) : base(name)
         {
             Visible = visible;
             Order = order;

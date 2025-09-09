@@ -13,6 +13,7 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Realization
         public RealizationAddVM(TableModel<Entities.RealizationEntity> tableModel)
             : base(tableModel)
         {
+            _id = 1;
             _units = MainServices.GetInstance().MeasureUnits.FetchValues<Entities.MeasureUnit>().ToList();
             _unit = Units.FirstOrDefault();
             _dishes = MainServices.GetInstance().Dishes.FetchValues<Entities.Dish>().ToList();
@@ -23,10 +24,23 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Realization
 
         protected override void Clear()
         {
+            Id = 1;
             Unit = Units.FirstOrDefault();
             Dish = Dishes.FirstOrDefault();
             Amount = 0;
             DateTimePick = DateTime.Now;
+        }
+
+        private uint _id;
+        public uint Id
+        {
+            get => _id;
+            set
+            {
+                if (!ValueChecker.CheckValueUint(value.ToString(), out _))
+                    value = 1;
+                Set(ref _id, value);
+            }
         }
 
         private IList<Entities.MeasureUnit> _units;
@@ -83,6 +97,10 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Realization
 
         public override void ParseFields()
         {
+            if (!ValueChecker.CheckValueUint(Id.ToString(), out uint id, false))
+                throw new ArgumentNullException("Некорректное значение!", nameof(Id));
+            Fields.Id = id;
+
             if (!ValueChecker.CheckValueUint(Unit.Id.ToString(), out uint unit))
                 throw new ArgumentException("Некорректный параметр!", nameof(Unit.Id));
             Fields.UnitId = unit;

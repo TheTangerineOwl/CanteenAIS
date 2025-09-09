@@ -30,6 +30,7 @@ namespace CanteenAIS_Views.Tables.Dishes
         {
             if (model is SimpleModel<DishEntity> model1)
             {
+                vm.SelectedIndex = -1;
                 DishAddEditWindow addGroup = new DishAddEditWindow(this, model1, false);
                 addGroup.ShowDialog();
             }
@@ -103,6 +104,11 @@ namespace CanteenAIS_Views.Tables.Dishes
             {
                 MessageBox.Show(ex.Message, "Ошибка!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            ColumnMasker.HideInvisible<DishEntity>(dtGrid);
         }
     }
 }

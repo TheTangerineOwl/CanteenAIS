@@ -9,11 +9,10 @@ namespace CanteenAIS_DB.Database.Queries
     {
         protected override string TableName => "banks";
 
-        protected override MySqlParameterCollection FillParameters(BankEntity entity, MySqlCommand command, bool withId = true)
+        protected override MySqlParameterCollection FillParameters(BankEntity entity, MySqlCommand command)
         {
             command.Parameters.AddWithValue("@entityName", entity.Name);
-            if (withId)
-                command.Parameters.AddWithValue("@entityId", entity.Id);
+            command.Parameters.AddWithValue("@entityId", entity.Id);
             return command.Parameters;
         }
 

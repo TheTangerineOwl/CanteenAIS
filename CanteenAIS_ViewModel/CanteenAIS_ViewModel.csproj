@@ -42,6 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BasicViewModels\BasicActionVM.cs" />
+    <Compile Include="EntityViewModels\IngredientVM\IngredientAddVM.cs" />
+    <Compile Include="EntityViewModels\IngredientVM\IngredientEditVM.cs" />
+    <Compile Include="EntityViewModels\IngredientVM\IngredientVM.cs" />
     <Compile Include="EntityViewModels\SupplyVM\SupplyAddVM.cs" />
     <Compile Include="EntityViewModels\SupplyVM\SupplyEditVM.cs" />
     <Compile Include="EntityViewModels\SupplyVM\SupplyFilterVM.cs" />

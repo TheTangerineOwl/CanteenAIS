@@ -37,10 +37,10 @@ namespace CanteenAIS_DB.Database.Queries
             "WHERE " +
             "`DishId`=@entityDishId AND `ProductId`=@entityProductId;";
 
-        protected override string QueryDelete => $"DELETE FROM ingredients" +
+        protected override string QueryDelete => $"DELETE FROM ingredients " +
             $"WHERE DishId=@entityDishId AND ProductId=@entityProductId";
 
-        protected override MySqlParameterCollection FillParameters(IngredientEntity en, MySqlCommand command, bool withId = true)
+        protected override MySqlParameterCollection FillParameters(IngredientEntity en, MySqlCommand command)
         {
             command.Parameters.AddWithValue("@entityGross", en.Gross);
             command.Parameters.AddWithValue("@entityNet", en.Net);
@@ -75,9 +75,9 @@ namespace CanteenAIS_DB.Database.Queries
         {
             return new TIngredient
             {
-                DishId = uint.Parse(row["DishId"].ToString()),
+                DishId = uint.TryParse(row["DishId"].ToString(), out uint did) ? did : 0,
                 DishName = DataRowExtensions.Field<string>(row, "DishName"),
-                ProductId = uint.Parse(row["ProductId"].ToString()),
+                ProductId = uint.TryParse(row["ProductId"].ToString(), out uint pid) ? pid : 0,
                 ProductName = DataRowExtensions.Field<string>(row, "ProductName"),
                 UnitId = DataRowExtensions.Field<uint>(row, "UnitId"),
                 UnitName = DataRowExtensions.Field<string>(row, "UnitName"),

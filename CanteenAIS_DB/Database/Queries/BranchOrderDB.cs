@@ -11,9 +11,9 @@ namespace CanteenAIS_DB.Database.Queries
         protected override string TableName => "branchorders";
 
         protected override string QueryCreate => $"INSERT INTO branchorders (" +
-            $"`BranchId`, `DateTime`" +
+            $"`Id`, `BranchId`, `DateTime`" +
             $") VALUES (" +
-            $"@entityBranchId, @entityDateTime" +
+            $"@entityId, @entityBranchId, @entityDateTime" +
             $");";
 
         protected override string QueryRead => $"SELECT " +
@@ -30,10 +30,9 @@ namespace CanteenAIS_DB.Database.Queries
             $"`DateTime`=@entityDateTime " +
             $"WHERE `Id`=@entityId;";
 
-        protected override MySqlParameterCollection FillParameters(BranchOrderEntity entity, MySqlCommand command, bool withId = true)
+        protected override MySqlParameterCollection FillParameters(BranchOrderEntity entity, MySqlCommand command)
         {
-            if (withId)
-                command.Parameters.AddWithValue("@entityId", entity.Id);
+            command.Parameters.AddWithValue("@entityId", entity.Id);
             command.Parameters.AddWithValue("@entityDateTime", entity.DateTime);
             command.Parameters.AddWithValue("@entityBranchId", entity.BranchId);
             return command.Parameters;

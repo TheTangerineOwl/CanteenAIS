@@ -9,11 +9,10 @@ namespace CanteenAIS_DB.Database.Queries
     {
         protected override string TableName => "measureunits";
 
-        protected override MySqlParameterCollection FillParameters(MeasureUnitEntity entity, MySqlCommand command, bool withId = true)
+        protected override MySqlParameterCollection FillParameters(MeasureUnitEntity entity, MySqlCommand command)
         {
             command.Parameters.AddWithValue("@entityName", entity.Name);
-            if (withId)
-                command.Parameters.AddWithValue("@entityId", entity.Id);
+            command.Parameters.AddWithValue("@entityId", entity.Id);
             return command.Parameters;
         }
 

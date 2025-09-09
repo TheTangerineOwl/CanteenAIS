@@ -39,7 +39,7 @@ namespace CanteenAIS_Models.Models
                 UnitId = info.UnitId,
                 UnitName = info.UnitName
             };
-            (result.DishId, result.ProductId) = GetPK(row);
+            //(result.DishId, result.ProductId) = GetPK(row);
             TableContext.Update(result);
         }
 

@@ -10,8 +10,9 @@ namespace CanteenAIS_DB.Database.Queries
         protected override string TableName => "suppliers";
 
         protected override string QueryCreate => "INSERT INTO suppliers (" +
-            "`Name`, `StreetId`, `Building`, `HeadId`, `BankId`, `Account`, `INN`" +
+            "`Id`, `Name`, `StreetId`, `Building`, `HeadId`, `BankId`, `Account`, `INN`" +
             ") VALUES (" +
+            "@entityId, " +
             "@entityName, " +
             "@entityStreetId, " +
             "@entityBUilding, " +
@@ -56,11 +57,10 @@ namespace CanteenAIS_DB.Database.Queries
 
         protected override string QueryDelete => $"DELETE FROM suppliers WHERE Id=@entityId";
 
-        protected override MySqlParameterCollection FillParameters(SupplierEntity entity, MySqlCommand command, bool withId = true)
+        protected override MySqlParameterCollection FillParameters(SupplierEntity entity, MySqlCommand command)
         {
             command.Parameters.AddWithValue("@entityName", entity.Name);
-            if (withId)
-                command.Parameters.AddWithValue("@entityId", entity.Id);
+            command.Parameters.AddWithValue("@entityId", entity.Id);
             command.Parameters.AddWithValue("@entityBuilding", entity.Building);
             command.Parameters.AddWithValue("@entityStreetId", entity.StreetId);
             command.Parameters.AddWithValue("@entityHeadId", entity.HeadId);

@@ -41,7 +41,7 @@ namespace CanteenAIS_DB.AppAuth.Queries
         protected override string QueryDelete => "DELETE FROM userperms " +
             "WHERE `UserId`=@entityUserId AND `ElementId`=@entityElementId;";
 
-        protected override MySqlParameterCollection FillParameters(UserPermEntity entity, MySqlCommand command, bool withId = true)
+        protected override MySqlParameterCollection FillParameters(UserPermEntity entity, MySqlCommand command)
         {
             command.Parameters.AddWithValue("@entityUserId", entity.UserId);
             command.Parameters.AddWithValue("@entityElementId", entity.ElementId);

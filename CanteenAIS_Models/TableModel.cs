@@ -3,10 +3,8 @@ using CanteenAIS_DB.AppAuth.Entities;
 using CanteenAIS_Models.Statics;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Linq;
-using System.Runtime.CompilerServices;
 
 namespace CanteenAIS_Models
 {   
@@ -160,6 +158,11 @@ namespace CanteenAIS_Models
             TableContext.Delete(firstId, secondId);
         }
 
+        public virtual void DeleteRow(uint firstId, uint secondId)
+        {
+            TableContext.Delete(firstId, secondId);
+        }
+
         public override int CompareEntities(TEntity first, TEntity second)
         {
             if (first == null)
@@ -168,8 +171,8 @@ namespace CanteenAIS_Models
                 return 1;
             int compared = first.FirstId.CompareTo(second.FirstId);
             if (compared != 0)
-                first.SecondId.CompareTo(second.SecondId);
-            return 0;
+                return first.SecondId.CompareTo(second.SecondId);
+            return compared;
         }
     }
 }

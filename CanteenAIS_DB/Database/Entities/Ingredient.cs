@@ -4,11 +4,13 @@ namespace CanteenAIS_DB.Database.Entities
 {
     public abstract class IngredientEntity : DoubleEntity
     {
+        [ColumnDisplay("DishId", false, 0)]
         public override uint FirstId { get => DishId; set => DishId = value; }
+        [ColumnDisplay("SecondId", false, 0)]
         public override uint SecondId { get => ProductId; set => ProductId = value; }
 
         public virtual uint DishId { get; set; }
-        [ColumnDisplay("Блюдо", true, 0)]
+        [ColumnDisplay("Блюдо", false, 0)]
         public virtual string DishName { get; set; }
         public virtual uint ProductId { get; set; }
         [ColumnDisplay("Продукт", true, 1)]

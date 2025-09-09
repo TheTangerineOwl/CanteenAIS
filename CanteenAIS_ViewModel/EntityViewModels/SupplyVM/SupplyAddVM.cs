@@ -12,6 +12,7 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Supply
         public SupplyAddVM(TableModel<Entities.SupplyEntity> tableModel)
             : base(tableModel)
         {
+            _id = 1;
             _suppliers = MainServices.GetInstance().Suppliers.FetchValues<Entities.Supplier>().ToList();
             _supplier = Suppliers.FirstOrDefault();
             _time = DateTime.Now;
@@ -19,8 +20,21 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Supply
 
         protected override void Clear()
         {
+            Id = 1;
             Supplier = Suppliers.FirstOrDefault();
             Time = DateTime.Now;
+        }
+
+        private uint _id;
+        public uint Id
+        {
+            get => _id;
+            set
+            {
+                if (!ValueChecker.CheckValueUint(value.ToString(), out _))
+                    value = 1;
+                Set(ref _id, value);
+            }
         }
 
         private IList<Entities.Supplier> _suppliers;
@@ -51,6 +65,9 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Supply
 
         public override void ParseFields()
         {
+            if (!ValueChecker.CheckValueUint(Id.ToString(), out uint id, false))
+                throw new ArgumentNullException("Некорректное значение!", nameof(Id));
+            Fields.Id = id;
             if (!ValueChecker.CheckValueUint(Supplier.Id.ToString(), out uint supplier))
                 throw new ArgumentException("Некорректный параметр!", nameof(Supplier.Id));
             if (!ValueChecker.CheckValueDateTime(Time.ToString(), out DateTime time))

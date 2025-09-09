@@ -1,4 +1,4 @@
-﻿<Window x:Class="CanteenAIS_Views.Tables.SupplierHeads.SupplierHeadAddEditWindow"
+﻿<Window x:Class="CanteenAIS_Views.Tables.Dishes.IngredientAddEditWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -6,7 +6,7 @@
         xmlns:template="clr-namespace:CanteenAIS_Views.BaseTemplates"
         mc:Ignorable="d"
         Title="{Binding WindowTitle}"
-        Style="{StaticResource SmallWindowStyle}">
+        Style="{StaticResource SmallWindowStyle}" x:Name="window">
 
     <DockPanel>
         <template:DialogButtons DockPanel.Dock="Bottom"
@@ -25,22 +25,22 @@
             </GroupBox.HeaderTemplate>
 
             <StackPanel Margin="10" Grid.IsSharedSizeScope="True">
-                <template:UIntFormField x:Name="idRow" LabelText="Id"
-                    ValuePick="{Binding Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    Minimum="1" Default="1" Maximum="1000000000"/>
-
-                <template:TextFormField LabelText="Фамилия"
-                    Text="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    MaxLength="50"/>
-                <template:TextFormField LabelText="Имя"
-                    Text="{Binding FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    MaxLength="50"/>
-                <template:TextFormField LabelText="Отчество"
-                    Text="{Binding Patronim, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    MaxLength="50"/>
-                <template:TextFormField LabelText="Телефон"
-                    Text="{Binding Phone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    MaxLength="13"/>
+                <template:ComboFormField LabelText="Продукт"
+                    ItemsSource="{Binding Products, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedItem="{Binding Product, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                />
+                <template:DoubleFormField LabelText="Брутто"
+                    ValuePick="{Binding Gross, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Minimum="0" Default="0" Maximum="10000000000"
+                />
+                <template:DoubleFormField LabelText="Нетто"
+                    ValuePick="{Binding Net, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Minimum="0" Default="0" Maximum="10000000000"
+                />
+                <template:ComboFormField LabelText="Единица измерения"
+                    ItemsSource="{Binding Units, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedItem="{Binding Unit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                />
             </StackPanel>
         </GroupBox>
     </DockPanel>

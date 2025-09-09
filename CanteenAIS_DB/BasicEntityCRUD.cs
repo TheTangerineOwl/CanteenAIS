@@ -10,19 +10,19 @@ namespace CanteenAIS_DB
 
         protected abstract string TableName { get; }
 
-        protected virtual string QueryCreate => $"INSERT INTO {TableName} (`Name`) VALUES (@entityName);";
+        protected virtual string QueryCreate => $"INSERT INTO {TableName} (`Id`, `Name`) VALUES (@entityId, @entityName);";
 
         protected virtual string QueryRead => $"SELECT * FROM {TableName} ORDER BY `Id`;";
 
         protected virtual string QueryUpdate => $"UPDATE {TableName} SET `Name`=@entityName WHERE `Id`=@entityId;";
 
-        protected abstract MySqlParameterCollection FillParameters(T entity, MySqlCommand command, bool withId = true);
+        protected abstract MySqlParameterCollection FillParameters(T entity, MySqlCommand command);
         protected abstract IList<TEntity> AddFromRows<TEntity>(DataTable table) where TEntity : T, new();
 
         public virtual void Create(T entity)
         {
             MySqlCommand command = new MySqlCommand(QueryCreate);
-            FillParameters(entity, command, false);
+            FillParameters(entity, command);
             DbConnection.GetInstance().ExecMySqlQuery(command, ref exception);
         }
 
