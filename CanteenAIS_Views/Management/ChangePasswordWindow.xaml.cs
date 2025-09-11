@@ -2,6 +2,7 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace CanteenAIS_Views.Management
 {
@@ -20,6 +21,10 @@ namespace CanteenAIS_Views.Management
                 vm.OnChange += ChangePassword;
                 vm.OnSuccessChangePassword += ChangeSuccess;
                 vm.OnCancel += Clear;
+                vm.InputInfo = GetInputInfo(
+                    InputLanguageManager.Current.CurrentInputLanguage.DisplayName,
+                    Keyboard.IsKeyToggled(Key.CapsLock)
+                );
             }
         }
 
@@ -77,6 +82,19 @@ namespace CanteenAIS_Views.Management
             {
                 vm.RepeatedPassword = ((PasswordBox)sender).Password;
             }
+        }
+
+        private string GetInputInfo(string language, bool isCapsLocked)
+        {
+            return !isCapsLocked ? language : language + ", CapsLock включен";
+        }
+
+        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            bool isCapsLocked = e.KeyboardDevice.IsKeyToggled(Key.CapsLock);
+            string lang = InputLanguageManager.Current.CurrentInputLanguage.DisplayName;
+            if (DataContext is ChangePasswordVM vm)
+                vm.InputInfo = GetInputInfo(lang, isCapsLocked);
         }
     }
 }

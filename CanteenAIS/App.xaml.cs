@@ -5,6 +5,7 @@ namespace CanteenAIS
 {
     /// <summary>
     /// Логика взаимодействия для App.xaml
+    /// Входная точка приложения.
     /// </summary>
     public partial class App : Application
     {

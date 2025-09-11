@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 
 namespace CanteenAIS_DB.AppAuth.Entities
 {
+    /// <summary>
+    /// Класс, представляющий пользователя в системе.
+    /// </summary>
     public abstract class UserEntity : SimpleEntity
     {
         [ColumnDisplay( "Логин", true, 0)]

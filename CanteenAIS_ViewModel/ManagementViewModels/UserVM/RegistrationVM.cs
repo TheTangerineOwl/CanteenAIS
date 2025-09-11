@@ -12,6 +12,15 @@ namespace CanteenAIS_ViewModel.ManagementViewModels.User
         private string name = string.Empty;
         private string password = string.Empty;
         private string repeatedPassword = string.Empty;
+        private string _inputInfo = string.Empty;
+        public string InputInfo
+        {
+            get => _inputInfo;
+            set
+            {
+                Set(ref _inputInfo, value);
+            }
+        }
 
         public Action OnRegistrate;
         public Action OnSuccessRegistration;

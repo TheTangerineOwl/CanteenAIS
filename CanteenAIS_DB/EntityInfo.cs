@@ -1,53 +1,43 @@
-﻿using System.ComponentModel;
-
-namespace CanteenAIS_DB
+﻿namespace CanteenAIS_DB
 {
+    /// <summary>
+    /// Базовый класс для всех сущностей, представляющих собой таблицы в БД.
+    /// </summary>
     public abstract class Entity
     {
         public Entity() { }
-
-        public static void CreateFrom<TResult, TInfo>(out TResult res, TInfo info)
-            where TResult : TInfo, new()
-            where TInfo : Entity
-        {
-            res = info.MemberwiseClone() as TResult;
-        }
-
-        public abstract void Copy<TResult, TInfo>(ref TResult res, TInfo info)
-            where TResult : TInfo
-            where TInfo : Entity;
     }
+
+    /// <summary>
+    /// Базовый класс для всех сущностей с одинарным PK.
+    /// </summary>
     public abstract class SimpleEntity : Entity
     {
+        /// <summary>
+        /// Первичный ключ сущности.
+        /// </summary>
         [ColumnDisplay("Id", true, 0)]
         public virtual uint Id { get; set; }
 
         public SimpleEntity() : base() { }
-
-        public override void Copy<TResult, TInfo>(ref TResult res, TInfo info)
-        {
-            if (res is SimpleEntity _res &&
-                info is SimpleEntity _info)
-                _res.Id = _info.Id;
-        }
     }
+
+    /// <summary>
+    /// Базовый класс для всех сущностей с двойным PK (таблицы для связей).
+    /// </summary>
     public abstract class DoubleEntity : Entity
     {
+        /// <summary>
+        /// Первое ключевое значение.
+        /// </summary>
         [ColumnDisplay("FirstId", true, 0)]
         public virtual uint FirstId { get; set; }
+        /// <summary>
+        /// Второе ключевое значение.
+        /// </summary>
         [ColumnDisplay("SecondId", true, 1)]
         public virtual uint SecondId { get; set; }
 
         public DoubleEntity() : base() { }
-
-        public override void Copy<TResult, TInfo>(ref TResult res, TInfo info)
-        {
-            if (res is DoubleEntity _res &&
-                info is DoubleEntity _info)
-            {
-                if (_info.FirstId != default) _res.FirstId = _info.FirstId;
-                if (_info.SecondId != default) _res.SecondId = _info.SecondId;
-            }
-        }
     }
 }

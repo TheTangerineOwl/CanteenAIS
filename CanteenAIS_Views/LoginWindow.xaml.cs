@@ -1,7 +1,9 @@
 ﻿using CanteenAIS_ViewModel.ManagementViewModels.User;
 using System;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Controls;
+using System.Globalization;
 
 namespace CanteenAIS_Views
 {
@@ -18,6 +20,10 @@ namespace CanteenAIS_Views
                 vm.OnLogin += Login;
                 vm.OnLoginSuccess += LoginSuccess;
                 vm.OnCancel += Clear;
+                vm.InputInfo = GetInputInfo(
+                    InputLanguageManager.Current.CurrentInputLanguage.DisplayName,
+                    Keyboard.IsKeyToggled(Key.CapsLock)
+                );
             }
         }
 
@@ -62,6 +68,19 @@ namespace CanteenAIS_Views
             {
                 vm.Password = ((PasswordBox)sender).Password;
             }
+        }
+
+        private string GetInputInfo(string language, bool isCapsLocked)
+        {
+            return !isCapsLocked ? language : language + ", CapsLock включен";
+        }
+
+        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            bool isCapsLocked = e.KeyboardDevice.IsKeyToggled(Key.CapsLock);
+            string lang = InputLanguageManager.Current.CurrentInputLanguage.DisplayName;
+            if (DataContext is LoginVM vm)
+                vm.InputInfo = GetInputInfo(lang, isCapsLocked);
         }
     }
 }

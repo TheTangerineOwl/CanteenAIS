@@ -9,7 +9,7 @@
              mc:Ignorable="d"
              ResizeMode="CanMinimize" Background="LightGray" SizeToContent="WidthAndHeight"
              WindowStartupLocation="CenterScreen"
-             Title="АИС Предприятие общественного питания | Регистрация">
+             Title="АИС Предприятие общественного питания | Регистрация" PreviewKeyDown="Window_PreviewKeyDown">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -27,16 +27,17 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto" MinWidth="100"/>
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <DockPanel Grid.Row="0" Grid.ColumnSpan="3" LastChildFill="True">
             <Image DockPanel.Dock="Left"
                    Source="{StaticResource LoginLogo}" Stretch="Uniform"
-                   MaxHeight="60"/>
+                   MaxHeight="100"/>
             <StackPanel x:Name="textStack" 
                 VerticalAlignment="Center"
                 DockPanel.Dock="Right">
@@ -44,6 +45,10 @@
                    FontSize="16" Margin="5" Padding="2"
                    TextAlignment="Right"
                    TextWrapping="Wrap"
+                   Background="PaleGreen"/>
+                <TextBlock Text="Версия 1.0.0.1"
+                   FontSize="16" Margin="5" Padding="2"
+                   TextAlignment="Right"
                    Background="PaleGoldenrod"/>
                 <TextBlock Text="Регистрация"
                    FontSize="16" Margin="5" Padding="2"
@@ -51,19 +56,22 @@
                    Background="LightYellow"/>
             </StackPanel>
         </DockPanel>
-        <Label Grid.Row="1" Grid.Column="0" Content="Логин" Style="{StaticResource LabelStyle}"/>
+        <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Content="Логин" Style="{StaticResource LabelStyle}"/>
         <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource TextBoxStyle}" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-        <Label Grid.Row="2" Grid.Column="0" Content="Пароль" Style="{StaticResource LabelStyle}"/>
+        <Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" Content="Пароль" Style="{StaticResource LabelStyle}"/>
         <PasswordBox x:Name="passOldBox" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"
                      Style="{StaticResource PasswordBoxStyle}" PasswordChanged="PasswordBox1_PasswordChanged"/>
-        <Label Grid.Row="3" Grid.Column="0" Content="Повторите пароль" Style="{StaticResource LabelStyle}"/>
+        <Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right"  Content="Повторите пароль" Style="{StaticResource LabelStyle}"/>
         <PasswordBox x:Name="passNewBox" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2"
                      Style="{StaticResource PasswordBoxStyle}" PasswordChanged="PasswordBox2_PasswordChanged"/>
-        <Button Content="Зарегистрироваться" Style="{StaticResource DialogButtonStyle}" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
+        <Button Content="Зарегистрировать" Style="{StaticResource DialogButtonStyle}" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
                 HorizontalAlignment="Center" VerticalAlignment="Center" Width="Auto"
                 Command="{Binding ClickRegistrate}" IsDefault="True"/>
         <Button Content="Отмена" Style="{StaticResource DialogButtonStyle}" Grid.Row="4" Grid.Column="2"
                 IsCancel="True"
                 Command="{Binding ClickCancel}"/>
+        <StatusBar Grid.Row="5" Grid.ColumnSpan="3">
+            <Label Content="{Binding InputInfo}"/>
+        </StatusBar>
     </Grid>
 </Window>

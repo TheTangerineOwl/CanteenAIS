@@ -109,17 +109,29 @@ namespace CanteenAIS_ViewModel
             Query = string.Empty;
         }
 
-        public Action OnExport;
+        public Action<string> OnExport;
         public virtual ICommand ClickExport
         {
             get => new Command((obj) =>
-                OnExport?.Invoke()
+                {
+                    if (obj is string format)
+                        OnExport?.Invoke(format);
+                }
             );
         }
 
-        public virtual void ExportCsv(string filename)
+        public virtual void ExportCsv(string filename, string format)
         {
-            ExportTable.ExportCsv(DataBaseTable, filename);
+            ExportFormat export = ExportTable.StringToFormat(format);
+            switch (export)
+            {
+                case ExportFormat.Word:
+                    ExportTable.ExportWord(DataBaseTable, filename); break;
+                case ExportFormat.Excel:
+                    ExportTable.ExportExcel(DataBaseTable, filename); break;
+                default:
+                    ExportTable.ExportCsv(DataBaseTable, filename); break;
+            }
         }
     }
 

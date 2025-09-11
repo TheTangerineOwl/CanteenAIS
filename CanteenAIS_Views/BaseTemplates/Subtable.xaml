@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CanteenAIS_Views.BaseTemplates"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="390" x:Name="root">
+             d:DesignHeight="300" d:DesignWidth="405" x:Name="root">
     <Grid>
         <GroupBox DockPanel.Dock="Top" Margin="10" Header="{Binding Title, ElementName=root}"
                   Style="{StaticResource DialogGroupBoxStyle}"
@@ -21,8 +21,16 @@
                     <Button x:Name="Delete" Content="Удалить" Style="{StaticResource CrudButtonStyle}"
                             Command="{Binding DeleteCommand, ElementName=root}"
                             IsEnabled="{Binding CanEditSubtable, ElementName=root}"/>
-                    <Button x:Name="Export" Content="Экспорт" Style="{StaticResource CrudButtonStyle}"
-                            Command="{Binding ExportCommand, ElementName=root}"/>
+                    <Menu Margin="5" DockPanel.Dock="Right" IsMainMenu="False" UsesItemContainerTemplate="True"
+              HorizontalContentAlignment="Stretch" FontSize="16" FontWeight="SemiBold" Background="LightGray"
+              VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalAlignment="Center" BorderBrush="DimGray" BorderThickness="1">
+                        <MenuItem HorizontalContentAlignment="Stretch" FontSize="16" FontWeight="SemiBold"
+                      Header="Экспорт">
+                            <MenuItem Header="CSV" Command="{Binding ClickExport}" CommandParameter="CSV"/>
+                            <MenuItem Header="Word" Command="{Binding ClickExport}" CommandParameter="Word"/>
+                            <MenuItem Header="Excel" Command="{Binding ClickExport}" CommandParameter="Excel"/>
+                        </MenuItem>
+                    </Menu>
                 </StackPanel>
                 <DataGrid x:Name="SubGrid" Style="{StaticResource TableDataGridStyle}" Margin="10"
                           AutoGenerateColumns="True"

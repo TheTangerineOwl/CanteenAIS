@@ -15,9 +15,20 @@
     </UserControl.Resources>
 
     <DockPanel LastChildFill="True">
-        <Button Content="Экспорт (.csv)"
+        <!--<Button Content="Экспорт (.csv)"
                 Command="{Binding ClickExport}"
-                Style="{StaticResource CrudButtonStyle}"/>
+                Style="{StaticResource CrudButtonStyle}"/>-->
+        <Menu Margin="6" DockPanel.Dock="Right" IsMainMenu="False" UsesItemContainerTemplate="True"
+              HorizontalContentAlignment="Stretch" FontSize="16" FontWeight="SemiBold" Background="LightGray"
+              VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalAlignment="Center"
+              BorderThickness="1" BorderBrush="DimGray">
+            <MenuItem HorizontalContentAlignment="Stretch" FontSize="16" FontWeight="SemiBold"
+                      Header="Экспорт">
+                <MenuItem Header="CSV" Command="{Binding ClickExport}" CommandParameter="CSV"/>
+                <MenuItem Header="Word" Command="{Binding ClickExport}" CommandParameter="Word"/>
+                <MenuItem Header="Excel" Command="{Binding ClickExport}" CommandParameter="Excel"/>
+            </MenuItem>
+        </Menu>
         <Button Content="Фильтр" 
                 Command="{Binding ClickFilter}"
                 Style="{StaticResource CrudButtonStyle}"/>

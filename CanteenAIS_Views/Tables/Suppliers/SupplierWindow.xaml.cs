@@ -80,7 +80,7 @@ namespace CanteenAIS_Views.Tables.Suppliers
             }
         }
 
-        public void ExportCsv()
+        public void ExportCsv(string format)
         {
             try
             {
@@ -90,13 +90,26 @@ namespace CanteenAIS_Views.Tables.Suppliers
                     CheckPathExists = true,
                     CreatePrompt = true,
                     OverwritePrompt = true,
-                    DefaultExt = "*.csv",
-                    Filter = "CSV files (*.csv)|*.csv|All files (*.*)|*.*"
                 };
+                if (format == "Word")
+                {
+                    dialog.DefaultExt = "*.docx";
+                    dialog.Filter = "Microsoft Office Word files (*.docx;*.doc)|*.docx;*.doc|All files (*.*)|*.*";
+                }
+                else if (format == "Excel")
+                {
+                    dialog.DefaultExt = "*.xlsx";
+                    dialog.Filter = "Microsoft Office Excel files (*.xls, *.xlsx)|*.xlsx;*xls|All files (*.*)|*.*";
+                }
+                else
+                {
+                    dialog.DefaultExt = "*.csv";
+                    dialog.Filter = "CSV files (*.csv)|*.csv|All files (*.*)|*.*";
+                }
                 if (dialog.ShowDialog() == true)
                 {
                     string file = dialog.FileName;
-                    vm.ExportCsv(file);
+                    vm.ExportCsv(file, format);
                 }
             }
             catch (Exception ex)

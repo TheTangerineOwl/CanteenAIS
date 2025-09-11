@@ -5,6 +5,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <!-- Подключены тили для окон и форм. -->
                 <ResourceDictionary Source="pack://application:,,,/CanteenAIS_Views;component/Styles/GenericWindowStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

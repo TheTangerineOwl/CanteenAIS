@@ -11,6 +11,15 @@ namespace CanteenAIS_ViewModel.ManagementViewModels.User
         private string oldPassword = string.Empty;
         private string newPassword = string.Empty;
         private string repeatedPassword = string.Empty;
+        private string _inputInfo = string.Empty;
+        public string InputInfo
+        {
+            get => _inputInfo;
+            set
+            {
+                Set(ref _inputInfo, value);
+            }
+        }
 
         public Action OnChange;
         public Action OnSuccessChangePassword;

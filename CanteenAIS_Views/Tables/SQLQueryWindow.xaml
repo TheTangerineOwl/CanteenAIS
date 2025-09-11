@@ -35,9 +35,16 @@
                 <Button Style="{StaticResource CrudButtonStyle}"
                         Content="Очистить"
                         Command="{Binding ClickClear}"/>
-                <Button Style="{StaticResource CrudButtonStyle}"
-                        Content="Экспорт в .csv"
-                        Command="{Binding ClickExport}"/>
+                <Menu Margin="5" DockPanel.Dock="Right" IsMainMenu="False" UsesItemContainerTemplate="True"
+              HorizontalContentAlignment="Stretch" FontSize="16" FontWeight="SemiBold" Background="LightGray"
+              VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalAlignment="Center" BorderBrush="DimGray" BorderThickness="1">
+                    <MenuItem HorizontalContentAlignment="Stretch" FontSize="16" FontWeight="SemiBold"
+                      Header="Экспорт">
+                        <MenuItem Header="CSV" Command="{Binding ClickExport}" CommandParameter="CSV"/>
+                        <MenuItem Header="Word" Command="{Binding ClickExport}" CommandParameter="Word"/>
+                        <MenuItem Header="Excel" Command="{Binding ClickExport}" CommandParameter="Excel"/>
+                    </MenuItem>
+                </Menu>
             </StackPanel>
             <GridSplitter Width="3" Grid.RowSpan="3" Grid.Column="1" ResizeDirection="Columns" ResizeBehavior="PreviousAndNext"/>
             <DockPanel Grid.Column="2" Grid.RowSpan="3" LastChildFill="True">
