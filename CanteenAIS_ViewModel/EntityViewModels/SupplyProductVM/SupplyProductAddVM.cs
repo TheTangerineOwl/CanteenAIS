@@ -13,17 +13,17 @@ namespace CanteenAIS_ViewModel.EntityViewModels.SupplyProduct
         public SupplyProductAddVM(TableModel<Entities.SupplyProductEntity> tableModel)
             : base(tableModel)
         {
-            _units = MainServices.GetInstance().MeasureUnits.FetchValues<Entities.MeasureUnit>().ToList();
-            _unit = Units.FirstOrDefault();
             _products = MainServices.GetInstance().Products.FetchValues<Entities.Product>().ToList();
             _product = Products.FirstOrDefault();
+            _units = MainServices.GetInstance().MeasureUnits.FetchValues<Entities.MeasureUnit>().ToList();
+            _unit = Units.Where(item => item.Id == _product.UnitId).FirstOrDefault() ?? Units.FirstOrDefault();
             _amount = 0;
             _price = 0;
         }
 
         protected override void Clear()
         {
-            _unit = Units.FirstOrDefault();
+            _unit = Units.Where(item => item.Id == _product.UnitId).FirstOrDefault() ?? Units.FirstOrDefault();
             _product = Products.FirstOrDefault();
             _amount = 0;
             _price = 0;
@@ -47,7 +47,11 @@ namespace CanteenAIS_ViewModel.EntityViewModels.SupplyProduct
         public Entities.Product Product
         {
             get => _product;
-            set => Set(ref _product, value);
+            set
+            {
+                Set(ref _product, value);
+                Unit = Units.Where(item => item.Id == value.UnitId).FirstOrDefault() ?? Units.FirstOrDefault();
+            }
         }
 
         private double _amount;
@@ -95,7 +99,7 @@ namespace CanteenAIS_ViewModel.EntityViewModels.SupplyProduct
                 throw new ArgumentException("Параметр не может быть 0!", nameof(Amount));
             Fields.Amount = amount;
             if (!ValueChecker.CheckValueDecimal(Price.ToString(), out decimal price))
-                throw new ArgumentException("Параметр не может быть 0!", nameof(Amount));
+                throw new ArgumentException("Параметр не может быть 0!", nameof(Price));
             Fields.Price = price;
         }
 
@@ -106,7 +110,7 @@ namespace CanteenAIS_ViewModel.EntityViewModels.SupplyProduct
             row.SetField("ProductId", Fields.ProductId);
             row.SetField("ProductName", Fields.ProductName);
             row.SetField("Amount", Fields.Amount);
-            row.SetField("Price", Fields.Amount);
+            row.SetField("Price", Fields.Price);
             row.SetField("UnitId", Fields.UnitId);
             row.SetField("UnitName", Fields.UnitName);
             Model.Table.Rows.Add(row);

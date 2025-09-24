@@ -45,7 +45,11 @@ namespace CanteenAIS_ViewModel.EntityViewModels.OrderProduct
         public Entities.Product Product
         {
             get => _product;
-            set => Set(ref _product, value);
+            set
+            {
+                Set(ref _product, value);
+                Unit = Units.Where(item => item.Id == value.UnitId).FirstOrDefault() ?? Units.FirstOrDefault();
+            }
         }
 
         private double _amount;

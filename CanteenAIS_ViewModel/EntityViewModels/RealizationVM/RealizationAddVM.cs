@@ -14,10 +14,10 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Realization
             : base(tableModel)
         {
             _id = 1;
-            _units = MainServices.GetInstance().MeasureUnits.FetchValues<Entities.MeasureUnit>().ToList();
-            _unit = Units.FirstOrDefault();
             _dishes = MainServices.GetInstance().Dishes.FetchValues<Entities.Dish>().ToList();
             _dish = Dishes.FirstOrDefault();
+            _units = MainServices.GetInstance().MeasureUnits.FetchValues<Entities.MeasureUnit>().ToList();
+            _unit = Units.Where(item => item.Id == _dish.UnitId).FirstOrDefault() ?? Units.FirstOrDefault();
             _amount = 0;
             _dateTimePick = DateTime.Now;
         }
@@ -25,7 +25,7 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Realization
         protected override void Clear()
         {
             Id = 1;
-            Unit = Units.FirstOrDefault();
+            Unit = Units.Where(item => item.Id == _dish.UnitId).FirstOrDefault() ?? Units.FirstOrDefault();
             Dish = Dishes.FirstOrDefault();
             Amount = 0;
             DateTimePick = DateTime.Now;
@@ -68,7 +68,11 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Realization
         public Entities.Dish Dish
         {
             get => _dish;
-            set => Set(ref _dish, value);
+            set
+            {
+                Set(ref _dish, value);
+                Unit = Units.Where(item => item.Id == value.UnitId).FirstOrDefault() ?? Units.FirstOrDefault();
+            }
         }
 
         private double _amount;

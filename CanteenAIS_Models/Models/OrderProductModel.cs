@@ -1,5 +1,6 @@
 ﻿using CanteenAIS_DB;
 using CanteenAIS_DB.Database.Entities;
+using CanteenAIS_DB.Database.Queries;
 using System.Data;
 
 namespace CanteenAIS_Models.Models
@@ -65,6 +66,13 @@ namespace CanteenAIS_Models.Models
                 entity.UnitName.Contains(sample) ||
                 entity.Amount.ToString().Contains(sample)
             );
+        }
+
+        public override TResult GetEntity<TResult>(DataRow row)
+        {
+            if (TableContext is OrderProductDB db)
+                return db.ParseEntity<TResult>(row);
+            return null;
         }
     }
 }

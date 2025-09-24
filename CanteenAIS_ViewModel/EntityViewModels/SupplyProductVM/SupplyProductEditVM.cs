@@ -47,7 +47,11 @@ namespace CanteenAIS_ViewModel.EntityViewModels.SupplyProduct
         public Entities.Product Product
         {
             get => _product;
-            set => Set(ref _product, value);
+            set
+            {
+                Set(ref _product, value);
+                Unit = Units.Where(item => item.Id == value.UnitId).FirstOrDefault() ?? Units.FirstOrDefault();
+            }
         }
 
         private double _amount;
@@ -92,8 +96,8 @@ namespace CanteenAIS_ViewModel.EntityViewModels.SupplyProduct
             if (!ValueChecker.CheckValueDouble(Amount.ToString(), out double amount))
                 throw new ArgumentException("Параметр не может быть 0!", nameof(Amount));
             Fields.Amount = amount;
-            if (!ValueChecker.CheckValueDecimal(Amount.ToString(), out decimal price))
-                throw new ArgumentException("Параметр не может быть 0!", nameof(Amount));
+            if (!ValueChecker.CheckValueDecimal(Price.ToString(), out decimal price))
+                throw new ArgumentException("Параметр не может быть 0!", nameof(Price));
             Fields.Price = price;
         }
 

@@ -13,17 +13,17 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Ingredient
         public IngredientAddVM(TableModel<Entities.IngredientEntity> tableModel)
             : base(tableModel)
         {
-            _units = MainServices.GetInstance().MeasureUnits.FetchValues<Entities.MeasureUnit>().ToList();
-            _unit = Units.FirstOrDefault();
             _products = MainServices.GetInstance().Products.FetchValues<Entities.Product>().ToList();
             _product = Products.FirstOrDefault();
+            _units = MainServices.GetInstance().MeasureUnits.FetchValues<Entities.MeasureUnit>().ToList();
+            _unit = Units.Where(item => item.Id == _product.UnitId).FirstOrDefault() ?? Units.FirstOrDefault();
             _gross = 0;
             _net = 0;
         }
 
         protected override void Clear()
         {
-            _unit = Units.FirstOrDefault();
+            _unit = Units.Where(item => item.Id == _product.UnitId).FirstOrDefault() ?? Units.FirstOrDefault();
             _product = Products.FirstOrDefault();
             _gross = 0;
             _net = 0;
@@ -47,7 +47,11 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Ingredient
         public Entities.Product Product
         {
             get => _product;
-            set => Set(ref _product, value);
+            set
+            {
+                Set(ref _product, value);
+                Unit = Units.Where(item => item.Id == value.UnitId).FirstOrDefault() ?? Units.FirstOrDefault();
+            }
         }
 
         private double _net;

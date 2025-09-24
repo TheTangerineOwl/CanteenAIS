@@ -47,7 +47,11 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Ingredient
         public Entities.Product Product
         {
             get => _product;
-            set => Set(ref _product, value);
+            set
+            {
+                Set(ref _product, value);
+                Unit = Units.Where(item => item.Id == value.UnitId).FirstOrDefault() ?? Units.FirstOrDefault();
+            }
         }
 
         private double _net;
@@ -103,7 +107,7 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Ingredient
             Row.SetField("ProductId", Fields.ProductId);
             Row.SetField("ProductName", Fields.ProductName);
             Row.SetField("Gross", Fields.Gross);
-            Row.SetField("Amount", Fields.Net);
+            Row.SetField("Net", Fields.Net);
             Row.SetField("UnitId", Fields.UnitId);
             Row.SetField("UnitName", Fields.UnitName);
         }

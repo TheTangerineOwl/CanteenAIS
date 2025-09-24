@@ -13,16 +13,16 @@ namespace CanteenAIS_ViewModel.EntityViewModels.OrderProduct
         public OrderProductAddVM(TableModel<Entities.OrderProductEntity> tableModel)
             : base(tableModel)
         {
-            _units = MainServices.GetInstance().MeasureUnits.FetchValues<Entities.MeasureUnit>().ToList();
-            _unit = Units.FirstOrDefault();
             _products = MainServices.GetInstance().Products.FetchValues<Entities.Product>().ToList();
             _product = Products.FirstOrDefault();
+            _units = MainServices.GetInstance().MeasureUnits.FetchValues<Entities.MeasureUnit>().ToList();
+            _unit = Units.Where(item => item.Id == _product.UnitId).FirstOrDefault() ?? Units.FirstOrDefault();
             _amount = 0;
         }
 
         protected override void Clear()
         {
-            _unit = Units.FirstOrDefault();
+            _unit = Units.Where(item => item.Id == _product.UnitId).FirstOrDefault() ?? Units.FirstOrDefault();
             _product = Products.FirstOrDefault();
             _amount = 0;
         }
@@ -45,7 +45,11 @@ namespace CanteenAIS_ViewModel.EntityViewModels.OrderProduct
         public Entities.Product Product
         {
             get => _product;
-            set => Set(ref _product, value);
+            set
+            {
+                Set(ref _product, value);
+                Unit = Units.Where(item => item.Id == value.UnitId).FirstOrDefault() ?? Units.FirstOrDefault();
+            }
         }
 
         private double _amount;

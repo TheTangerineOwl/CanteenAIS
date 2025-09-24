@@ -1,12 +1,13 @@
 ﻿using CanteenAIS_DB;
 using CanteenAIS_DB.Database.Entities;
+using CanteenAIS_DB.Database.Queries;
 using System.Data;
 
 namespace CanteenAIS_Models.Models
 {
     public class SupplyProductModel : DoubleModel<SupplyProductEntity>
     {
-        public override string TableName => "Банки";
+        public override string TableName => "Продукты в поставке";
 
         public SupplyProductModel(BasicDoubleCRUD<SupplyProductEntity> context) : base(context) { }
 
@@ -68,6 +69,13 @@ namespace CanteenAIS_Models.Models
                 entity.UnitName.Contains(sample) ||
                 entity.Price.ToString().Contains(sample)
             );
+        }
+
+        public override TResult GetEntity<TResult>(DataRow row)
+        {
+            if (TableContext is SupplyProductDB db)
+                return db.ParseEntity<TResult>(row);
+            return null;
         }
     }
 }
