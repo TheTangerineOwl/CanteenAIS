@@ -1,5 +1,6 @@
 ﻿using CanteenAIS_DB.Database.Entities;
 using CanteenAIS_Models;
+using CanteenAIS_Models.Models;
 using CanteenAIS_ViewModel.BasicViewModels;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace CanteenAIS_ViewModel.EntityViewModels.BranchOrder
         public BranchOrderAddVM(TableModel<Entities.BranchOrderEntity> tableModel)
             : base(tableModel)
         {
-            _id = 1;
+            //_id = 1;
             _branches = MainServices.GetInstance().Branches.FetchValues<Entities.Branch>().ToList<BranchEntity>();
             _branch = _branches.FirstOrDefault();
             _dateTimePick = DateTime.Now;
@@ -21,19 +22,19 @@ namespace CanteenAIS_ViewModel.EntityViewModels.BranchOrder
 
         protected override void Clear()
         {
-            Id = 1;
+            //Id = 1;
             Branch = Branches?.FirstOrDefault();
             DateTimePick = DateTime.Now;
         }
 
-        private uint _id;
-        public uint Id
+        private long _id;
+        public long Id
         {
             get => _id;
             set
             {
-                if (!ValueChecker.CheckValueUint(value.ToString(), out _))
-                    value = 1;
+                //if (!ValueChecker.CheckValueUint(value.ToString(), out _))
+                //    value = 1;
                 Set(ref _id, value);
             }
         }
@@ -69,9 +70,9 @@ namespace CanteenAIS_ViewModel.EntityViewModels.BranchOrder
 
         public override void ParseFields()
         {
-            if (!ValueChecker.CheckValueUint(Id.ToString(), out uint id, false))
-                throw new ArgumentNullException("Некорректное значение!", nameof(Id));
-            Fields.Id = id;
+            //if (!ValueChecker.CheckValueUint(Id.ToString(), out uint id, false))
+            //    throw new ArgumentNullException("Некорректное значение!", nameof(Id));
+            //Fields.Id = id;
             int BranchId = (int?)Branch?.Id ?? -1;
             if (!ValueChecker.CheckValueUint(BranchId.ToString(), out uint branchId))
                 throw new ArgumentException("Параметр не может быть 0!", nameof(BranchId));
@@ -79,6 +80,15 @@ namespace CanteenAIS_ViewModel.EntityViewModels.BranchOrder
                 throw new ArgumentException("Некорректное время!", nameof(DateTimePick));
             Fields.BranchId = branchId;
             Fields.DateTime = time;
+        }
+
+        public override void Add()
+        {
+            ParseFields();
+            if (Model is BranchOrderModel dm)
+                dm.Add<Entities.BranchOrder>(Fields, out _id);
+            Table = Model.GetTable<Entities.BranchOrder>();
+            Clear();
         }
     }
 }

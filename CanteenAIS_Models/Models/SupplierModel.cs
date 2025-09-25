@@ -14,7 +14,7 @@ namespace CanteenAIS_Models.Models
         {
             TResult result = new TResult
             {
-                Id = info.Id,
+                //Id = info.Id,
                 Name = info.Name,
                 CityName = info.CityName,
                 StreetId = info.StreetId,
@@ -29,6 +29,27 @@ namespace CanteenAIS_Models.Models
                 INN = info.INN
             };
             TableContext.Create(result);
+        }
+
+        public override void Add<TResult>(SupplierEntity info, out long id)
+        {
+            TResult result = new TResult
+            {
+                //Id = info.Id,
+                Name = info.Name,
+                CityName = info.CityName,
+                StreetId = info.StreetId,
+                StreetName = info.StreetName,
+                Building = info.Building,
+                HeadId = info.HeadId,
+                HeadName = info.HeadName,
+                HeadPhone = info.HeadPhone,
+                BankId = info.BankId,
+                BankName = info.BankName,
+                Account = info.Account,
+                INN = info.INN
+            };
+            id = TableContext.Create(result);
         }
 
         public override void Update<TResult>(DataRow row, SupplierEntity info)

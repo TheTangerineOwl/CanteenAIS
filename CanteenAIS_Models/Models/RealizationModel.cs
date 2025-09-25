@@ -14,7 +14,7 @@ namespace CanteenAIS_Models.Models
         {
             TResult result = new TResult
             {
-                Id = info.Id,
+                //Id = info.Id,
                 DishId = info.DishId,
                 DishName = info.DishName,
                 Amount = info.Amount,
@@ -23,6 +23,21 @@ namespace CanteenAIS_Models.Models
                 UnitName = info.UnitName
             };
             TableContext.Create(result);
+        }
+
+        public override void Add<TResult>(RealizationEntity info, out long id)
+        {
+            TResult result = new TResult
+            {
+                //Id = info.Id,
+                DishId = info.DishId,
+                DishName = info.DishName,
+                Amount = info.Amount,
+                DateTime = info.DateTime,
+                UnitId = info.UnitId,
+                UnitName = info.UnitName
+            };
+            id = TableContext.Create(result);
         }
 
         public override void Update<TResult>(DataRow row, RealizationEntity info)

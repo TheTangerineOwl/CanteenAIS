@@ -28,7 +28,7 @@ namespace CanteenAIS_Views.Tables.Dishes
             {
                 vm = new DishAddVM(model);
                 vm.OnApply += Add;
-                //idRow.Visibility = Visibility.Collapsed;
+                idRow.Visibility = Visibility.Collapsed;
             }
             else
             {
@@ -115,7 +115,7 @@ namespace CanteenAIS_Views.Tables.Dishes
                 try
                 {
                     vmAdd.Add();
-                    Subvm.AddTableToDB(vm.Fields.Id);
+                    Subvm.AddTableToDB((uint)vmAdd.Id);
                     this.Close();
                 }
                 catch (Exception ex)

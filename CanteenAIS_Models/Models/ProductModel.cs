@@ -14,7 +14,7 @@ namespace CanteenAIS_Models.Models
         {
             TResult result = new TResult
             {
-                Id = info.Id,
+                //Id = info.Id,
                 Name = info.Name,
                 UnitId = info.UnitId,
                 UnitName = info.UnitName,
@@ -24,6 +24,22 @@ namespace CanteenAIS_Models.Models
                 SupplierName = info.SupplierName
             };
             TableContext.Create(result);
+        }
+
+        public override void Add<TResult>(ProductEntity info, out long id)
+        {
+            TResult result = new TResult
+            {
+                //Id = info.Id,
+                Name = info.Name,
+                UnitId = info.UnitId,
+                UnitName = info.UnitName,
+                Markup = info.Markup,
+                Stock = info.Stock,
+                SupplierId = info.SupplierId,
+                SupplierName = info.SupplierName
+            };
+            id = TableContext.Create(result);
         }
 
         public override void Update<TResult>(DataRow row, ProductEntity info)

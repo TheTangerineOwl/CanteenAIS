@@ -14,12 +14,24 @@ namespace CanteenAIS_Models.Models
         {
             TResult result = new TResult
             {
-                Id = info.Id,
+                //Id = info.Id,
                 SupplierId = info.SupplierId,
                 SupplierName = info.SupplierName,
                 DateTime = info.DateTime
             };
             TableContext.Create(result);
+        }
+
+        public override void Add<TResult>(SupplyEntity info, out long id)
+        {
+            TResult result = new TResult
+            {
+                //Id = info.Id,
+                SupplierId = info.SupplierId,
+                SupplierName = info.SupplierName,
+                DateTime = info.DateTime
+            };
+            id = TableContext.Create(result);
         }
 
         public override void Update<TResult>(DataRow row, SupplyEntity info)

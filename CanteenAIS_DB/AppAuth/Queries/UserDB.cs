@@ -36,9 +36,10 @@ namespace CanteenAIS_DB.AppAuth.Queries
                     "`DateOfBirth`=@entityDateOfBirth " +
                     "WHERE `Id`=@entityId;";
 
-        protected override MySqlParameterCollection FillParameters(UserEntity entity, MySqlCommand command)
+        protected override MySqlParameterCollection FillParameters(UserEntity entity, MySqlCommand command, bool withId = false)
         {
-            command.Parameters.AddWithValue("@entityId", entity.Id);
+            if (withId)
+                command.Parameters.AddWithValue("@entityId", entity.Id);
             command.Parameters.AddWithValue("@entityLogin", entity.Login);
             command.Parameters.AddWithValue("@entityPassword", entity.Password);
             command.Parameters.AddWithValue("@entityLastName", entity.LastName);
@@ -58,11 +59,12 @@ namespace CanteenAIS_DB.AppAuth.Queries
             command.Parameters.AddWithValue("@entityDateOfBirth", entity.DateOfBirth);
         }
 
-        public override void Create(UserEntity entity)
+        public override long Create(UserEntity entity)
         {
             MySqlCommand command = new MySqlCommand(QueryCreate);
             FillRegistration(entity, command);
             DbConnection.GetInstance().ExecMySqlQuery(command, ref exception);
+            return command.LastInsertedId;
         }
 
         protected override IList<TUser> AddFromRows<TUser>(DataTable table)

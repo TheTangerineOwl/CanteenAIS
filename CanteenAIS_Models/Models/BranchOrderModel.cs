@@ -14,12 +14,24 @@ namespace CanteenAIS_Models.Models
         {
             TResult result = new TResult
             {
-                Id = info.Id,
+                //Id = info.Id,
                 BranchId = info.BranchId,
                 BranchName = info.BranchName,
                 DateTime = info.DateTime
             };
             TableContext.Create(result);
+        }
+
+        public override void Add<TResult>(BranchOrderEntity info, out long id)
+        {
+            TResult result = new TResult
+            {
+                //Id = info.Id,
+                BranchId = info.BranchId,
+                BranchName = info.BranchName,
+                DateTime = info.DateTime
+            };
+            id = TableContext.Create(result);
         }
 
         public override void Update<TResult>(DataRow row, BranchOrderEntity info)

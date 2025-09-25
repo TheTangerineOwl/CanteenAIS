@@ -28,6 +28,7 @@ namespace CanteenAIS_Views.Tables.BranchOrders
             {
                 vm = new BranchOrderAddVM(model);
                 vm.OnApply += Add;
+                idRow.Visibility = Visibility.Collapsed;
             }
             else
             {
@@ -113,7 +114,7 @@ namespace CanteenAIS_Views.Tables.BranchOrders
                 try
                 {
                     vmAdd.Add();
-                    Subvm.AddTableToDB(vm.Fields.Id);
+                    Subvm.AddTableToDB((uint)vmAdd.Id);
                     this.Close();
                 }
                 catch (Exception ex)

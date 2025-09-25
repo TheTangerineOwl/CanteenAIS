@@ -13,7 +13,7 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Product
         public ProductAddVM(TableModel<Entities.ProductEntity> tableModel)
             : base(tableModel)
         {
-            _id = 1;
+            //_id = 1;
             _units = MainServices.GetInstance().MeasureUnits.FetchValues<Entities.MeasureUnit>().ToList();
             _unit = Units.FirstOrDefault();
             _suppliers = MainServices.GetInstance().Suppliers.FetchValues<Entities.Supplier>().ToList();
@@ -25,7 +25,7 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Product
 
         protected override void Clear()
         {
-            Id = 1;
+            //Id = 1;
             Name = string.Empty;
             Unit = Units.FirstOrDefault();
             Markup = 0;
@@ -33,17 +33,17 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Product
             Supplier = Suppliers.FirstOrDefault();
         }
 
-        private uint _id;
-        public uint Id
-        {
-            get => _id;
-            set
-            {
-                if (!ValueChecker.CheckValueUint(value.ToString(), out _))
-                    value = 1;
-                Set(ref _id, value);
-            }
-        }
+        //private uint _id;
+        //public uint Id
+        //{
+        //    get => _id;
+        //    set
+        //    {
+        //        if (!ValueChecker.CheckValueUint(value.ToString(), out _))
+        //            value = 1;
+        //        Set(ref _id, value);
+        //    }
+        //}
 
         private IList<Entities.MeasureUnit> _units;
         public IList<Entities.MeasureUnit> Units
@@ -114,9 +114,9 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Product
 
         public override void ParseFields()
         {
-            if (!ValueChecker.CheckValueUint(Id.ToString(), out uint id, false))
-                throw new ArgumentNullException("Некорректное значение!", nameof(Id));
-            Fields.Id = id;
+            //if (!ValueChecker.CheckValueUint(Id.ToString(), out uint id, false))
+            //    throw new ArgumentNullException("Некорректное значение!", nameof(Id));
+            //Fields.Id = id;
             if (!ValueChecker.CheckValueString(Name, out string name, 100, false))
                 throw new ArgumentNullException("Строка не может быть пустой!", nameof(Name));
             Fields.Name = name;

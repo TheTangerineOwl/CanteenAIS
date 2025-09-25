@@ -98,6 +98,8 @@ namespace CanteenAIS_Models
     {
         protected BasicSimpleCRUD<TEntity> TableContext;
 
+        public abstract void Add<TResultType>(TEntity info, out long insertedId) where TResultType : TEntity, new();
+
         public SimpleModel(BasicSimpleCRUD<TEntity> contextInstance) : base(contextInstance)
         {
             TableContext = contextInstance;

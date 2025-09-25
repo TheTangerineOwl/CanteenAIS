@@ -10,7 +10,7 @@ namespace CanteenAIS_ViewModel.EntityViewModels.SupplierHead
         public SupplierHeadAddVM(TableModel<Entities.SupplierHeadEntity> tableModel)
             : base(tableModel)
         {
-            _id = 1;
+            //_id = 1;
             _lastName = string.Empty;
             _firstName = string.Empty;
             _patronim = string.Empty;
@@ -19,24 +19,24 @@ namespace CanteenAIS_ViewModel.EntityViewModels.SupplierHead
 
         protected override void Clear()
         {
-            Id = 1;
+            //Id = 1;
             LastName = string.Empty;
             FirstName = string.Empty;
             Patronim = string.Empty;
             Phone = string.Empty;
         }
 
-        private uint _id;
-        public uint Id
-        {
-            get => _id;
-            set
-            {
-                if (!ValueChecker.CheckValueUint(value.ToString(), out _))
-                    value = 1;
-                Set(ref _id, value);
-            }
-        }
+        //private uint _id;
+        //public uint Id
+        //{
+        //    get => _id;
+        //    set
+        //    {
+        //        if (!ValueChecker.CheckValueUint(value.ToString(), out _))
+        //            value = 1;
+        //        Set(ref _id, value);
+        //    }
+        //}
 
         private string _lastName;
         public string LastName
@@ -96,9 +96,9 @@ namespace CanteenAIS_ViewModel.EntityViewModels.SupplierHead
 
         public override void ParseFields()
         {
-            if (!ValueChecker.CheckValueUint(Id.ToString(), out uint id, false))
-                throw new ArgumentNullException("Некорректное значение!", nameof(Id));
-            Fields.Id = id;
+            //if (!ValueChecker.CheckValueUint(Id.ToString(), out uint id, false))
+            //    throw new ArgumentNullException("Некорректное значение!", nameof(Id));
+            //Fields.Id = id;
 
             if (!ValueChecker.CheckValueString(LastName, out string lastname, 50))
                 throw new ArgumentNullException("Строка не может быть пустой!", nameof(LastName));

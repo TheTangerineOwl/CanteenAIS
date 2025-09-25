@@ -40,7 +40,7 @@ namespace CanteenAIS_DB.Database.Queries
         protected override string QueryDelete => $"DELETE FROM ingredients " +
             $"WHERE DishId=@entityDishId AND ProductId=@entityProductId";
 
-        protected override MySqlParameterCollection FillParameters(IngredientEntity en, MySqlCommand command)
+        protected override MySqlParameterCollection FillParameters(IngredientEntity en, MySqlCommand command, bool withId = false)
         {
             command.Parameters.AddWithValue("@entityGross", en.Gross);
             command.Parameters.AddWithValue("@entityNet", en.Net);

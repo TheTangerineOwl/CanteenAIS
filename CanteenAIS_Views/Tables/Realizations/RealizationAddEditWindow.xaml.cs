@@ -23,7 +23,7 @@ namespace CanteenAIS_Views.Tables.Realizations
             {
                 vm = new RealizationAddVM(model);
                 vm.OnApply += Add;
-                //idRow.Visibility = Visibility.Collapsed;
+                idRow.Visibility = Visibility.Collapsed;
             }
             else
             {

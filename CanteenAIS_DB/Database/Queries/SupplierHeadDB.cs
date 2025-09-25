@@ -11,9 +11,9 @@ namespace CanteenAIS_DB.Database.Queries
 
         protected override string QueryCreate =>
             $"INSERT INTO supplierheads (" +
-            $"`Id`, `LastName`, `FirstName`, `Patronim`, `Phone`" +
+            $"`LastName`, `FirstName`, `Patronim`, `Phone`" +
             $") VALUES (" +
-            $"@entityId, @entityLastName, @entityFirstName, @entityPatronim, @entityPhone" +
+            $"@entityLastName, @entityFirstName, @entityPatronim, @entityPhone" +
             $");";
 
         protected override string QueryRead => $"SELECT * FROM supplierheads ORDER BY `Id`";
@@ -28,10 +28,11 @@ namespace CanteenAIS_DB.Database.Queries
 
         protected override string QueryDelete => $"DELETE FROM supplierheads WHERE `Id`=@entityId";
 
-        protected override MySqlParameterCollection FillParameters(SupplierHeadEntity entity, MySqlCommand command)
+        protected override MySqlParameterCollection FillParameters(SupplierHeadEntity entity, MySqlCommand command, bool withId = false)
         {
             command.Parameters.AddWithValue("@entityLastName", entity.LastName);
-            command.Parameters.AddWithValue("@entityId", entity.Id);
+            if (withId)
+                command.Parameters.AddWithValue("@entityId", entity.Id);
             command.Parameters.AddWithValue("@entityFirstName", entity.FirstName);
             command.Parameters.AddWithValue("@entityPatronim", entity.Patronim);
             command.Parameters.AddWithValue("@entityPhone", entity.Phone);

@@ -11,9 +11,9 @@ namespace CanteenAIS_DB.Database.Queries
 
         protected override string QueryCreate =>
             "INSERT INTO products (" +
-            "`Id`, `Name`, `UnitId`, `Markup`, `Stock`, `SupplierId`" +
+            "`Name`, `UnitId`, `Markup`, `Stock`, `SupplierId`" +
             ") VALUES (" +
-            "@entityId, @entityName, @entityUnitId, @entityMarkup, @entityStock, @entitySupplierId);";
+            "@entityName, @entityUnitId, @entityMarkup, @entityStock, @entitySupplierId);";
 
         protected override string QueryRead =>
             $"SELECT " +
@@ -39,9 +39,10 @@ namespace CanteenAIS_DB.Database.Queries
             "`SupplierId`=@entitySupplierId " +
             "WHERE `Id`=@entityId;";
 
-        protected override MySqlParameterCollection FillParameters(ProductEntity entity, MySqlCommand command)
+        protected override MySqlParameterCollection FillParameters(ProductEntity entity, MySqlCommand command, bool withId = false)
         {
-            command.Parameters.AddWithValue("@entityId", entity.Id);
+            if (withId)
+                command.Parameters.AddWithValue("@entityId", entity.Id);
             command.Parameters.AddWithValue("@entityName", entity.Name);
             command.Parameters.AddWithValue("@entityUnitId", entity.UnitId);
             command.Parameters.AddWithValue("@entityMarkup", entity.Markup);

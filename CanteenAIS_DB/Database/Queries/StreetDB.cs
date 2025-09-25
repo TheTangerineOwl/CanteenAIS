@@ -10,9 +10,9 @@ namespace CanteenAIS_DB.Database.Queries
         protected override string TableName => "streets";
 
         protected override string QueryCreate => "INSERT INTO streets " +
-            "(`Id`, `CityId`, `Name`) " +
+            "(`CityId`, `Name`) " +
             "VALUES " +
-            "(@entityId, @entityCityId, @entityName);";
+            "(@entityCityId, @entityName);";
 
         protected override string QueryRead => "SELECT " +
             "s.`Id` AS `Id`, " +
@@ -28,9 +28,10 @@ namespace CanteenAIS_DB.Database.Queries
             "@entityCityId, @entityName" +
             ");";
 
-        protected override MySqlParameterCollection FillParameters(StreetEntity entity, MySqlCommand command)
+        protected override MySqlParameterCollection FillParameters(StreetEntity entity, MySqlCommand command, bool withId = false)
         {
-            command.Parameters.AddWithValue("@entityId", entity.Id);
+            if (withId)
+                command.Parameters.AddWithValue("@entityId", entity.Id);
             command.Parameters.AddWithValue("@entityCityId", entity.CityId);
             command.Parameters.AddWithValue("@entityName", entity.Name);
             return command.Parameters;

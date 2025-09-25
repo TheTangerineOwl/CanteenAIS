@@ -10,9 +10,8 @@ namespace CanteenAIS_DB.Database.Queries
         protected override string TableName => "dishes";
 
         protected override string QueryCreate => "INSERT INTO dishes (" +
-            "`Id`, `Name`, `GroupId`, `Price`, `Serving`, `UnitId`, `Recipe`, `Picture`" +
+            "`Name`, `GroupId`, `Price`, `Serving`, `UnitId`, `Recipe`, `Picture`" +
             ") VALUES (" +
-            "@entityId, " +
             "@entityName, " +
             "@entityGroupId, " +
             "@entityPrice, " +
@@ -44,10 +43,11 @@ namespace CanteenAIS_DB.Database.Queries
             "`Picture`=@entityPicture " +
             "WHERE `Id`=@entityId;";
 
-        protected override MySqlParameterCollection FillParameters(DishEntity dish, MySqlCommand command)
+        protected override MySqlParameterCollection FillParameters(DishEntity dish, MySqlCommand command, bool withId = false)
         {
             command.Parameters.AddWithValue("@entityName", dish.Name);
-            command.Parameters.AddWithValue("@entityId", dish.Id);
+            if (withId)
+                command.Parameters.AddWithValue("@entityId", dish.Id);
             command.Parameters.AddWithValue("@entityGroupId", dish.GroupId);
             command.Parameters.AddWithValue("@entityServing", dish.Serving);
             command.Parameters.AddWithValue("@entityUnitId", dish.UnitId);

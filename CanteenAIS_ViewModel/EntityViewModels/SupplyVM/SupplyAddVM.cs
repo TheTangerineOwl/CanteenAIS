@@ -1,4 +1,5 @@
 ﻿using CanteenAIS_Models;
+using CanteenAIS_Models.Models;
 using CanteenAIS_ViewModel.BasicViewModels;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Supply
         public SupplyAddVM(TableModel<Entities.SupplyEntity> tableModel)
             : base(tableModel)
         {
-            _id = 1;
+            //_id = 1;
             _suppliers = MainServices.GetInstance().Suppliers.FetchValues<Entities.Supplier>().ToList();
             _supplier = Suppliers.FirstOrDefault();
             _time = DateTime.Now;
@@ -20,19 +21,19 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Supply
 
         protected override void Clear()
         {
-            Id = 1;
+            //Id = 1;
             Supplier = Suppliers.FirstOrDefault();
             Time = DateTime.Now;
         }
 
-        private uint _id;
-        public uint Id
+        private long _id;
+        public long Id
         {
             get => _id;
             set
             {
-                if (!ValueChecker.CheckValueUint(value.ToString(), out _))
-                    value = 1;
+                //if (!ValueChecker.CheckValueUint(value.ToString(), out _))
+                //    value = 1;
                 Set(ref _id, value);
             }
         }
@@ -65,15 +66,24 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Supply
 
         public override void ParseFields()
         {
-            if (!ValueChecker.CheckValueUint(Id.ToString(), out uint id, false))
-                throw new ArgumentNullException("Некорректное значение!", nameof(Id));
-            Fields.Id = id;
+            //if (!ValueChecker.CheckValueUint(Id.ToString(), out uint id, false))
+            //    throw new ArgumentNullException("Некорректное значение!", nameof(Id));
+            //Fields.Id = id;
             if (!ValueChecker.CheckValueUint(Supplier.Id.ToString(), out uint supplier))
                 throw new ArgumentException("Некорректный параметр!", nameof(Supplier.Id));
             if (!ValueChecker.CheckValueDateTime(Time.ToString(), out DateTime time))
                 throw new ArgumentException("Некорректный параметр!", nameof(Time));
             Fields.SupplierId = supplier;
             Fields.DateTime = time;
+        }
+
+        public override void Add()
+        {
+            ParseFields();
+            if (Model is SupplyModel dm)
+                dm.Add<Entities.Supply>(Fields, out _id);
+            Table = Model.GetTable<Entities.Supply>();
+            Clear();
         }
     }
 }

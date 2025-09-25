@@ -27,6 +27,7 @@ namespace CanteenAIS_Views.Tables.Supplies
             {
                 vm = new SupplyAddVM(model);
                 vm.OnApply += Add;
+                idRow.Visibility = Visibility.Collapsed;
             }
             else
             {
@@ -112,7 +113,7 @@ namespace CanteenAIS_Views.Tables.Supplies
                 try
                 {
                     vmAdd.Add();
-                    Subvm.AddTableToDB(vm.Fields.Id);
+                    Subvm.AddTableToDB((uint)vmAdd.Id);
                     this.Close();
                 }
                 catch (Exception ex)

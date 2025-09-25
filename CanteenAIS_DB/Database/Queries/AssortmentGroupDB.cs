@@ -9,10 +9,11 @@ namespace CanteenAIS_DB.Database.Queries
     {
         protected override string TableName => "assortmentgroups";
 
-        protected override MySqlParameterCollection FillParameters(AssortmentGroupEntity entity, MySqlCommand command)
+        protected override MySqlParameterCollection FillParameters(AssortmentGroupEntity entity, MySqlCommand command, bool withId = false)
         {
             command.Parameters.AddWithValue("@entityName", entity.Name);
-            command.Parameters.AddWithValue("@entityId", entity.Id);
+            if (withId)
+                command.Parameters.AddWithValue("@entityId", entity.Id);
             return command.Parameters;
         }
 

@@ -14,12 +14,24 @@ namespace CanteenAIS_Models.Models
         {
             TResult result = new TResult
             {
-                Id = info.Id,
+                //Id = info.Id,
                 CityId = info.CityId,
                 CityName = info.CityName,
                 Name = info.Name
             };
             TableContext.Create(result);
+        }
+
+        public override void Add<TResult>(StreetEntity info, out long id)
+        {
+            TResult result = new TResult
+            {
+                //Id = info.Id,
+                CityId = info.CityId,
+                CityName = info.CityName,
+                Name = info.Name
+            };
+            id = TableContext.Create(result);
         }
 
         public override void Update<TResult>(DataRow row, StreetEntity info)

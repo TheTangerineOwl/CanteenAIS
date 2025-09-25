@@ -12,9 +12,9 @@ namespace CanteenAIS_DB.Database.Queries
 
         protected override string QueryCreate =>
             "INSERT INTO realizations (" +
-            "`Id`, `DishId`, `Amount`, `DateTime`, `UnitId`" +
+            "`DishId`, `Amount`, `DateTime`, `UnitId`" +
             ") VALUES (" +
-            "@entityId, @entityDishId, @entityAmount, @entityDateTime, @entityUnitId" +
+            "@entityDishId, @entityAmount, @entityDateTime, @entityUnitId" +
             ");";
 
         protected override string QueryRead =>
@@ -39,9 +39,10 @@ namespace CanteenAIS_DB.Database.Queries
             "`UnitId`=@entityUnitId " +
             "WHERE `Id`=@entityId;";
 
-        protected override MySqlParameterCollection FillParameters(RealizationEntity entity, MySqlCommand command)
+        protected override MySqlParameterCollection FillParameters(RealizationEntity entity, MySqlCommand command, bool withId = false)
         {
-            command.Parameters.AddWithValue("@entityId", entity.Id);
+            if (withId)
+                command.Parameters.AddWithValue("@entityId", entity.Id);
             command.Parameters.AddWithValue("@entityDishId", entity.DishId);
             command.Parameters.AddWithValue("@entityAmount", entity.Amount);
             command.Parameters.AddWithValue("@entityDateTime", entity.DateTime);

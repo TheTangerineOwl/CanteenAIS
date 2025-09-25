@@ -14,7 +14,7 @@ namespace CanteenAIS_Models.Management.Models
         {
             TResultType res = new TResultType
             {
-                Id = info.Id,
+                //Id = info.Id,
                 Login = info.Login,
                 Password = info.Password,
                 LastName = info.LastName,
@@ -24,6 +24,22 @@ namespace CanteenAIS_Models.Management.Models
                 UserPerms = info.UserPerms
             };
             TableContext.Create(res);
+        }
+
+        public override void Add<TResultType>(UserEntity info, out long id)
+        {
+            TResultType res = new TResultType
+            {
+                //Id = info.Id,
+                Login = info.Login,
+                Password = info.Password,
+                LastName = info.LastName,
+                FirstName = info.FirstName,
+                Patronim = info.Patronim,
+                DateOfBirth = info.DateOfBirth,
+                UserPerms = info.UserPerms
+            };
+            id = TableContext.Create(res);
         }
 
         public override void Update<TResultType>(DataRow row, UserEntity info)

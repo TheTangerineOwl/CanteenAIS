@@ -1,4 +1,7 @@
-﻿using CanteenAIS_Models;
+﻿using CanteenAIS_DB;
+using CanteenAIS_DB.Database.Entities;
+using CanteenAIS_Models;
+using CanteenAIS_Models.Models;
 using CanteenAIS_ViewModel.BasicViewModels;
 using System;
 using System.Collections.Generic;
@@ -13,7 +16,7 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Dish
         public DishAddVM(TableModel<Entities.DishEntity> tableModel)
             : base(tableModel)
         {
-            _id = 1;
+            //_id = 1;
             _units = MainServices.GetInstance().MeasureUnits.FetchValues<Entities.MeasureUnit>().ToList();
             _unit = Units.FirstOrDefault();
             _groups = MainServices.GetInstance().AssortmentGroups.FetchValues<Entities.AssortmentGroup>().ToList();
@@ -27,7 +30,7 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Dish
 
         protected override void Clear()
         {
-            Id = 1;
+            //Id = 1;
             Unit = Units.FirstOrDefault();
             Group = Groups.FirstOrDefault();
             Name = string.Empty;
@@ -37,14 +40,14 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Dish
             Picture = string.Empty;
         }
 
-        private uint _id;
-        public uint Id
+        private long _id;
+        public long Id
         {
             get => _id;
             set
             {
-                if (!ValueChecker.CheckValueUint(value.ToString(), out _))
-                    value = 1;
+                //if (!ValueChecker.CheckValueUint(value.ToString(), out _))
+                //    value = 1;
                 Set(ref _id, value);
             }
         }
@@ -145,9 +148,9 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Dish
 
         public override void ParseFields()
         {
-            if (!ValueChecker.CheckValueUint(Id.ToString(), out uint id, false))
-                throw new ArgumentNullException("Некорректное значение!", nameof(Id));
-            Fields.Id = id;
+            //if (!ValueChecker.CheckValueUint(Id.ToString(), out uint id, false))
+            //    throw new ArgumentNullException("Некорректное значение!", nameof(Id));
+            //Fields.Id = id;
             if (!ValueChecker.CheckValueString(Name, out string name, 100))
                 throw new ArgumentNullException("Строка не может быть пустой!", nameof(Name));
             Fields.Name = name;
@@ -171,6 +174,15 @@ namespace CanteenAIS_ViewModel.EntityViewModels.Dish
             if (!ValueChecker.CheckValueString(Picture, out string picture, 200))
                 throw new ArgumentNullException("Строка не может быть пустой!", nameof(Picture));
             Fields.Picture = picture;
+        }
+
+        public override void Add()
+        {
+            ParseFields();
+            if (Model is DishModel dm)
+                dm.Add<Entities.Dish>(Fields, out _id);
+            Table = Model.GetTable<Entities.Dish>();
+            Clear();
         }
     }
 }

@@ -23,7 +23,7 @@ namespace CanteenAIS_DB
         /// <summary>
         /// Запрос для создания нового экземпляра сущности в БД.
         /// </summary>
-        protected virtual string QueryCreate => $"INSERT INTO {TableName} (`Id`, `Name`) VALUES (@entityId, @entityName);";
+        protected virtual string QueryCreate => $"INSERT INTO {TableName} (`Name`) VALUES (@entityName);";
 
         /// <summary>
         /// Запрос для чтения всех данных из таблицы в БД.
@@ -41,7 +41,7 @@ namespace CanteenAIS_DB
         /// <param name="entity"></param>
         /// <param name="command"></param>
         /// <returns></returns>
-        protected abstract MySqlParameterCollection FillParameters(T entity, MySqlCommand command);
+        protected abstract MySqlParameterCollection FillParameters(T entity, MySqlCommand command, bool withId = false);
         /// <summary>
         /// Разбивает <paramref name="table"/> на строки и инициализирует на основе каждой строки 
         /// экземпляр <typeparamref name="TEntity"/>.
@@ -50,17 +50,6 @@ namespace CanteenAIS_DB
         /// <param name="table">Исходная таблица.</param>
         /// <returns>Список прочитанных сущностей.</returns>
         protected abstract IList<TEntity> AddFromRows<TEntity>(DataTable table) where TEntity : T, new();
-
-        /// <summary>
-        /// Отправляет в БД запрос для создания экземпляра <paramref name="entity"/>.
-        /// </summary>
-        /// <param name="entity">Данные экземпляра сущности для создания.</param>
-        public virtual void Create(T entity)
-        {
-            MySqlCommand command = new MySqlCommand(QueryCreate);
-            FillParameters(entity, command);
-            DbConnection.GetInstance().ExecMySqlQuery(command, ref exception);
-        }
 
         /// <summary>
         /// Отправляет в БД запрос для чтения всех данных таблицы для сущности <typeparamref name="T"/> и записывает их в список.
@@ -80,7 +69,7 @@ namespace CanteenAIS_DB
         public virtual void Update(T entity)
         {
             MySqlCommand command = new MySqlCommand(QueryUpdate);
-            FillParameters(entity, command);
+            FillParameters(entity, command, true);
             DbConnection.GetInstance().ExecMySqlQuery(command, ref exception);
         }
 
@@ -108,6 +97,14 @@ namespace CanteenAIS_DB
         /// Имя параметра для первичного ключа.
         /// </summary>
         protected virtual string IdQueryParam => "@entityId";
+
+        public virtual long Create(T entity)
+        {
+            MySqlCommand command = new MySqlCommand(QueryCreate);
+            FillParameters(entity, command);
+            DbConnection.GetInstance().ExecMySqlQuery(command, ref exception);
+            return command.LastInsertedId;
+        }
 
         /// <summary>
         /// Отправляет в БД запрос об удалении объекта с заданным id из таблицы.
@@ -154,6 +151,13 @@ namespace CanteenAIS_DB
         /// Запрос для удаления объекта из БД.
         /// </summary>
         protected abstract string QueryDelete { get; }
+
+        public virtual void Create(T entity)
+        {
+            MySqlCommand command = new MySqlCommand(QueryCreate);
+            FillParameters(entity, command);
+            DbConnection.GetInstance().ExecMySqlQuery(command, ref exception);
+        }
 
         /// <summary>
         /// Отправляет в БД запрос об удалении объекта с заданным PK из таблицы.
