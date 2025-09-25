@@ -7,7 +7,7 @@
 
     <Grid>
         <DockPanel LastChildFill="True">
-            <template:TableControlPanel Margin="10,5,10,5" DockPanel.Dock="Bottom"/>
+            <template:TableControlPanelWSubtable Margin="10,5,10,5" DockPanel.Dock="Bottom"/>
 
             <DataGrid x:Name="dtGrid" Style="{StaticResource TableDataGridStyle}"
                      SelectedIndex="{Binding SelectedIndex, UpdateSourceTrigger=PropertyChanged}"

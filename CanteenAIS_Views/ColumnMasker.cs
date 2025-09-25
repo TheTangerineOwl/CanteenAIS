@@ -12,7 +12,7 @@ namespace CanteenAIS_Views
         public static DataGrid HideInvisible<T>(DataGrid grid, bool attributed = true) where T : class
         {
             PropertyDescriptorCollection props = TypeDescriptor.GetProperties(typeof(T));
-            var orderedProps = props.Cast<PropertyDescriptor>().ToList();
+            var entityFields = props.Cast<PropertyDescriptor>().ToList();
 
             ColumnDisplayAttribute attr;
 
@@ -20,10 +20,13 @@ namespace CanteenAIS_Views
             {
                 foreach (DataGridColumn col in grid.Columns)
                 {
-                    PropertyDescriptor prop = orderedProps.Where(item => item.DisplayName == (string)col.Header).FirstOrDefault();
-                    attr = prop.Attributes.OfType<ColumnDisplayAttribute>().FirstOrDefault();
+                    PropertyDescriptor prop = entityFields.Where(item => item.Name == (string)col.Header || item.DisplayName == (string)col.Header).FirstOrDefault();
+                    attr = prop?.Attributes.OfType<ColumnDisplayAttribute>().FirstOrDefault();
                     if (attr != null)
+                    {
                         col.Visibility = attr.Visible == true ? Visibility.Visible : Visibility.Collapsed;
+                        col.Header = attr.DisplayName;
+                    }
                     else if (attributed)
                         col.Visibility = Visibility.Collapsed;
                     else

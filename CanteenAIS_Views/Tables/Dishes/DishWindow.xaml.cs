@@ -23,7 +23,22 @@ namespace CanteenAIS_Views.Tables.Dishes
             vm.OnFilter += Filter;
             vm.OnDelete += Delete;
             vm.OnExport += ExportCsv;
+            vm.OnTableUpdate += HideColumns;
+            vm.OnSubtable += ReadSubtable;
+
             DataContext = vm;
+        }
+
+        private void HideColumns()
+        {
+            ColumnMasker.HideInvisible<Dish>(dtGrid);
+        }
+
+        private void ReadSubtable()
+        {
+            uint id = vm.Table.Rows[vm.SelectedIndex].Field<uint>("Id");
+            IngredientWindow ingredients = new IngredientWindow(id);
+            ingredients.Show();
         }
 
         private void Add(TableModel<DishEntity> model)
@@ -79,6 +94,7 @@ namespace CanteenAIS_Views.Tables.Dishes
                 if (dataColumn != null)
                     e.Column.Header = dataColumn.Caption;
             }
+            HideColumns();
         }
 
         public void ExportCsv(string format)

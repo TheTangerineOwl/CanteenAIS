@@ -23,7 +23,13 @@ namespace CanteenAIS_Views.Tables.MeasureUnits
             vm.OnFilter += Filter;
             vm.OnExport += ExportCsv;
             vm.OnDelete += Delete;
+            vm.OnTableUpdate += HideColumns;
             DataContext = vm;
+        }
+
+        private void HideColumns()
+        {
+            ColumnMasker.HideInvisible<MeasureUnit>(dtGrid);
         }
 
         private void Add(TableModel<MeasureUnitEntity> model)
@@ -78,6 +84,7 @@ namespace CanteenAIS_Views.Tables.MeasureUnits
                 if (dataColumn != null)
                     e.Column.Header = dataColumn.Caption;
             }
+            HideColumns();
         }
 
         public void ExportCsv(string format)

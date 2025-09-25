@@ -23,7 +23,13 @@ namespace CanteenAIS_Views.Tables.Cities
             vm.OnFilter += Filter;
             vm.OnDelete += Delete;
             vm.OnExport += ExportCsv;
+            vm.OnTableUpdate += HideColumns;
             DataContext = vm;
+        }
+
+        private void HideColumns()
+        {
+            ColumnMasker.HideInvisible<City>(dtGrid);
         }
 
         private void Add(TableModel<CityEntity> model)
@@ -78,6 +84,7 @@ namespace CanteenAIS_Views.Tables.Cities
                 if (dataColumn != null)
                     e.Column.Header = dataColumn.Caption;
             }
+            HideColumns();
         }
 
         public void ExportCsv(string format)

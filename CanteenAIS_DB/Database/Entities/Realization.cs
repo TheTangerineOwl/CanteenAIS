@@ -7,11 +7,13 @@ namespace CanteenAIS_DB.Database.Entities
     {
         [ColumnDisplay("Время", true, 1)]
         public virtual DateTime DateTime { get; set; }
+        [ColumnDisplay("Блюдо_Id")]
         public virtual uint DishId { get; set; }
         [ColumnDisplay("Блюдо", true, 2)]
         public virtual string DishName { get; set; }
         [ColumnDisplay("Объем", true, 3)]
         public virtual double Amount { get; set; }
+        [ColumnDisplay("Единица_Id")]
         public virtual uint UnitId { get; set; }
         [ColumnDisplay("Единица измерения", true, 4)]
         public virtual string UnitName { get; set; }

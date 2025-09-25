@@ -9,11 +9,13 @@ namespace CanteenAIS_DB.Database.Entities
         [ColumnDisplay("ProductId", false, 0)]
         public override uint SecondId { get => ProductId; set => ProductId = value; }
 
-        [ColumnDisplay("SupplyId", true, 0)]
+        [ColumnDisplay("Id поставки", true, 0)]
         public virtual uint SupplyId { get; set; }
+        [ColumnDisplay("Продукт_Id")]
         public virtual uint ProductId { get; set; }
         [ColumnDisplay("Продукт", true, 1)]
         public virtual string ProductName { get; set; }
+        [ColumnDisplay("Единица_Id")]
         public virtual uint UnitId { get; set; }
         [ColumnDisplay("Единица измерения", true, 2)]
         public virtual string UnitName { get; set; }

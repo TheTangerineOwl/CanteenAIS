@@ -9,16 +9,19 @@ namespace CanteenAIS_DB.Database.Entities
 
         [ColumnDisplay("Город", true, 2)]
         public virtual string CityName { get; set; }
+        [ColumnDisplay("Улица_Id")]
         public virtual uint StreetId { get; set; }
         [ColumnDisplay("Улица", true, 3)]
         public virtual string StreetName { get; set; }
         [ColumnDisplay("Строение", true, 4)]
         public virtual string Building { get; set; }
+        [ColumnDisplay("Руководитель_Id")]
         public virtual uint HeadId { get; set; }
         [ColumnDisplay("Руководитель", true, 5)]
         public virtual string HeadName { get; set; }
         [ColumnDisplay("Телефон", true, 6)]
         public virtual string HeadPhone { get; set; }
+        [ColumnDisplay("Банк_Id")]
         public virtual uint BankId { get; set; }
         [ColumnDisplay("Банк", true, 7)]
         public virtual string BankName { get; set; }

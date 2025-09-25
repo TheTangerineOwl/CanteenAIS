@@ -87,6 +87,9 @@
     <Compile Include="BaseTemplates\Subtable.xaml.cs">
       <DependentUpon>Subtable.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BaseTemplates\TableControlPanelWSubtable.xaml.cs">
+      <DependentUpon>TableControlPanelWSubtable.xaml</DependentUpon>
+    </Compile>
     <Compile Include="BaseTemplates\UIntFormFieldChecked.xaml.cs">
       <DependentUpon>UIntFormFieldChecked.xaml</DependentUpon>
     </Compile>
@@ -143,6 +146,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BaseTemplates\TableControlPanel.xaml.cs">
       <DependentUpon>TableControlPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tables\Ingredients\IngredientWindow.xaml.cs">
+      <DependentUpon>IngredientWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tables\OrderProducts\OrderProductWindow.xaml.cs">
+      <DependentUpon>OrderProductWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tables\SupplyProducts\SupplyProductWindow.xaml.cs">
+      <DependentUpon>SupplyProductWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Tables\SupplyProducts\SupplyProductAddEditWindow.xaml.cs">
       <DependentUpon>SupplyProductAddEditWindow.xaml</DependentUpon>
@@ -321,6 +333,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="BaseTemplates\TableControlPanelWSubtable.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="BaseTemplates\UIntFormFieldChecked.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -394,6 +410,18 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="BaseTemplates\TableControlPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tables\Ingredients\IngredientWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tables\OrderProducts\OrderProductWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tables\SupplyProducts\SupplyProductWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

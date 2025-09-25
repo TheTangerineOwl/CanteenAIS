@@ -8,10 +8,11 @@ namespace CanteenAIS_DB.Database.Entities
         public override uint FirstId { get => DishId; set => DishId = value; }
         [ColumnDisplay("SecondId", false, 0)]
         public override uint SecondId { get => ProductId; set => ProductId = value; }
-
+        [ColumnDisplay("Блюдо_Id")]
         public virtual uint DishId { get; set; }
         [ColumnDisplay("Блюдо", false, 0)]
         public virtual string DishName { get; set; }
+        [ColumnDisplay("Продукт_Id")]
         public virtual uint ProductId { get; set; }
         [ColumnDisplay("Продукт", true, 1)]
         public virtual string ProductName { get; set; }
@@ -19,6 +20,7 @@ namespace CanteenAIS_DB.Database.Entities
         public virtual double Gross { get; set; }
         [ColumnDisplay("Вес нетто", true, 3)]
         public virtual double Net { get; set; }
+        [ColumnDisplay("Единица_Id")]
         public virtual uint UnitId { get; set; }
         [ColumnDisplay("Единица измерения", true, 4)]
         public virtual string UnitName { get; set; }

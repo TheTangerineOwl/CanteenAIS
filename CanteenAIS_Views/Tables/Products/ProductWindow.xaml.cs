@@ -23,7 +23,13 @@ namespace CanteenAIS_Views.Tables.Products
             vm.OnFilter += Filter;
             vm.OnDelete += Delete;
             vm.OnExport += ExportCsv;
+            vm.OnTableUpdate += HideColumns;
             DataContext = vm;
+        }
+
+        private void HideColumns()
+        {
+            ColumnMasker.HideInvisible<Product>(dtGrid);
         }
 
         private void Add(TableModel<ProductEntity> model)
@@ -78,6 +84,7 @@ namespace CanteenAIS_Views.Tables.Products
                 if (dataColumn != null)
                     e.Column.Header = dataColumn.Caption;
             }
+            HideColumns();
         }
 
         public void ExportCsv(string format)

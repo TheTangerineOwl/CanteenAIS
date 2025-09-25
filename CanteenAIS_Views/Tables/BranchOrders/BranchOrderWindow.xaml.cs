@@ -1,6 +1,7 @@
 ﻿using CanteenAIS_DB.Database.Entities;
 using CanteenAIS_Models;
 using CanteenAIS_ViewModel.EntityViewModels.BranchOrder;
+using CanteenAIS_Views.Tables.Dishes;
 using Microsoft.Win32;
 using System;
 using System.Data;
@@ -23,7 +24,19 @@ namespace CanteenAIS_Views.Tables.BranchOrders
             vm.OnFilter += Filter;
             vm.OnExport += ExportCsv;
             vm.OnDelete += Delete;
+            //DataContext = vm;
+
+            vm.OnSubtable += ReadSubtable;
+            vm.OnTableUpdate += HideColumns;
+
             DataContext = vm;
+        }
+
+        private void ReadSubtable()
+        {
+            uint id = vm.Table.Rows[vm.SelectedIndex].Field<uint>("Id");
+            OrderProductWindow products = new OrderProductWindow(id);
+            products.Show();
         }
 
         private void Add(TableModel<BranchOrderEntity> model)
@@ -79,6 +92,7 @@ namespace CanteenAIS_Views.Tables.BranchOrders
                 if (dataColumn != null)
                     e.Column.Header = dataColumn.Caption;
             }
+            HideColumns();
         }
 
         public void ExportCsv(string format)
@@ -119,9 +133,14 @@ namespace CanteenAIS_Views.Tables.BranchOrders
             }
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        private void HideColumns()
         {
             ColumnMasker.HideInvisible<BranchOrder>(dtGrid);
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            HideColumns();
         }
     }
 }

@@ -21,6 +21,8 @@ namespace CanteenAIS_ViewModel.EntityViewModels.OrderProduct
             }
         }
 
+        public Action OnTableUpdate;
+
         public readonly DoubleModel<Entities.OrderProductEntity> Model;
 
         protected DataTable _oldTable;
@@ -34,7 +36,11 @@ namespace CanteenAIS_ViewModel.EntityViewModels.OrderProduct
         public virtual DataTable Table
         {
             get => table;
-            set => Set(ref table, value);
+            set
+            {
+                Set(ref table, value);
+                OnTableUpdate?.Invoke();
+            }
         }
 
         public virtual string Title

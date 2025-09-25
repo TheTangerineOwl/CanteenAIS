@@ -1,77 +1,31 @@
 ﻿using CanteenAIS_DB.Database.Entities;
 using CanteenAIS_Models;
-using CanteenAIS_ViewModel.EntityViewModels.SupplierHead;
+using CanteenAIS_ViewModel.EntityViewModels.OrderProduct;
 using Microsoft.Win32;
 using System;
 using System.Data;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace CanteenAIS_Views.Tables.SupplierHeads
+namespace CanteenAIS_Views.Tables.BranchOrders
 {
-    public partial class SupplierHeadWindow : Window
+    public partial class OrderProductWindow : Window
     {
-        public readonly SupplierHeadVM vm;
+        public readonly OrderProductVM vm;
 
-        public SupplierHeadWindow(SimpleModel<SupplierHeadEntity> model, uint elementId)
+        public OrderProductWindow(uint branchOrderId)
         {
             InitializeComponent();
-
-            vm = new SupplierHeadVM(model, elementId);
-            vm.OnAdd += Add;
-            vm.OnEdit += Edit;
-            vm.OnFilter += Filter;
+            vm = new OrderProductVM(branchOrderId);
             vm.OnExport += ExportCsv;
-            vm.OnDelete += Delete;
             vm.OnTableUpdate += HideColumns;
             DataContext = vm;
+            HideColumns();
         }
 
         private void HideColumns()
         {
-            ColumnMasker.HideInvisible<SupplierHead>(dtGrid);
-        }
-
-        private void Add(TableModel<SupplierHeadEntity> model)
-        {
-            if (model is SimpleModel<SupplierHeadEntity> model1)
-            {
-                SupplierHeadAddEditWindow addGroup = new SupplierHeadAddEditWindow(this, model1, false);
-                addGroup.ShowDialog();
-            }
-        }
-
-        private void Edit(DataRow row, TableModel<SupplierHeadEntity> model)
-        {
-            if (model is SimpleModel<SupplierHeadEntity> model1)
-            {
-                SupplierHeadAddEditWindow editGroup = new SupplierHeadAddEditWindow(this, model1, true, row);
-                editGroup.ShowDialog();
-            }
-        }
-
-        private void Filter(TableModel<SupplierHeadEntity> model)
-        {
-            if (model is SimpleModel<SupplierHeadEntity> model1)
-            {
-                SupplierHeadFilterWindow filter = new SupplierHeadFilterWindow(this, model1);
-                filter.ShowDialog();
-            }
-        }
-
-        private void Delete(DataRow row, TableModel<SupplierHeadEntity> model)
-        {
-            MessageBoxResult dr = MessageBox.Show("Удалить запись?", "Удаление данных", MessageBoxButton.YesNo);
-            if (dr == MessageBoxResult.Yes)
-                vm.Delete();
-        }
-
-        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (vm.SelectedIndex == -1)
-                vm.DataTableMouseLeave();
-            else
-                vm.DataTableMouseDown();
+            ColumnMasker.HideInvisible<OrderProduct>(dtGrid);
         }
 
         private void DataGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)

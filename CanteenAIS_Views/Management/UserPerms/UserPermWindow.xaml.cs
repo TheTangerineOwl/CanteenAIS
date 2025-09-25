@@ -1,4 +1,5 @@
 ﻿using CanteenAIS_DB.AppAuth.Entities;
+using CanteenAIS_DB.Database.Entities;
 using CanteenAIS_Models;
 using CanteenAIS_ViewModel.ManagementViewModels.UserPerm;
 using System.Data;
@@ -20,6 +21,9 @@ namespace CanteenAIS_Views.Management.UserPerms
             vm.OnEdit += Edit;
             vm.OnFilter += Filter;
             vm.OnDelete += Delete;
+
+            vm.OnTableUpdate += HideColumns;
+
             DataContext = vm;
         }
 
@@ -65,6 +69,11 @@ namespace CanteenAIS_Views.Management.UserPerms
                 vm.DataTableMouseDown();
         }
 
+        private void HideColumns()
+        {
+            ColumnMasker.HideInvisible<UserPerm>(dtGrid);
+        }
+
         private void DataGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
             if (dtGrid.ItemsSource is DataView dataView && dataView.Table != null)
@@ -75,6 +84,7 @@ namespace CanteenAIS_Views.Management.UserPerms
                 if (dataColumn != null)
                     e.Column.Header = dataColumn.Caption;
             }
+            HideColumns();
         }
     }
 }

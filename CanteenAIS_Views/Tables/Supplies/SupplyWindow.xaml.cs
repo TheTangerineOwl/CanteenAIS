@@ -1,6 +1,7 @@
 ﻿using CanteenAIS_DB.Database.Entities;
 using CanteenAIS_Models;
 using CanteenAIS_ViewModel.EntityViewModels.Supply;
+using CanteenAIS_Views.Tables.Dishes;
 using Microsoft.Win32;
 using System;
 using System.Data;
@@ -23,8 +24,24 @@ namespace CanteenAIS_Views.Tables.Supplies
             vm.OnFilter += Filter;
             vm.OnDelete += Delete;
             vm.OnExport += ExportCsv;
+            vm.OnTableUpdate += HideColumns;
+            vm.OnSubtable += ReadSubtable;
+
             DataContext = vm;
         }
+
+        private void HideColumns()
+        {
+            ColumnMasker.HideInvisible<Supply>(dtGrid);
+        }
+
+        private void ReadSubtable()
+        {
+            uint id = vm.Table.Rows[vm.SelectedIndex].Field<uint>("Id");
+            SupplyProductWindow products = new SupplyProductWindow(id);
+            products.Show();
+        }
+
 
         private void Add(TableModel<SupplyEntity> model)
         {
@@ -79,6 +96,7 @@ namespace CanteenAIS_Views.Tables.Supplies
                 if (dataColumn != null)
                     e.Column.Header = dataColumn.Caption;
             }
+            HideColumns();
         }
 
         public void ExportCsv(string format)

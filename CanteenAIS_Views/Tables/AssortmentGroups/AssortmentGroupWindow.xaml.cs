@@ -24,7 +24,13 @@ namespace CanteenAIS_Views.Tables.AssortmentGroups
             vm.OnFilter += Filter;
             vm.OnDelete += Delete;
             vm.OnExport += ExportCsv;
+            vm.OnTableUpdate += HideColumns;
             DataContext = vm;
+        }
+
+        private void HideColumns()
+        {
+            ColumnMasker.HideInvisible<AssortmentGroup>(dtGrid);
         }
 
         private void Add(TableModel<AssortmentGroupEntity> model)
@@ -79,6 +85,7 @@ namespace CanteenAIS_Views.Tables.AssortmentGroups
                 if (dataColumn != null)
                     e.Column.Header = dataColumn.Caption;
             }
+            HideColumns();
         }
 
         public void ExportCsv(string format)

@@ -8,6 +8,7 @@ namespace CanteenAIS_DB.Database.Entities
         public virtual string Name { get; set; }
         [ColumnDisplay("Группа", true, 2)]
         public virtual string GroupName { get; set; }
+        [ColumnDisplay("Группа_Id")]
         public virtual uint GroupId { get; set; }
         [ColumnDisplay("Цена", true, 3)]
         public virtual decimal Price { get; set; }
@@ -15,6 +16,7 @@ namespace CanteenAIS_DB.Database.Entities
         public virtual double Serving { get; set; }
         [ColumnDisplay("Единица измерения", true, 5)]
         public virtual string UnitName { get; set; }
+        [ColumnDisplay("Единица_Id")]
         public virtual uint UnitId { get; set; }
         [ColumnDisplay("Приготовление", true, 6)]
         public virtual string Recipe { get; set; }

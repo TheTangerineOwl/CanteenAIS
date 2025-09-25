@@ -5,12 +5,15 @@
     /// </summary>
     public abstract class UserPermEntity : DoubleEntity
     {
+        [ColumnDisplay("Пользователь_Id")]
         public override uint FirstId { get => UserId; set => UserId = value; }
+        [ColumnDisplay("Элемент_Id")]
         public override uint SecondId { get => ElementId; set => ElementId = value; }
 
         /// <summary>
         /// Идентификатор пользователя.
         /// </summary>
+        [ColumnDisplay("ПользовательId")]
         public virtual uint UserId { get; set; }
         /// <summary>
         /// Логин пользователя.
@@ -20,6 +23,7 @@
         /// <summary>
         /// Идентификатор элемента меню.
         /// </summary>
+        [ColumnDisplay("Элемент_Id")]
         public virtual uint ElementId { get; set; }
         /// <summary>
         /// Имя элемента меню.

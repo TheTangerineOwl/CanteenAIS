@@ -5,6 +5,7 @@ namespace CanteenAIS_DB.Database.Entities
 {
     public abstract class SupplyEntity : SimpleEntity
     {
+        [ColumnDisplay("Поставщик_Id")]
         public virtual uint SupplierId { get; set; }
         [ColumnDisplay("Поставщик", true, 1)]
         public virtual string SupplierName { get; set; }

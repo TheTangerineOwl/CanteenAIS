@@ -30,7 +30,11 @@ namespace CanteenAIS_ViewModel.BasicViewModels
         public virtual DataTable Table
         {
             get => table;
-            set => Set(ref table, value);
+            set
+            {
+                Set(ref table, value);
+                OnTableUpdate?.Invoke();
+            }
         }
 
         public virtual string Title
@@ -78,6 +82,7 @@ namespace CanteenAIS_ViewModel.BasicViewModels
         }
 
         public Action OnChangeSelection;
+        public Action OnTableUpdate;
         public Action<TableModel<TEntityBase>> OnFilter;
         public Action<TableModel<TEntityBase>> OnAdd;
         public Action<DataRow, TableModel<TEntityBase>> OnEdit;
